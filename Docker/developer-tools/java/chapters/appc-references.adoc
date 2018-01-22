@@ -1,0 +1,8 @@
+[appendix]
+[[References]]
+
+== References
+
+. Docker Docs: http://docs.docker.com
+. Latest lab content: https://github.com/docker/labs/tree/master/developer-tools/java
+

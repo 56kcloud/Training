@@ -1,6 +1,8 @@
 # Container, Cloud & DevOps Tutorials and Labs
 
-This repo contains Docker, Kubernetes, Cloud, and DevOps Labs authored both by the respective companies or organizations, and by members of the community. We welcome contributions and want to grow the repo.
+![56K.Cloud Logo](./img/56k-cloud-logo.jpg)
+
+Welcome to [56K.Cloud](www.56k.cloud) Training & Labs. This repo contains Docker, Kubernetes, Cloud, and DevOps Labs authored both by the respective companies or organizations, and by members of the community. We welcome contributions and want to grow the repo.
 
 #### Tutorials:
 * [Docker](Docker/README.md)

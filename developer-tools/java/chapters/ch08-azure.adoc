@@ -1,6 +1,0 @@
-:toc:
-
-:imagesdir: images
-
-= Docker for Azure
-

@@ -73,7 +73,7 @@ You can also run a second webserver at the same time, specifying a custom host p
 ```
 $ docker run --name static-site-2 --env AUTHOR="Your Name" --detach --publish 8888:80 dockersamples/static-site
 ```
-<img src="../images/web-app.png" title="static">
+<img src="../images/web-app.png" title="web-app">
 
 * `--publish` will publish instruct the container to map the specified container port to the host port. `8888:80` = Host:Container Port
 

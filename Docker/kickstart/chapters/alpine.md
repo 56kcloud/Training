@@ -1,4 +1,4 @@
-## 1.0 Running your first container
+## <a name="Task_1"></a>Task 1: Running your first container
 
 Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get a taste of the `docker run` command.
 
@@ -82,14 +82,14 @@ You are now inside the container shell and you can try out a few commands like `
 Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
 
 ```
-$ docker ps
+$ docker container ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
 Since no containers are running, you see a blank line. Let's try a more useful variant: `docker ps -a`
 
 ```
-$ docker ps -a
+$ docker container ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
 a6a9d46d0b2f        alpine             "echo 'hello from alp"    6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
@@ -111,7 +111,7 @@ Running the `run` command with the `-it` flags attaches us to an interactive tty
 That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker run`.
 
 
-### Run an interactive Ubuntu container
+### <a name="Task_2"></a>Task 2: Run an interactive Ubuntu container
 
 You can run a container based on a different version of Linux than is running on your Docker host.
 
@@ -170,11 +170,120 @@ Interactive containers are useful when you are putting together your own image. 
 
 We can exit the TTY of the container with by typing `exit` or `CTRL-D`
 
+### <a name="Task_3"></a>Task 3: Run a background MySQL container
+
+Background containers are how you'll run most applications. Here's a simple example using MySQL.
+
+1. Let's run MySQL in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
+
+    We'll also use an environment variable (`-e`) to set the root password (NOTE: This should never be done in production):
+
+    ```
+    $ docker container run \
+    --detach \
+    --name mydb \
+    -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+    mysql:latest
+
+    Unable to find image 'mysql:latest' locallylatest: Pulling from library/mysql
+    aa18ad1a0d33: Pull complete
+    fdb8d83dece3: Pull complete
+    <Snip>
+     315e21657aa4: Pull complete
+    Digest: sha256:0dc3dacb751ef46a6647234abdec2d47400f0dfbe77ab490b02bffdae57846ed
+    Status: Downloaded newer image for mysql:latest
+    41d6157c9f7d1529a6c922acb8167ca66f167119df0fe3d86964db6c0d7ba4e0
+    ```
+
+    Once again, the image we requested was not available locally, so Docker pulled it from Docker Hub.
+
+    As long as the MySQL process is running, Docker will keep the container running in the background.
+
+2. List running containers
+
+    ```
+    $ docker container ls
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS            NAMES
+    3f4e8da0caf7        mysql:latest        "docker-entrypoint..."   52 seconds ago      Up 51 seconds       3306/tcp         mydb
+    ```
+
+    Notice your container is running
+
+3. You can check what's happening in your containers by using a couple of built-in Docker commands: `docker container logs` and `docker container top`
+
+    ```
+    $ docker container logs mydb
+    <output truncated>
+    2017-09-29T16:02:58.605004Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check.
+    2017-09-29T16:02:58.605026Z 0 [Note] Beginning of list of non-natively partitioned tables
+    2017-09-29T16:02:58.616575Z 0 [Note] End of list of non-natively partitioned tables
+    ```
+
+    This shows the logs from your Docker container.
+
+    Let's look at the running processes inside the container.
+
+    ```
+    $ docker container top mydb
+    PID                 USER                TIME                COMMAND
+    2876                999                 0:00                mysqld
+    ```
+    
+	You should see the MySQL demon (`mysqld`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `mysqld` process running as the main process of the container (PID 1) try:
+	
+	```
+	$ docker container exec mydb ps -ef
+	UID         PID   PPID  C STIME TTY          TIME CMD
+	mysql         1      0  0 21:00 ?        00:00:01 mysqld
+	root        207      0  0 21:39 ?        00:00:00 ps -ef
+	```
+
+    Although MySQL is running, it is isolated within the container because no network ports have been published to the host. Network traffic cannot reach containers from the host unless ports are explicitly published.
+
+4. List the MySQL version using `docker container exec`.
+
+   `docker container exec` allows you to run a command inside a container. In this example, we'll use `docker container exec` to run the command-line equivalent of `mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version` inside our MySQL container.
+
+    ```
+    $ docker container exec -it mydb \
+    mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+
+    mysql: [Warning] Using a password on the command line interface can be insecure.
+    mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
+    ```
+
+    The output above shows the MySQL version number, as well as a handy warning.
+
+5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MySQL container.  
+
+    ```
+    $ docker exec -it mydb sh
+    #
+    ```
+
+    Notice that your shell prompt has changed. This is because your shell is now connected to the `sh` process running inside of your container.
+
+6. Let's check the version number by running the same command we passed to the container in the previous step.
+
+    ```
+    # mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+
+    mysql: [Warning] Using a password on the command line interface can be insecure.
+    mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
+    ```
+
+    Notice the output is the same as before.
+
+7. Type `exit` to leave the interactive shell session.
+
+    Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mysqld` process still running.
+    
+
 ### Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
-- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker inspect alpine`. In the demo above, you used the `docker pull` command to download the **alpine** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker ps` command.
+- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
+- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.

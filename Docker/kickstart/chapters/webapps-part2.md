@@ -6,7 +6,7 @@ Now that we understand the structure of Docker images it's now time to start bui
 > * [Task 1: Package and run a custom app using Docker](#Task_1)
 > * [Task 2: Modify a running website](#Task_2)
 > * [Task 3: Create your first image](#Task_3)
-> * [Understanding Docker Volumes](#Understanding Docker Volumes)
+> * [Understanding Docker Volumes](#understanding-docker-volumes)
 
 ## <a name="Task_1"></a>Task 1: Package and run a custom app using Docker
 

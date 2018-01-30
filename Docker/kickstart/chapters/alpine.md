@@ -1,3 +1,15 @@
+# Our First Containers
+
+The wait is finally over. It's time to roll up our sleeves and start our first container. Get Ready.
+
+> **Tasks**:
+>
+
+> * [Task 1: Run our First Container](#Task_1)
+> * [Task 2: Run an Interactive Container](#Task_2)
+> * [Task 3: Run a background MySQL container](#Task_3)
+> * [Terminology Covered in this section](#Terminology)
+
 ## <a name="Task_1"></a>Task 1: Running your first container
 
 Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get a taste of the `docker run` command.
@@ -277,7 +289,7 @@ Background containers are how you'll run most applications. Here's a simple exam
 7. Type `exit` to leave the interactive shell session.
 
     Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mysqld` process still running.
-    
+
 
 ### Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.

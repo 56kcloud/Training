@@ -1,5 +1,14 @@
-## 2.0 Webapps with Docker
+# 2.0 Webapps with Docker
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
+
+> **Tasks**:
+>
+
+> * [Task 1: Run a static website in a container](#Task_1)
+> * [Task 2: Docker Images](#Task_2)
+> * [Task 3: Create your first image](#Task_3)
+> * [Understanding Docker Volumes](#Understanding Docker Volumes)
+
 
 ### <a name="Task_1"></a>Task 1: Run a static website in a container
 >**Note:** Code for this section is in this repo in the [static-site directory](https://github.com/docker/labs/tree/master/beginner/static-site).
@@ -338,64 +347,6 @@ The next sections will cover both anonymous and named volumes.
 
 > Special Note: These next sections were adapted from [Arun Gupta's](https://twitter.com/arungupta) excellent [tutorial](http://blog.arungupta.me/docker-mysql-persistence/) on persisting data with MySQL. 
 
-
-### 2.3.4 Push your image
-Now that you've created and tested your image, you can push it to [Docker Cloud](https://cloud.docker.com).
-
-First you have to login to your Docker Cloud account, to do that:
-
-```
-docker login
-```
-
-Enter `YOUR_USERNAME` and `password` when prompted. 
-
-Now all you have to do is:
-
-```
-docker push YOUR_USERNAME/myfirstapp
-```
-Now that you are done with this container, stop and remove it since you won't be using it again.
-
-Open another terminal window and execute the following commands:
-
-```
-$ docker stop myfirstapp
-$ docker rm myfirstapp
-```
-
-or
-
-```
-$ docker rm -f myfirstapp
-```
-
-### 2.3.5 Dockerfile commands summary
-
-Here's a quick summary of the few basic commands we used in our Dockerfile.
-
-* `FROM` starts the Dockerfile. It is a requirement that the Dockerfile must start with the `FROM` command. Images are created in layers, which means you can use another image as the base image for your own. The `FROM` command defines your base layer. As arguments, it takes the name of the image. Optionally, you can add the Docker Cloud username of the maintainer and image version, in the format `username/imagename:version`.
-
-* `RUN` is used to build up the Image you're creating. For each `RUN` command, Docker will run the command then create a new layer of the image. This way you can roll back your image to previous states easily. The syntax for a `RUN` instruction is to place the full text of the shell command after the `RUN` (e.g., `RUN mkdir /user/local/foo`). This will automatically run in a `/bin/sh` shell. You can define a different shell like this: `RUN /bin/bash -c 'mkdir /user/local/foo'`
-
-* `COPY` copies local files into the container.
-
-* `CMD` defines the commands that will run on the Image at start-up. Unlike a `RUN`, this does not create a new layer for the Image, but simply runs the command. There can only be one `CMD` per a Dockerfile/Image. If you need to run multiple commands, the best way to do that is to have the `CMD` run a script. `CMD` requires that you tell it where to run the command, unlike `RUN`. So example `CMD` commands would be:
-```
-  CMD ["python", "./app.py"]
-
-  CMD ["/bin/bash", "echo", "Hello World"]
-```
-
-* `EXPOSE` creates a hint for users of an image which ports provide services. It is included in the information which
- can be retrieved via `$ docker inspect <container-id>`.     
-
->**Note:** The `EXPOSE` command does not actually make any ports accessible to the host! Instead, this requires 
-publishing ports by means of the `-p` flag when using `$ docker run`.  
-
-* `PUSH` pushes your image to Docker Cloud, or alternately to a [private registry](https://docs.docker.com/registry/)
-
->**Note:** If you want to learn more about Dockerfiles, check out [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/).
 
 ## Let's Take a Break then continue to Part 2
 For the next step in the tutorial head over to [WebApps Part Deux](./webapps-part2.md)

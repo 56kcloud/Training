@@ -4,7 +4,7 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 
 > **Tasks**:
 >
-
+>
 > * [Task 1: Run our First Container](#Task_1)
 > * [Task 2: Run an Interactive Container](#Task_2)
 > * [Task 3: Run a background MySQL container](#Task_3)

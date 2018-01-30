@@ -2,7 +2,9 @@
 
 Now that we understand the structure of Docker images it's now time to start building our very own Docker image from a `Dockerfile`
 
-
+> **Tasks**:
+>
+>
 > * [Task 1: Package and run a custom app using Docker](#Task_1)
 > * [Task 2: Modify a running website](#Task_2)
 > * [Task 3: Create your first image](#Task_3)

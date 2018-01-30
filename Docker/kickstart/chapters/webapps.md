@@ -3,11 +3,11 @@ Great! So you have now looked at `docker run`, played with a Docker container an
 
 > **Tasks**:
 >
-
+>
 > * [Task 1: Run a static website in a container](#Task_1)
 > * [Task 2: Docker Images](#Task_2)
 > * [Task 3: Create your first image](#Task_3)
-> * [Understanding Docker Volumes](#Understanding Docker Volumes)
+> * [Understanding Docker Volumes](#understanding-docker-volumes)
 
 
 ### <a name="Task_1"></a>Task 1: Run a static website in a container

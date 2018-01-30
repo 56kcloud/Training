@@ -130,7 +130,6 @@ Multipe Containers can use the same Image. Each container has its own writable c
 
 <center><img src="../images/sharing-layers.jpg" title="Sharing Layers"></center>
 
-
 The following exercises will help to illustrate those concepts in practice. 
 
 Let's start by looking at layers and how files written to a container are managed by something called *copy on write*.
@@ -152,11 +151,11 @@ alpine                 3.3                 70c557e50ed6        8 days ago       
 java                   7                   21f6ce84e43c        8 days ago          587.7 MB
 ```
 
-Above is a list of images that I've pulled from the registry and those I've created myself (we'll shortly see how). You will have a different list of images on your machine. The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier for that image.
+Above is a list of images that we've pulled from the Docker registry and images I created myself (we'll shortly see how). You will have a different list of images on your machine. The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier or hash for that image.
 
-For simplicity, you can think of an image akin to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you do not provide a specific version number, the client defaults to `latest`.
+For simplicity, you can think of an image functions similarly to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you do not provide a specific version number, the client defaults to `latest`.
 
-For example you could pull a specific version of `ubuntu` image as follows:
+For example, let's pull a specific version of `ubuntu` image as follows:
 
 ```
 $ docker image pull ubuntu:12.04
@@ -164,7 +163,7 @@ $ docker image pull ubuntu:12.04
 
 If you do not specify the version number of the image then, as mentioned, the Docker client will default to a version named `latest`.
 
-So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
+So for example, the `docker image pull` command given below will always pull the `latest` tag of an image. The example below pulls `ubuntu:latest` by default.
 
 ```
 $ docker image pull ubuntu
@@ -184,14 +183,13 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 - **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`. The `user` value in the image name is your Docker Store user or organization name.
 
-### 2.3 Create your first image
+### <a name="Task_3"></a>Task 3: Create your first image
 
 
 ## Layers and Copy on Write
 
-> Note: If you have not cleaned up the containers and images from the previous section please do so 
 
-1. Pull down the Debian:Jessie image
+1. Pull the Debian:Jessie image
 
     ```
     $ docker image pull debian:jessie
@@ -201,7 +199,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     Status: Downloaded newer image for debian:jessie
     ```
 
-2. Pull down a MySQL image
+2. Pull a MySQL image
 
     ```
     $ docker image pull mysql
@@ -259,6 +257,8 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 5. Exit the container but leave it running by pressing `ctrl-p` and then `ctrl-q`
 
+<center><img src="../images/overlay_constructs.jpg" title="Overlay Constructs"></center>
+
     The Docker hosts for the labs today use OverlayFS with the [overlay2](https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#how-the-overlay2-driver-works) storage driver. 
 
     OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer.  The unified view is exposed through its own directory called merged. 
@@ -268,7 +268,8 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     > Note: The *inspect* command uses Go templates to allow us to extract out specific information from its output. For more information on how these templates work with *inspect* read this [excellent tutorial](http://container-solutions.com/docker-inspect-template-magic/). 
 
     ```
-    $ docker inspect -f '{{json .GraphDriver.Data}}' debian | jq
+    $ docker inspect -f '{{json .GraphDriver.Data}}' debian | python -mjson.tool
+        
     {
       "LowerDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e-init/diff:/var/lib/docker/overlay2/c2e2db4221ad5dca9f35a92e04d17c79b861ddee30015fa3ddc77c66ae1bf758/diff",
       "MergedDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/merged",
@@ -276,68 +277,19 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
       "WorkDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/work"
     }
     ```
+
     > Note: `WorkDir` is a working directory for the Overlay2 driver
 
     Since the change we made is the newest modification to the Debian container's file system, it's going to be stored in `UpperDir`. 
 
-6. List the contents of the `UpperDir`. 
+
+6. Stop the contianer
 
     ```
-    $ cd $(docker inspect -f {{.GraphDriver.Data.UpperDir}} debian)
-    
-    $ ls
-    root       test-file
+    $ docker container stop debian
     ```
 
-    `MergedDir` is going to give us a look at the root filesystem of our container which is a combination of `UpperDir` and `LowerDir`:
-
-7. List the contents of `MergedDir`:
-
-    ```
-    $ cd $(docker inspect -f {{.GraphDriver.Data.MergedDir}} debian)
-
-    $ ls
-    bin        etc        lib64      opt        run        sys        usr
-    boot       home       media      proc       sbin       test-file  var
-    dev        lib        mnt        root       srv        tmp
-    ```
-
-    Notice that the directory on our host file system has the same contents as the one inside the container. That's because that directory is what we see in the container. 
-
-    > Warning: You should NEVER manipulate your container's file system via the Docker host. This is only being done as an academic exercise. 
-
-8. Write a new file to the host file system in the `UpperDir`, and list the directory to see the contents
-
-    ```
-    $ cd $(docker inspect -f {{.GraphDriver.Data.UpperDir}} debian)
-
-    $ touch test-file2
-
-    $ ls
-    root        test-file   test-file2
-    ```
-
-
-9. Move back into your Debian container and list the root file system
-
-    ```
-    $ docker attach debian
-
-    root@674d7abf10c6:/# ls
-    bin   dev  home  lib64  mnt  proc  run   srv  test-file   tmp  var
-    boot  etc  lib   media  opt  root  sbin  sys  test-file2  usr
-    ```
-    
-    The file that was created on the local host filesystem (`test-file2`) is now available in the container as well. 
-
-10. Type `exit` to stop your container, which will also stop it
-
-    ```
-    root@674d7abf10c6:/# exit
-    exit
-    ```
-
-11. Ensure that your debian container still exists
+7. Ensure that your debian container still exists
 
     ```
     $ docker container ls --all
@@ -345,14 +297,20 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     674d7abf10c6        debian:jessie       "bash"              36 minutes ago      Exited (0) 2 minutes ago                       debian
     ```
 
-12. List out the current directory
+8. Sart the Debian container again
 
     ```
-    $ ls
-    root        test-file   test-file2
+    $ docker container start debian
     ```
 
-    Because the container still exists, the files are still available on  your file system. At this point you could `docker start` your container and it would be just as it was before you exited. 
+8. Attach to the Debian container hit `enter` twice after completing the command
+
+    ```
+    $ docker container attach debian
+    ```
+
+
+    Because the container still exists, the files are still available on  your file system. At this point the file we created previously still exists.
 
     However, if we remove the container, the directories on the host file system will be removed, and your changes will be gone
 
@@ -361,26 +319,10 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     ```
     $ docker container rm debian
     debian
-
-    $ ls
     ```
 
-    The files that were created are now gone. You've actually been left in a sort of "no man's land" as the directory you're in has actually been deleted as well.
+    The files that were created are now gone and the container now reverts back to the base image which it was created from if we start it again.
 
-14. Copy the directory location from the prompt in the terminal. 
-
-15. CD back to your home directory
-
-    ```
-    $ cd
-    ```
-
-16. Attempt to list the contents of the old `UpperDir` directory.
-
-    ```
-    $ ls /var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/diff
-    ls: /var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/diff: No such file or directory
-    ```
 
 ## Understanding Docker Volumes
 
@@ -455,5 +397,5 @@ publishing ports by means of the `-p` flag when using `$ docker run`.
 
 >**Note:** If you want to learn more about Dockerfiles, check out [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/).
 
-## Next Steps
-For the next step in the tutorial head over to [3.0 Deploying an app to a Swarm](./votingapp.md)
+## Let's Take a Break then continue to Part 2
+For the next step in the tutorial head over to [WebApps Part Deux](./webapps-part2.md)

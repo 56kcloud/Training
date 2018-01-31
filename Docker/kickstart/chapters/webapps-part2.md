@@ -300,36 +300,6 @@ What did we just accomplish?
 3. Finally, we commited our new changes into a newly created image
 4. We ran version 1 and version 2 side-by-side
 
-### 2.3.4 Push your image
-Now that you've created and tested your image, you can push it to [Docker Cloud](https://cloud.docker.com).
-
-First you have to login to your Docker Cloud account, to do that:
-
-```
-docker login
-```
-
-Enter `YOUR_USERNAME` and `password` when prompted. 
-
-Now all you have to do is:
-
-```
-docker push $DOCKERID/myfirstapp
-```
-Now that you are done with this container, stop and remove it since you won't be using it again.
-
-Open another terminal window and execute the following commands:
-
-```
-$ docker stop myfirstapp
-$ docker rm myfirstapp
-```
-
-or
-
-```
-$ docker rm -f myfirstapp
-```
 
 ### Dockerfile commands summary
 
@@ -358,10 +328,6 @@ publishing ports by means of the `-p` flag when using `$ docker run`.
 
 >**Note:** If you want to learn more about Dockerfiles, check out [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/).
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
-
-### <a name="Task_1"></a>Task 1: Run a static website in a container
->**Note:** Code for this section is in this repo in the [static-site directory](https://github.com/docker/labs/tree/master/beginner/static-site).
-
 
 
 ## Next Steps

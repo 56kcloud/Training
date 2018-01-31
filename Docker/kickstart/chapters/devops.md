@@ -6,8 +6,8 @@ Now that we understand the structure of Docker images it's now time to start bui
 >
 >
 > * [Task 1: Push your image to Docker Hub](#Task_1)
-> * [Task 2: Modify a running website](#Task_2)
-> * [Task 3: Create your first image](#Task_3)
+> * [Task 2: Setup a Automated Build](#Task_2)
+> * [Task 3: Unit Test our Automated Builds](#Task_3)
 > * [Understanding Docker Volumes](#understanding-docker-volumes)
 
 ## <a name="Task_1"></a>Task 1: Push your image to Docker Hub
@@ -37,8 +37,8 @@ List the images on your Docker host. You will see that you now have two `linux_t
     $ docker image ls
 
     REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
-    mikegcoleman/linux_tweet_app   2.0                 01612e05312b        3 minutes ago       108MB
-    mikegcoleman/linux_tweet_app   1.0                 bb32b5783cd3        7 minutes ago       108MB
+    vegasbrianc/linux_tweet_app   2.0                 01612e05312b        3 minutes ago       108MB
+    vegasbrianc/linux_tweet_app   1.0                 bb32b5783cd3        7 minutes ago       108MB
     ```
 
 These images are only stored in your Docker host's local repository. We want to `push` these images to Docker Hub so we can access the images from anywhere.
@@ -92,6 +92,28 @@ Distribution is built into the Docker platform. You can build images locally and
 
 
     You can browse to `https://hub.docker.com/r/<your docker id>/` and see your newly-pushed Docker images. These are public repositories, so anyone can pull the images - you don't even need a Docker ID to pull public images.
+
+## <a name="Task_2"></a>Task 2: Setup an Automated Build
+
+### Prepare to push our newly created project to GitHub
+
+It's time to automated our build pipeline. First, we need to create a GitHub Repo. 
+
+1. Login to your [www.GitHub.com](www.github.com) account and click create new repository
+
+<center><img src="../images/Create_new_git_repo.png" title="Create New Git Repo"></center>
+
+2. Name the new repository `autobuild` and fill in the description in optional
+
+<center><img src="../images/setup_repo.png" title="Create New Git Repo"></center>
+
+3. From the `linux_tweet_app` directory, initialize the project, commit and push the project to GitHub. Follow the directions which GitHub provides
+
+<center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>
+
+
+
+## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
 
 
 ### Dockerfile commands summary

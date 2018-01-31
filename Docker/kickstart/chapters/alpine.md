@@ -188,13 +188,13 @@ Background containers are how you'll run most applications. Here's a simple exam
 
 1. Let's run MySQL in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
 
-    We'll also use an environment variable (`-e`) to set the root password (NOTE: This should never be done in production):
+    We'll also use an environment variable (`--env`) to set the root password (NOTE: This should never be done in production):
 
     ```
     $ docker container run \
     --detach \
     --name mydb \
-    -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+    --env MYSQL_ROOT_PASSWORD=my-secret-pw \
     mysql:latest
 
     Unable to find image 'mysql:latest' locallylatest: Pulling from library/mysql

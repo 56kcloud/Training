@@ -189,6 +189,11 @@ Because we did a bind mount, any changes made to the local filesystem are immedi
 
     > Using your favorite editor (vi, emacs, etc) you can use it to load the `index.html` file and make additional real-time changes. Those too would be reflected when you reload the webpage.
 
+    Edit the index.html file and edit line number 33 and change the text to "Docker is Awesome!"
+    ```
+    $ vi index.html
+    ```
+
     Even though we've modified the `index.html` local filesystem and seen it reflected in the running container, we've not actually changed the original Docker image.
 
     To show this, let's stop the current container and re-run the `1.0` image without a bind mount.
@@ -286,6 +291,15 @@ To save the changes you made to the `index.html` file earlier, you need to build
 
 4. Open the Tweet Web App in your Browser `http://0.0.0.0:8081` to view the old version of the website.
 
+### Review
+
+What did we just accomplish? 
+
+1. We created a built a Dockerfile and ran a container from this newly create image
+2. Next, we modified the website both the version & index.html file showing real-time updates to the application
+3. Finally, we commited our new changes into a newly created image
+4. We ran version 1 and version 2 side-by-side
+
 ### 2.3.4 Push your image
 Now that you've created and tested your image, you can push it to [Docker Cloud](https://cloud.docker.com).
 
@@ -300,7 +314,7 @@ Enter `YOUR_USERNAME` and `password` when prompted.
 Now all you have to do is:
 
 ```
-docker push YOUR_USERNAME/myfirstapp
+docker push $DOCKERID/myfirstapp
 ```
 Now that you are done with this container, stop and remove it since you won't be using it again.
 

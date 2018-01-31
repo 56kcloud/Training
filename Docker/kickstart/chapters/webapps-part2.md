@@ -331,4 +331,4 @@ Great! So you have now looked at `docker run`, played with a Docker container an
 
 
 ## Next Steps
-For the next step in the tutorial head over to [3.0 Deploying an app to a Swarm](./votingapp.md)
+For the next step in the tutorial head over to [Docker & DevOps](./devops.md)

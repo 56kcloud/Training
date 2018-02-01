@@ -1,13 +1,13 @@
 ## Docker Kickstarter
 
-This tutorial consists of the following sections:
+This Docker tutorial consists of the following sections:
 
 * [Setup](chapters/setup.md)
-* [1.0 Running your first container](chapters/alpine.md)
-* [2.0 Webapps with Docker](chapters/webapps.md)
-* [3.0 Deploying an app to a Swarm](chapters/votingapp.md)
-* [3.1 Networking](chapters/networking-basics.md)
-* [3.2 Secret Management](chapters/secrets.md)
-* [4.0 Build and Deploy a Monitoring Stack](chapters/prometheus.md)
-* [5.0 Create a Docker Build Pipeline](chapters/docker-devops.md)
-* [6.0 Docker Swarm & Kuberenetes](chapters/swarm-kubernetes.md)
+* [Running your first container](chapters/alpine.md)
+* [Webapps with Docker](chapters/webapps.md)
+* [Webapps with Docker part Deux](chapters/webapps-part2.md)
+* [Docker & DevOps](chapters/devops.md)
+* [Networking](chapters/networking-basics.md)
+* [Secret Management](chapters/secrets.md)
+* [Docker Swarm & Kuberenetes](chapters/swarm-kubernetes.md)
+* [Build and Deploy a Monitoring Stack](chapters/prometheus.md)

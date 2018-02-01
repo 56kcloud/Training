@@ -103,14 +103,21 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 <center><img src="../images/Create_new_git_repo.png" title="Create New Git Repo"></center>
 
-2. Name the new repository `autobuild` and fill in the description in optional
+2. Name the new repository `autobuilds` and fill in the description in optional
 
 <center><img src="../images/setup_repo.png" title="Create New Git Repo"></center>
 
-3. From the `linux_tweet_app` directory, initialize the project, commit and push the project to GitHub. Follow the directions which GitHub provides
+3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below.
 
 <center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>
 
+4. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) and in the upper right hand corner click create new Automated build.
+
+<center><img src="../images/create-autobuild-repo.png" title="Create Auto Build Repo"></center>
+
+5. Click the GitHub icon and link your GitHub account to Docker Hub
+
+6. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search for the `autobuilds` GitHub repo we created in the previous section.
 
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds

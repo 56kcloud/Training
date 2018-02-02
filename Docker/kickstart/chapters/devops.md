@@ -107,7 +107,9 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 <center><img src="../images/setup_repo.png" title="Create New Git Repo"></center>
 
-3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below.
+3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below. 
+
+**Be aware that we need to add all files in the directory so run `git add *` Additionally, the URL of the Repo requires updating with `git remote set-url origin https://github.com/vegasbrianc/autobuilds.git`**
 
 <center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>
 
@@ -117,7 +119,20 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 5. Click the GitHub icon and link your GitHub account to Docker Hub
 
-6. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search for the `autobuilds` GitHub repo we created in the previous section.
+6. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search and select the `autobuilds` GitHub repo we created in the previous section.
+
+7. Fill in a short description for our Autobuild Repo.
+
+8. Expand the next screen by clicking `Click here to cusomize`link. This will allow us to perform autobuilds based on certain tags or branches.
+
+9. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+
+Once the autobuild has complete let's have a look around.
+
+* First click the `Repo` Tab. What's populated here?
+* Next click the `Tags` Tab
+* Finally, click on the `Build Details` and click on the `Success` status. What do we see here and why?
+
 
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds

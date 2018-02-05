@@ -1,11 +1,5 @@
 # Docker Networking Basics
 
-# Lab Meta
-
-> **Difficulty**: Beginner
-
-> **Time**: Approximately 10 minutes
-
 In this lab you'll look at the most basic networking components that come with a fresh installation of Docker.
 
 You will complete the following steps as part of this lab.

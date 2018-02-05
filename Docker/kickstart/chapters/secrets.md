@@ -1,31 +1,25 @@
-# Secrets
-
-# Lab Meta
-
-> **Difficulty**: Intermediate
-
-> **Time**: Approximately 15 minutes
+# Managin Docker Secrets
 
 In this lab you'll learn how to create and manage *secrets* with Docker.
 
 You will complete the following steps as part of this lab.
 
-- [Step 1 - Create a Secret](#create)
-- [Step 2 - Manage Secrets](#manage)
-- [Step 3 - Access the secret within an app](#use)
-- [Step 4 - Clean-up](#clean)
+- [Task 1 - Create a Secret](#Task_1)
+- [Task 2 - Manage Secrets](#Task_2)
+- [Task 3 - Access the secret within an app](#Task_3)
+- [Task 4 - Clean-up](#Task_4)
 
 In this lab the terms *service task* and *container* are used interchangeably.
 In all examples in the lab a *service tasks* is a container that is running as
 part of a service.
 
-# Prerequisites
+## Prerequisites
 
 You will need all of the following to complete this lab:
 
 - A Docker Swarm cluster running **Docker 1.13** or higher
 
-# <a name="create"></a>Step 1: Create a Secret
+## <a name="Task_1"></a>Task 1: Create a Secret
 
 In this step you'll use the `docker secret create` command to create a new
 *secret*.
@@ -70,7 +64,7 @@ using the Swarm's native encryption.
 
 You can now delete the `sec.txt` file used to create the secret.
 
-# <a name="manage"></a>Step 2: Manage Secrets
+## <a name="Task_2"></a>Task 2: Manage Secrets
 
 In this step you'll use the `docker secret` sub-command to list and inspect
 secrets.
@@ -116,7 +110,7 @@ You can use the `docker secret rm` command to delete secrets. To delete the
 delete the sec1 secret as you will use it in the next section.**
 
 
-# <a name="use"></a>Step 3: Access the secret within an app
+## <a name="Task_3"></a>Task 3: Access the secret within an app
 
 In this step you'll deploy a service and grant it access to the secret. You'll
 then `exec` on to a task in the service and view the unencrypted contents of the
@@ -263,7 +257,7 @@ the secret from memory.
 
 **Congratulations**, you have completed this lab on Secrets management.
 
-# <a name="clean"></a>Step 5: Clean-up
+## <a name="Task_4"></a>Task 4: Clean-up
 
 In this step you will remove all secrets and services,as well as clean up any other artifacts created in this lab.
 

@@ -1,4 +1,4 @@
-# 2.0 Webapps with Docker
+# Webapps with Docker part Deux
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
 
 > **Tasks**:

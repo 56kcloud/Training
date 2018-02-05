@@ -133,10 +133,99 @@ Once the autobuild has complete let's have a look around.
 * Next click the `Tags` Tab
 * Finally, click on the `Build Details` and click on the `Success` status. What do we see here and why?
 
+### Test Automated Builds
 
+Awesome! To ensure our automated builds are really working let's commit a new version of our `linux_tweet_app` to GitHub. When we push our changes to GitHub this will trigger an automated build in Docker Hub. Great, let's give it a try.
+
+1. in the `linux_tweep_app` directoy edit the `index.html`
+> Using your favorite editor (vi, emacs, etc)
+
+    Edit the index.html file and edit line number 33 and change the text to "DevOps is Awesome"
+    ```
+    $ vi index.html
+    ```
+
+2. Commit our new changes to our GitHub Repo
+    
+    ```
+    $ git add index.html
+
+    $ git commit -m "updated index.html text to DevOps is Awesome"
+
+    $ git push
+    ```
+
+3. Head back to your [Docker Hub](www.hub.docker.com) account and click on the `Build Details` tab of your `autobuilds` repo. You should now see if you are quick enough that your build is queued ready to be built by Docker Hub. Next, it will run through the build and and report back the status of your new build. Click on the status of the build once it has completed building to view the logs.
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
 
+Now, we have an automated Build pipeline in place that is automatically being built everytime a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are commiting is doing what it is suppose to do. In this section we will setup a `Travis Continous Integration`testing to check out container.
+
+This section we will enable `Travis CI`, create a test script, and enable testing on our Repo. Sounds great, let's get started.
+
+1. Open [Travis CI](https://travis-ci.org/) and in the upper click the big green button in the middle of the screen `SIGN UP`
+
+2. Once we are signed up and signed in we can then add our Repo to Travis. Upper left corner click the `+`sign to add a new Repo. 
+
+3. Flip the toggle switch for the `autobuilds` Repo
+
+3. Now add the test to the Repo. This test will check that the container indeed can start and port 8080 is indeed accessible.
+> Using your favorite editor (vi, emacs, etc) create a new file called `.travis.yml`
+
+.travis.yml should contain the following. Be sure to update your Docker ID:
+```
+sudo: required
+
+services:
+    - docker
+
+language: bash
+
+before_script:
+    - "docker build -t <Your Docker ID>/autobuilds ."
+    - "docker container run --detach --publish 8080:80 <Your Docker ID>/autobuilds"
+    - docker ps
+
+script:
+    - while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done
+```
+
+4. Add the `.travis.yml` file to our GitHub repo.
+```
+    $ git add .travis.yml
+
+    $ git commit -m "added Travis CI testing to our Autobuild Repo"
+
+    $ git push
+    ```
+
+5. Head back to [Travis CI](https://travis-ci.org/) and click on the `autobuilds` Repo in the left pane. Click the running job and we should now see the build log.
+
+<center><img src="../images/travisci-build-log.png" title="Travis CI Build Log"></center>
+
+**OPTIONAL ADD BUILD STATUS TO PROJECT**
+
+6. Update the build status in our `README.md`. At the top of the `TravisCI` page click on the build status icon.
+
+<center><img src="../images/travisci-build-status.png" title="Travis CI Build Log"></center>
+
+7. Once the build status dialog box appears select `Markdown` as the format. Copy the Markdown 
+
+
+> Using your favorite editor (vi, emacs, etc) edit the `README.md` file and paste the Markdown to the first line of the `README.md`
+
+    ```
+    [![Build Status](https://travis-ci.org/vegasbrianc/autobuilds.svg?branch=dev)](https://travis-ci.org/vegasbrianc/autobuilds)
+    ```
+
+8. Commit the changes to `README.md`
+```
+    $ git add README.md
+
+    $ git commit -m "added Travis CI build status to our Repo"
+
+    $ git push
+    ```
 
 ### Dockerfile commands summary
 
@@ -165,10 +254,6 @@ publishing ports by means of the `-p` flag when using `$ docker run`.
 
 >**Note:** If you want to learn more about Dockerfiles, check out [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/).
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
-
-### <a name="Task_1"></a>Task 1: Run a static website in a container
->**Note:** Code for this section is in this repo in the [static-site directory](https://github.com/docker/labs/tree/master/beginner/static-site).
-
 
 
 ## Next Steps

@@ -1,4 +1,4 @@
-# Managin Docker Secrets
+# Managing Docker Secrets
 
 In this lab you'll learn how to create and manage *secrets* with Docker.
 

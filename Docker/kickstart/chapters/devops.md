@@ -205,7 +205,8 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
 <center><img src="../images/travisci-build-log.png" title="Travis CI Build Log"></center>
 
-**OPTIONAL ADD BUILD STATUS TO PROJECT**
+
+### OPTIONAL ADD BUILD STATUS TO PROJECT**
 
 
 6. Update the build status in our `README.md`. At the top of the `TravisCI` page click on the build status icon.

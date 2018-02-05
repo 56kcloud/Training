@@ -35,7 +35,7 @@ alpine                  latest              3fd9065eaf02        2 weeks ago     
 hello-world             latest              f2a91732366c        2 months ago        1.85kB
 ```
 
-### 1.1 Run a single-task Alpine Linux Container
+### Run a single-task Alpine Linux Container
 
 1. Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker container run` command.
 

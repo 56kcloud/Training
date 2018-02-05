@@ -1,28 +1,23 @@
 # Bridge networking
 
-# Lab Meta
-
-> **Difficulty**: Intermediate
-
-> **Time**: Approximately 15 minutes
 
 In this lab you'll learn how to build, manage, and use **bridge** networks.
 
 You will complete the following steps as part of this lab.
 
-- [Step 1 - The default **bridge** network](#default_bridge)
-- [Step 2 - Connect a container to the default *bridge* network](#connect_container)
-- [Step 3 - Test the network connectivity](#ping_local)
-- [Step 4 - Configure NAT for external access](#nat)
+- [Task 1 - The default **bridge** network](#Task_1)
+- [Task 2 - Connect a container to the default *bridge* network](#Task_2)
+- [Task 3 - Test the network connectivity](#Task_3)
+- [Task 4 - Configure NAT for external access](#Task_4)
 
-# Prerequisites
+## Prerequisites
 
 You will need all of the following to complete this lab:
 
 - A Linux-based Docker host running Docker 1.12 or higher
 - The lab was built and tested using Ubuntu 16.04
 
-# <a name="default_bridge"></a>Step 1: The default **bridge** network
+## <a name="Task_1"></a>Task 1: The default **bridge** network
 
 Every clean installation of Docker comes with a pre-built network called **bridge**. Verify this with the `docker network ls` command.
 
@@ -70,7 +65,7 @@ $ ip a
        valid_lft forever preferred_lft forever
 ```
 
-# <a name="connect-container"></a>Step 2: Connect a container
+## <a name="Task_2"></a>Task 2: Connect a container
 
 The **bridge** network is the default network for new containers. This means that unless you specify a different network, all new containers will be connected to the **bridge** network.
 
@@ -110,7 +105,7 @@ $ docker network inspect bridge
 <Snip>
 ```
 
-# <a name="ping_local"></a>Step 3: Test network connectivity
+## <a name="Task_3"></a>Task 3: Test network connectivity
 
 The output to the previous `docker network inspect` command shows the IP address of the new container. In the previous example it is "172.17.0.2" but yours might be different.
 
@@ -135,15 +130,15 @@ Log in to the container, install the `ping`
  program and ping `www.docker.com`.
 
  ```
-# Get the ID of the container started in the previous step.
+### Get the ID of the container started in the previous step.
 $ docker ps
 CONTAINER ID    IMAGE    COMMAND             CREATED  STATUS  NAMES
 6dd93d6cdc80    ubuntu   "sleep infinity"    5 mins   Up      reverent_dubinsky
 
-# Exec into the container
+### Exec into the container
 $ docker exec -it 6dd93d6cdc80 /bin/bash
 
-# Update APT package lists and install the iputils-ping package
+### Update APT package lists and install the iputils-ping package
 root@6dd93d6cdc80:/# apt-get update
  <Snip>
 
@@ -151,7 +146,7 @@ root@6dd93d6cdc80:/# apt-get update
  Reading package lists... Done
 <Snip>
 
-# Ping www.docker.com from within the container
+### Ping www.docker.com from within the container
 
 ```
 root@6dd93d6cdc80:/# ping www.docker.com
@@ -168,7 +163,7 @@ rtt min/avg/max/mdev = 93.878/93.895/93.928/0.251 ms
 This shows that the new container can ping the internet and therefore has a valid and working network configuration.
 
 
-# <a name="nat"></a>Step 4: Configure NAT for external connectivity
+## <a name="Task_4"></a>Task 4: Configure NAT for external connectivity
 
 In this step we'll start a new **NGINX** container and map port 8080 on the Docker host to port 80 inside of the container. This means that traffic that hits the Docker host on port 8080 will be passed on to port 80 inside the container.
 
@@ -227,3 +222,6 @@ If for some reason you cannot open a session from a web broswer, you can connect
 If you try and curl the IP address on a different port number it will fail.
 
 > **NOTE:** The port mapping is actually port address translation (PAT).
+
+## Next Steps
+For the next step in the tutorial, head over to [Docker Networking](./bridge-network.md)

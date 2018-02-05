@@ -34,9 +34,9 @@ Perform the following command from a *manager* node in your Swarm. This lab will
 
 1. Create a new text file containing the text you wish to use as your secret.
 
-  ```
-  node1$ echo "secrets are important" > sec.txt
-  ```
+    ```
+    node1$ echo "secrets are important" > sec.txt
+    ```
 
   The command shown above will create a new file called `sec.txt` in your
   working directory containing the string **secrets are important**. The text
@@ -45,19 +45,19 @@ Perform the following command from a *manager* node in your Swarm. This lab will
 
 2. Confirm that the file was created.
 
-  ```
-  node1$ ls -l
-  total 4
-  -rw-r--r-- 1 root root 10 Mar 21 18:40 sec.txt
-  ```
+    ```
+    node1$ ls -l
+    total 4
+    "-rw-r--r-- 1 root root 10 Mar 21 18:40 sec.txt
+    ```
 
 3. Use the `docker secret create` command to create a new secret using the file
 created in the previous step.
 
-  ```
-  node1$ docker secret create sec1 ./sec.txt
-  ftu76ghgsk7f9fmcrj3wx3xcd
-  ```
+    ```
+    node1$ docker secret create sec1 ./sec.txt
+    ftu76ghgsk7f9fmcrj3wx3xcd
+    ```
 
   The return code of the command is the ID of the newly created secret.
 
@@ -83,18 +83,18 @@ Perform all of the following commands from a Swarm *manager*.  The lab assumes y
 
 1. List existing secrets with the `docker secret ls` command.
 
-  ```
-  node1$ docker secret ls
-  ID                     NAME      CREATED             UPDATED
-  ftu76ghg...rj3wx3xcd   sec1      11 seconds ago      11 seconds ago
-  ```
+    ```
+    node1$ docker secret ls
+    ID                     NAME      CREATED             UPDATED
+    ftu76ghg...rj3wx3xcd   sec1      11 seconds ago      11 seconds ago
+    ```
 
 2. Inspect the **sec1** secret.
 
-  ```
-  node1$ docker secret inspect sec1
-  [
-    {
+    ```
+    node1$ docker secret inspect sec1
+    [
+      {
         "ID": "ftu76ghgsk7f9fmcrj3wx3xcd",
         "Version": {
             "Index": 113
@@ -105,8 +105,8 @@ Perform all of the following commands from a Swarm *manager*.  The lab assumes y
             "Name": "sec1"
         }
     }
-  ]
-  ```
+    ]
+    ```
 
   Notice that the `docker secret inspect` command does not display the
   unencrypted contents of the secret.
@@ -129,10 +129,10 @@ shown in the examples below.
 
 1. Create a new service and attach the `sec1` secret.
 
-  ```
-  node1$ docker service create --name sec-test --secret="sec1" redis:alpine
-  p858ush7oeei8647na2xa12sc
-  ```
+    ```
+    node1$ docker service create --name sec-test --secret="sec1" redis:alpine
+    p858ush7oeei8647na2xa12sc
+    ```
 
   This command creates a new service called **sec-test**. The service has a
   single task (container), is given access to the **sec1** secret and is based
@@ -140,19 +140,19 @@ shown in the examples below.
 
 2. Verify the service is running.
 
-  ```
-  node1$ docker service ls
-  ID             NAME       MODE         REPLICAS   IMAGE
-  p858ush7oeei   sec-test   replicated   1/1        redis:alpine
-  ```
+    ```
+    node1$ docker service ls
+    ID             NAME       MODE         REPLICAS   IMAGE
+    p858ush7oeei   sec-test   replicated   1/1        redis:alpine
+    ```
 
 3. Inspect the `sec-test` service to verify that the secret is associated with
 it.
 
-  ```
-  node1$ docker service inspect sec-test
-  [
-    {
+    ```
+    node1$ docker service inspect sec-test
+    [
+      {
         "ID": "p858ush7oeei8647na2xa12sc",
         "Version": {
             "Index": 116
@@ -176,7 +176,7 @@ it.
                             "SecretID": "ftu76ghgsk7f9fmcrj3wx3xcd",
                             "SecretName": "sec1"
                             <Snip>
-  ```
+    ```
 
   The output above shows that the `sec1` secret (ID:ftu76ghgsk7f9fmcrj3wx3xcd)
   is successfully associated with the `sec-test` service. This is important as
@@ -185,21 +185,21 @@ it.
 4. Obtain the name of any of the tasks in the `sec-test` service (if you've been
 following along there will only be one task running in the service).
 
-  ```
-  //Run the following docker service ps command to see which node
-  the service task is running on.
+    ```
+    //Run the following docker service ps command to see which node
+    the service task is running on.
 
-  node1$ docker service ps sec-test
-  ID          NAME        IMAGE         NODE    DESIRED STATE  CURRENT STATE   
-  9qqp...htd  sec-test.1  redis:alpine  node1   Running        Running 8 mins..
+    node1$ docker service ps sec-test
+    ID          NAME        IMAGE         NODE    DESIRED STATE  CURRENT STATE   
+    9qqp...htd  sec-test.1  redis:alpine  node1   Running        Running 8 mins..
 
-  //Log on to the node running the service task (node1 in this example, but
+    //Log on to the node running the service task (node1 in this example, but
     might be different in your lab) and run a docker ps command.
 
-  node1$ docker ps --filter name=sec-test
-  CONTAINER ID    IMAGE                     COMMAND                  CREATED   STATUS      PORTS      NAMES
-  5652c1688f40    redis@sha256:9cd..c3ee7   "docker-entrypoint..."   15 mins   Up 15 mins  6379/tcp   sec-test.1.9qqp...vu2aw
-  ```
+    node1$ docker ps --filter name=sec-test
+    CONTAINER ID    IMAGE                     COMMAND                  CREATED   STATUS      PORTS      NAMES
+    5652c1688f40    redis@sha256:9cd..c3ee7   "docker-entrypoint..."   15 mins   Up 15 mins  6379/tcp   sec-test.1.9qqp...vu2aw
+    ```
 
   You will use the `CONTAINER ID` from the output above in the next step.
 
@@ -215,20 +215,20 @@ following along there will only be one task running in the service).
 service task. Be sure to substitute the Container ID in the command below with
 a the container ID form your environment (see output of previous step).
 
-  ```
-  node1$ docker exec -it 5652c1688f40 sh
-  data#
-  ```
+    ```
+    node1$ docker exec -it 5652c1688f40 sh
+    data#
+    ```
 
   The `data#` prompt is a shell prompt inside the service task.
 
 6. List the contents of the container's `/run/secrets` directory.
 
-  ```
-  node1$ ls -l /run/secrets
-  total 4
-  -r--r--r--  1   root   root     10 Mar 21 19:37 sec1
-  ```
+    ```
+    node1$ ls -l /run/secrets
+    total 4
+    "-r--r--r--  1   root   root     10 Mar 21 19:37 sec1
+    ```
 
   Secrets are only shared to *service tasks/containers* that are granted access
   to them, and the secrets are shared with the *service task* via the TLS
@@ -240,10 +240,10 @@ a the container ID form your environment (see output of previous step).
 
 7. View the unencrypted contents of the *secret*.
 
-  ```
-  node1$ cat /run/secrets/sec1
-  secrets are important
-  ```
+    ```
+    node1$ cat /run/secrets/sec1
+    secrets are important
+    ```
 
 It's important to note several things about this unencrypted secret.
 
@@ -272,21 +272,24 @@ In this step you will remove all secrets and services,as well as clean up any ot
 
    This command will remove **all** services on your Docker host. Only perform this step if you know you know you do not need any of the services running on your system.
 
-   ```
-   $ docker service rm $(docker service ls -q)
-   <Snip>
-   ```
+    ```
+    $ docker service rm $(docker service ls -q)
+    <Snip>
+    ```
 2. Remove all secrets on the host.
 
    This command will remove **all** secrets on your Docker host. Only perform this step if you know you will not use these secrets again.
 
-   ```
-   $ docker secret rm $(docker secret ls -q)
-   <Snip>
-   ```
+    ```
+    $ docker secret rm $(docker secret ls -q)
+    <Snip>
+    ```
 
 3. If you haven;t already done so, delete the file that you used as the source of the secret data in Step 1. The lab assumed this was **node1** in your lab.
 
-   ```
-   $ rm sec.txt
-   ```
+    ```
+    $ rm sec.txt
+    ```
+
+## Next Steps
+For the next step in the tutorial, head over to [Webapps with Docker](./swarm-kubernetes.md)

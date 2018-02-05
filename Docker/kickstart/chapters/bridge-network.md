@@ -152,6 +152,8 @@ root@6dd93d6cdc80:/# apt-get update
 <Snip>
 
 # Ping www.docker.com from within the container
+
+```
 root@6dd93d6cdc80:/# ping www.docker.com
 PING www.docker.com (104.239.220.248) 56(84) bytes of data.
 64 bytes from 104.239.220.248: icmp_seq=1 ttl=39 time=93.9 ms
@@ -174,26 +176,26 @@ In this step we'll start a new **NGINX** container and map port 8080 on the Dock
 
 Start a new container based off the official NGINX image.
 
-```
-$ docker run --name web1 -d -p 8080:80 nginx
-Unable to find image 'nginx:latest' locally
-latest: Pulling from library/nginx
-386a066cd84a: Pull complete
-7bdb4b002d7f: Pull complete
-49b006ddea70: Pull complete
-Digest: sha256:9038d5645fa5fcca445d12e1b8979c87f46ca42cfb17beb1e5e093785991a639
-Status: Downloaded newer image for nginx:latest
-b747d43fa277ec5da4e904b932db2a3fe4047991007c2d3649e3f0c615961038
-```
+    ```
+    $ docker run --name web1 -d -p 8080:80 nginx
+    Unable to find image 'nginx:latest' locally
+    latest: Pulling from library/nginx
+    386a066cd84a: Pull complete
+    7bdb4b002d7f: Pull complete
+    49b006ddea70: Pull complete
+    Digest: sha256:9038d5645fa5fcca445d12e1b8979c87f46ca42cfb17beb1e5e093785991a639
+    Status: Downloaded newer image for nginx:latest
+    b747d43fa277ec5da4e904b932db2a3fe4047991007c2d3649e3f0c615961038
+    ```
 
 Check that the container is running and view the port mapping.
 
-```
-$ docker ps
-CONTAINER ID    IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
-b747d43fa277   nginx               "nginx -g 'daemon off"   3 seconds ago       Up 2 seconds        443/tcp, 0.0.0.0:8080->80/tcp   web1
-6dd93d6cdc80        ubuntu              "sleep infinity"         About an hour ago   Up About an hour                                    reverent_dubinsky
-```
+    ```
+    $ docker ps
+    CONTAINER ID    IMAGE               COMMAND                  CREATED             STATUS              PORTS                           NAMES
+    b747d43fa277   nginx               "nginx -g 'daemon off"   3 seconds ago       Up 2 seconds        443/tcp, 0.0.0.0:8080->80/tcp   web1
+    6dd93d6cdc80        ubuntu              "sleep infinity"         About an hour ago   Up About an hour                                    reverent_dubinsky
+    ```
 
 There are two containers listed in the output above. The top line shows the new **web1** container running NGINX. Take note of the command the container is running as well as the port mapping - `0.0.0.0:8080->80/tcp` maps port 8080 on all host interfaces to port 80 inside the **web1** container. This port mapping is what effectively makes the containers web service accessible from external sources (via the Docker hosts IP address on port 8080).
 
@@ -209,17 +211,18 @@ If you try connecting to the same IP address on a different port number it will 
 
 If for some reason you cannot open a session from a web broswer, you can connect from your Docker host using the `curl` command.
 
-```
-$ curl 127.0.0.1:8080
-<!DOCTYPE html>
-<html>
-<head>
-<title>Welcome to nginx!</title>
-    <Snip>
-<p><em>Thank you for using nginx.</em></p>
-</body>
-</html>
-```
+    ```
+    $ curl 127.0.0.1:8080
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Welcome to nginx!</title>
+        <Snip>
+    <p><em>Thank you for using nginx.</em></p>
+    </body>
+    </html>
+    ```
+
 
 If you try and curl the IP address on a different port number it will fail.
 

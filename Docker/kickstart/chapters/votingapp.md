@@ -1,4 +1,4 @@
-## 3.0 Deploying an app to a Swarm
+## Deploying an app to a Swarm
 This portion of the tutorial will guide you through the creation and customization of a voting app. It's important that you follow the steps in order, and make sure to customize the portions that are customizable.
 
 **Important.**
@@ -20,7 +20,7 @@ git clone https://github.com/docker/example-voting-app.git
 cd example-voting-app
 ```
 
-### 3.1 Deploying the app
+### Deploying the app
 For this first stage, we will use existing images that are in Docker Store.
 
 This app relies on [Docker Swarm mode](https://docs.docker.com/engine/swarm/). Swarm mode is the cluster management and orchestration features embedded in the Docker engine. You can easily deploy to a swarm using a file that declares your desired state for the app. Swarm allows you to run your containers on more than one machine. In this tutorial, you can run on just one machine, or you can use something like [Docker for AWS](https://beta.docker.com/) or [Docker for Azure](https://beta.docker.com/) to quickly create a multiple node machine. Alternately, you can use Docker Machine to create a number of local nodes on your development machine. See [the Swarm Mode lab](../../swarm-mode/beginner-tutorial/README.md#creating-the-nodes-and-swarm) for more information.
@@ -202,10 +202,10 @@ Click on one to vote. You can check the results at `http://localhost:5001`.
 $ ssh -L 5000:localhost:5000 <ssh-user>@<CLOUD_INSTANCE_IP_ADDRESS>
 ```
 
-### 3.2 Customize the app
+### Customize the app
 In this step, you will customize the app and redeploy it. We've supplied the same images but with the votes changed from Cats and Dogs to Java and .NET using the `after` tag.
 
-#### 3.2.1 Change the images used
+#### Change the images used
 
 Going back to `docker-stack.yml`, change the `vote` and `result` images to use the `after` tag, so they look like this:
 
@@ -241,17 +241,17 @@ Going back to `docker-stack.yml`, change the `vote` and `result` images to use t
         condition: on-failure
 ```
 
-#### 3.2.3 Redeploy
+#### Redeploy
 Redeployment is the same as deploying
 
 ```
 docker stack deploy --compose-file docker-stack.yml vote
 ```
-#### 3.2.4 Another test run
+#### Another test run
 
-Now take it for a spin again. Go to the URLs you used in section [3.1](#31-deploying-the-app) and see the new votes.
+Now take it for a spin again. Go to the URLs you used in section [Deploying the App](#deploying-the-app) and see the new votes.
 
-#### 3.2.5 Remove the stack
+#### Remove the stack
 
 Remove the stack from the swarm.
 
@@ -259,5 +259,5 @@ Remove the stack from the swarm.
 docker stack rm vote
 ```
 
-### 3.3 Next steps
-For the next step in the tutorial, head over to [4.0 Running NodeRed with Docker](nodered.md)
+### Next steps
+For the next step in the tutorial, head over to [Docker Secrets](secrets.md)

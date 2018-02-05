@@ -96,4 +96,4 @@ In the last section, you saw a lot of Docker-specific jargon which might be conf
 - *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
 
 ## Next Steps
-For the next step in the tutorial, head over to [2.0 Webapps with Docker](./webapps.md)
+For the next step in the tutorial, head over to [Monitoring with Prometheus](./prometheus.md)

@@ -1,0 +1,3 @@
+[submodule "Kubernetes/website"]
+	path = Kubernetes/website
+	url = https://github.com/kubernetes/website

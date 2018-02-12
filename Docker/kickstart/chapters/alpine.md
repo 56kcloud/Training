@@ -67,9 +67,9 @@ When you run `docker container run alpine`, you provided a command (`hostname`),
     888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
     ```
 
-Notice that your Alpine Linux container is in the `Exited` state.
+    Notice that your Alpine Linux container is in the `Exited` state.
 
-Note: The container ID is the hostname that the container displayed. In the example above it's 888e89a3b36b
+    Note: The container ID is the hostname that the container displayed. In the example above it's 888e89a3b36b
 
 Containers which do one task and then exit can be very useful. You could build a Docker image that executes a script to configure something. Anyone can execute that task just by running the container - they don't need the actual scripts or configuration information.
 
@@ -81,7 +81,7 @@ Containers which do one task and then exit can be very useful. You could build a
     hello from alpine
     ```
 
-OK, that's some actual output. In this case, the Docker client ran the `echo` command inside our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Compare the same process to booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
+    OK, that's some actual output. In this case, the Docker client ran the `echo` command inside our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Compare the same process to booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
 4. Try another command:
 
@@ -307,5 +307,5 @@ In the last section, you saw a lot of Docker-specific jargon which might be conf
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
 
-## Next Steps
+## Next Steps, Docker Networking
 For the next step in the tutorial, head over to [Docker Networking](./networking-basics.md)

@@ -14,7 +14,7 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
 
-    To get started, let's run the following in our terminal:
+1. To get started, let's run the following in our terminal:
 
     ```
     $ docker image pull alpine
@@ -27,7 +27,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
 > **Note:** Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. Try the commands from the Getting Started tutorial to [verify your installation](https://docs.docker.com/engine/getstarted/step_one/#/step-3-verify-your-installation). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) to get rid of this issue.
 
-    The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
+2. The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
 
     ```
     $ docker images

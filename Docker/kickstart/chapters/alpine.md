@@ -297,6 +297,27 @@ Background containers are how you'll run most applications. Here's a simple exam
 
     Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mysqld` process still running.
 
+Let's clean up for the next lab.
+
+8. Stop the MySQL container
+
+    ````
+    $ docker container stop mydb
+    ```
+
+9. Remove the MySQL container
+
+    ```
+    $ docker container rm mydb
+    ```
+
+10. Delete the MySQL image
+
+    ```
+    $ docker image rm mysql
+    ```
+
+
 
 ### Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.

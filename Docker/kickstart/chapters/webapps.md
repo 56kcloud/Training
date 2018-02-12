@@ -1,5 +1,6 @@
-# Webapps with Docker part Deux
-Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
+# Deploying Webapps with Docker
+
+Great! So you have now looked at `docker container run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; create Docker Images and deploy this images as web application with Docker.
 
 > **Tasks**:
 >
@@ -13,105 +14,113 @@ Great! So you have now looked at `docker run`, played with a Docker container an
 ### <a name="Task_1"></a>Task 1: Run a static website in a container
 >**Note:** Code for this section is in this repo in the [static-site directory](https://github.com/docker/labs/tree/master/beginner/static-site).
 
-Let's start by taking baby-steps. First, we'll use Docker to run a static website in a container. The website is based on an existing image. We'll pull a Docker image from Docker Store, run the container, and see how easy it is to set up a web server.
+First, we'll use Docker to run a static website in a container. The website is based on an existing image. We'll pull a Docker image from Docker Store, run the container, and see how easy it is to set up a web server.
 
-The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Store as [`dockersamples/static-site`](https://store.docker.com/community/images/dockersamples/static-site). You can download and run the image directly in one go using `docker run` as follows.
+The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Store as [`dockersamples/static-site`](https://store.docker.com/community/images/dockersamples/static-site). 
 
-```
-$ docker container run --detach dockersamples/static-site
-```
+1. Run the image directly in one go using `docker run` as follows.
 
->**Note:** The current version of this image doesn't run without the `-d` flag. The `-d` flag enables **detached mode**, which detaches the running container from the terminal/shell and returns your prompt after the container starts. We are debugging the problem with this image but for now, use `-d` even for this first example.
+    ```
+    $ docker container run --detach dockersamples/static-site
+    ```
 
-So, what happens when you run this command?
+    >**Note:** The current version of this image doesn't run without the `-d` flag. The `-d` flag enables **detached mode**, which detaches the running container from the terminal/shell and returns your prompt after the container starts. We are debugging the problem with this image but for now, use `-d` even for this first example.
 
-Since the image doesn't exist on your Docker host, the Docker daemon first fetches it from the registry and then runs it as a container.
+    So, what happens when you run this command?
 
-Now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
+    Since the image doesn't exist on your Docker host, the Docker daemon first fetches it from the registry and then runs it as a container.
 
-Actually, you probably won't be able to answer any of these questions yet! &#9786; In this case, the client didn't tell the Docker Engine to publish any of the ports, so you need to re-run the `docker run` command to add this instruction.
+    Now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
+
+    Actually, you probably won't be able to answer any of these questions yet! &#9786; In this case, the client didn't tell the Docker Engine to publish any of the ports, so you need to re-run the `docker run` command to add this instruction.
 
 Let's re-run the command with some new flags to publish ports and pass your name to the container to customize the message displayed. We'll use the *-d* option again to run the container in detached mode.
 
-First, stop the container that you have just launched. In order to do this, we need the container ID.
+2. Stop the container that you have just launched. In order to do this, we need the container ID.
 
-Since we ran the container in detached mode, we don't have to launch another terminal to do this. Run `docker ps` to view the running containers.
+    Since we ran the container in detached mode, we don't have to launch another terminal to do this. Run `docker container ps` to view the running containers.
 
-```
-$ docker container ps
-CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-a7a0e504ca3e        dockersamples/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
-```
+    ```
+    $ docker container ps
+    CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+    a7a0e504ca3e        dockersamples/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
+    ```
 
-Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters, to identify the container you want to stop, and then to remove it. The example below provides the `CONTAINER ID` on our system; you should use the value that you see in your terminal.
-```
-$ docker container stop a7a0e504ca3e
-$ docker container rm   a7a0e504ca3e
-```
+3. Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters, to identify the container you want to stop, and then to remove it. The example below provides the `CONTAINER ID` on our system; you should use the value that you see in your terminal.
+    
+    ```
+    $ docker container stop a7a0e504ca3e
+    $ docker container rm   a7a0e504ca3e
+    ```
 
->**Note:** A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
+    >**Note:** A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
 
-Now, let's launch a container in **detached** mode as shown below:
+4. Launch a container in **detached** mode as shown below:
+    The command summary the above command:
 
-```
-$ docker container run --name static-site --env AUTHOR="Your Name" --detach --publish-all dockersamples/static-site
-e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
-```
+    *  `--detach` will create a container with the process detached from our terminal
+    * `-publish-all` will publish all the exposed container ports to random ports on the Docker host
+    * `--env` is how you pass environment variables to the container
+    * `--name` allows you to specify a container name
+    * `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass
 
-In the above command:
-
-*  `--detach` will create a container with the process detached from our terminal
-* `-publish-all` will publish all the exposed container ports to random ports on the Docker host
-* `--env` is how you pass environment variables to the container
-* `--name` allows you to specify a container name
-* `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass
-
-Now you can see the ports by running the `docker port` command.
-
-```
-$ docker port static-site
-443/tcp -> 0.0.0.0:32772
-80/tcp -> 0.0.0.0:32773
-```
-
-If you are running [Docker for Mac](https://docs.docker.com/docker-for-mac/), [Docker for Windows](https://docs.docker.com/docker-for-windows/), or Docker on Linux, you can open `http://localhost:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.
+    ```
+    $ docker container run --name static-site --env AUTHOR="Your Name" --detach --publish-all dockersamples/static-site
+    e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
+    ```
 
 
-You can also run a second webserver at the same time, specifying a custom host port mapping to the container's webserver.
+5. Now you can see the ports by running the `docker port` command with the name of the newly create container `static-site`.
 
-```
-$ docker run --name static-site-2 --env AUTHOR="Your Name" --detach --publish 8888:80 dockersamples/static-site
-```
+    ```
+    $ docker port static-site
+    443/tcp -> 0.0.0.0:32772
+    80/tcp -> 0.0.0.0:32773
+    ```
+
+**If you are running [Docker for Mac](https://docs.docker.com/docker-for-mac/), [Docker for Windows](https://docs.docker.com/docker-for-windows/), or Docker on Linux, you can open `http://0.0.0.0:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.**
+
+
+6. You can also run a second webserver at the same time, this time specifying a custom host port mapping to the container's webserver. **Be sure to change the name**
+
+    ```
+    $ docker container run --name static-site-2 --env AUTHOR="Your Name" --detach --publish 8888:80 dockersamples/static-site
+    ```
+
+    Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888` We can now view both websites running in parralel on your Docker Host.
+
 <center><img src="../images/web-app.png" title="web-app"></center>
 
-* `--publish` will publish instruct the container to map the specified container port to the host port. `8888:80` = Host:Container Port
+    * `--publish` will publish instruct the container to map the specified container port to the host port. `8888:80` = Host:Container Port
 
-Now that you've seen how to run a webserver inside a Docker container, how do you create your own Docker image? This is the question we'll explore in the next section.
+    Now that you've seen how to run a webserver inside a Docker container, how do you create your own Docker image? This is the question we'll explore in the next section.
 
-But first, let's stop and remove the containers since you won't be using them anymore.
+7. Stop and remove the containers since we won't be using them anymore.
 
-```
-$ docker container stop static-site
-$ docker container rm static-site
-```
+    ```
+    $ docker container stop static-site
+    $ docker container rm static-site
+    ```
 
-Let's use a shortcut to remove the second site:
+8. Let's use a shortcut to remove the second site:
 
-```
-$ docker container rm -f static-site-2
-```
+    ```
+    $ docker container rm -f static-site-2 static-site-3
+    ```
+    >**Note:** `rm -f` is the not nice way of removing containers. Be warned
 
-Run `docker ps` to make sure the containers are gone.
-```
-$ docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-```
+9. Run `docker container ps` to make sure the containers are gone.
+
+    ```
+    $ docker container ps
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+    ```
 
 ### <a name="Task_2"></a>Task 2: Docker Images
 
-In this section, let's dive deeper into what Docker images are. You will build your own image, use that image to run an application locally, and finally, push some of your own images to Docker Cloud.
+In this section, we dive into Docker images. You will build your own image, use that image to run an application locally, and finally, push the newly create images to Docker Cloud.
 
-The [Docker documentation](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/) gives a great explanation on how storage works with Docker images and containers, but here's the high points. 
+The [Docker documentation](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/) gives a great explanation on how storage works with Docker images and containers, but here's the highlights. 
 
 * Images are comprised of layers
 * These layers are added by each line in a Dockerfile
@@ -147,36 +156,36 @@ Docker images are the basis of containers. In the previous example, you **pulled
 
 ```
 $ docker images
-REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
+REPOSITORY                  TAG                 IMAGE ID            CREATED             SIZE
 dockersamples/static-site   latest              92a386b6e686        2 hours ago        190.5 MB
-nginx                  latest              af4b3d7d5401        3 hours ago        190.5 MB
-python                 2.7                 1c32174fd534        14 hours ago        676.8 MB
-postgres               9.4                 88d845ac7a88        14 hours ago        263.6 MB
-containous/traefik     latest              27b4e0c6b2fd        4 days ago          20.75 MB
-node                   0.10                42426a5cba5f        6 days ago          633.7 MB
-redis                  latest              4f5f397d4b7c        7 days ago          177.5 MB
-mongo                  latest              467eb21035a8        7 days ago          309.7 MB
-alpine                 3.3                 70c557e50ed6        8 days ago          4.794 MB
-java                   7                   21f6ce84e43c        8 days ago          587.7 MB
+nginx                       latest              af4b3d7d5401        3 hours ago        190.5 MB
+python                      2.7                 1c32174fd534        14 hours ago        676.8 MB
+postgres                    9.4                 88d845ac7a88        14 hours ago        263.6 MB
+containous/traefik          latest              27b4e0c6b2fd        4 days ago          20.75 MB
+node                        0.10                42426a5cba5f        6 days ago          633.7 MB
+redis                       latest              4f5f397d4b7c        7 days ago          177.5 MB
+mongo                       latest              467eb21035a8        7 days ago          309.7 MB
+alpine                      3.3                 70c557e50ed6        8 days ago          4.794 MB
+java                        7                   21f6ce84e43c        8 days ago          587.7 MB
 ```
 
 Above is a list of images that we've pulled from the Docker registry and images I created myself (we'll shortly see how). You will have a different list of images on your machine. The `TAG` refers to a particular snapshot of the image and the `ID` is the corresponding unique identifier or hash for that image.
 
 For simplicity, you can think of an image functions similarly to a git repository - images can be [committed](https://docs.docker.com/engine/reference/commandline/commit/) with changes and have multiple versions. When you do not provide a specific version number, the client defaults to `latest`.
 
-For example, let's pull a specific version of `ubuntu` image as follows:
+1. Pull a specific version of `ubuntu` image as follows:
 
-```
-$ docker image pull ubuntu:12.04
-```
+    ```
+    $ docker image pull ubuntu:12.04
+    ```
 
-If you do not specify the version number of the image then, as mentioned, the Docker client will default to a version named `latest`.
+    *Note* If you do not specify the version number of the image then, as mentioned, the Docker client will default to a version named `latest`.
 
-So for example, the `docker image pull` command given below will always pull the `latest` tag of an image. The example below pulls `ubuntu:latest` by default.
+2. So for example, the `docker image pull` command given below will always pull the `latest` tag of an image. The example below pulls `ubuntu:latest` by default.
 
-```
-$ docker image pull ubuntu
-```
+    ```
+    $ docker image pull ubuntu
+    ```
 
 To get a new Docker image you can either get it from a registry (such as the Docker Store) or create your own. There are hundreds of thousands of images available on [Docker Store](https://store.docker.com). You can also search for images directly from the command line using `docker search`.
 
@@ -268,7 +277,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 <center><img src="../images/overlay_constructs.jpg" title="Overlay Constructs"></center>
 
-    The Docker hosts for the labs today use OverlayFS with the [overlay2](https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#how-the-overlay2-driver-works) storage driver. 
+    Our Docker host utilizes OverlayFS with the [overlay2](https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#how-the-overlay2-driver-works) storage driver. 
 
     OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer.  The unified view is exposed through its own directory called merged. 
 
@@ -349,7 +358,7 @@ The next sections will cover both anonymous and named volumes.
 
 ### Anonymous Volumes
 
-If you once again look at the MySQL [Dockerfile](https://github.com/docker-library/mysql/blob/0590e4efd2b31ec794383f084d419dea9bc752c4/5.7/Dockerfile) you will find the following line:
+Take a look at the MySQL [Dockerfile](https://github.com/docker-library/mysql/blob/0590e4efd2b31ec794383f084d419dea9bc752c4/5.7/Dockerfile) you will find the following line:
 
 ```
 VOLUME /var/lib/mysql
@@ -374,27 +383,13 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
 
     ```
     $ docker inspect -f 'in the {{.Name}} container {{(index .Mounts 0).Destination}} is mapped to {{(index .Mounts 0).Source}}' mysqldb
-    in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data
     ```
 
-3. Change into the volume directory on the local host file system and list the contents
-
-    ```
-    $ cd $(docker inspect -f '{{(index .Mounts 0).Source}}' mysqldb)
-
-    $ ls
-    auto.cnf            ib_buffer_pool      mysql               server-cert.pem
-    ca-key.pem          ib_logfile0         performance_schema  server-key.pem
-    ca.pem              ib_logfile1         private_key.pem     sys
-    client-cert.pem     ibdata1             public_key.pem
-    client-key.pem      ibtmp1              sample
-    ```
-
-    Notice the the directory name starts with `/var/lib/docker/volumes/` whereas for directories managed by the Overlay2 storage driver it was `/var/lib/docker/overlay2`
+    This command will return: `in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data`
 
     As mentined anonymous volumes will not persist data between containers, they are almost always used to increase performance. 
 
-4. Shell into your running MySQL container and log into MySQL
+3. Shell into your running MySQL container and log into MySQL
 
     ```
     $ docker exec --tty --interactive mysqldb bash
@@ -414,7 +409,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
-5. Create a new table
+4. Create a new table
 
     ```
     mysql> show databases;
@@ -445,7 +440,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     1 row in set (0.00 sec)
     ```
 
-6. Exit MySQL and the MySQL container. 
+5. Exit MySQL and the MySQL container. 
 
     ```
     mysql> exit
@@ -455,7 +450,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     exit
     ```
 
-7. Stop the container and restart it
+6. Stop the container and restart it
 
     ```
     $ docker stop mysqldb
@@ -465,7 +460,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     mysqldb
     ```
 
-8. Shell back into the running container and log into MySQL
+7. Shell back into the running container and log into MySQL
 
     ```
     $ docker exec --interactive --tty mysqldb bash
@@ -485,7 +480,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
-9. Ensure the table created previously table still exists
+8. Ensure the table created previously table still exists
 
     ```
     mysql> connect sample;
@@ -504,7 +499,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     1 row in set (0.00 sec)
     ```
 
-10. Exit MySQL and the MySQL container. 
+9. Exit MySQL and the MySQL container. 
 
     ```
     mysql> exit
@@ -516,7 +511,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
 
     The table persisted across container restarts, which is to be expected. In fact, it would have done this whether or not we had actually used a volume as shown in the previous section. 
 
-11. Let's look at the volume again
+10. Let's look at the volume again
 
     ```
     $ docker inspect -f 'in the {{.Name}} container {{(index .Mounts 0).Destination}} is mapped to {{(index .Mounts 0).Source}}' mysqldb
@@ -529,21 +524,21 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
 
     To examine that delete the old container, create a new one with the same command, and check to see if the table exists. 
 
-12. Remove the current MySQL container
+11. Remove the current MySQL container
 
     ```
     $ docker container rm --force mysqldb
     mysqldb
     ```
 
-13. Start a new container with the same command that was used before
+12. Start a new container with the same command that was used before
 
     ```
     $ docker run --name mysqldb -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -e MYSQL_DATABASE=sample -e MYSQL_ROOT_PASSWORD=supersecret -d mysql
     eb15eb4ecd26d7814a8da3bb27cee1a23304fab1961358dd904db37c061d3798
     ```
 
-14. List out the volume details for the new container
+13. List out the volume details for the new container
 
     ```
     $ docker inspect -f 'in the {{.Name}} container {{(index .Mounts 0).Destination}} is mapped to {{(index .Mounts 0).Source}}' mysqldb
@@ -552,7 +547,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
 
     Notice this directory is different than before. 
 
-15. Shell back into the running container and log into MySQL
+14. Shell back into the running container and log into MySQL
 
     ```
     $ docker exec --interactive --tty mysqldb bash
@@ -572,7 +567,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     ```
 
-16. Check to see if table created previously table still exists
+15. Check to see if table created previously table still exists
 
     ```
     mysql> connect sample;
@@ -583,7 +578,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     Empty set (0.00 sec)
     ```
 
-17. Exit MySQL and the MySQL container. 
+16. Exit MySQL and the MySQL container. 
 
     ```
     mysql> exit
@@ -593,7 +588,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     exit
     ```
 
-18. Remove the container
+17. Remove the container
 
     ```
     docker container rm --force mysqldb

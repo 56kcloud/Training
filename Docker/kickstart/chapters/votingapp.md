@@ -28,7 +28,7 @@ This app relies on [Docker Swarm mode](https://docs.docker.com/engine/swarm/). S
 First, create a Swarm.
 
 ```
-docker swarm init
+docker swarm init --advertise-addr $(hostname -i)
 ```
 
 Next, you will need a [Docker Compose](https://docs.docker.com/compose) file. You don't need Docker Compose installed, though if you are using Docker for Mac or Docker for Windows you have it installed. However, `docker stack deploy` accepts a file in the Docker Compose format. The file you need is in Docker Example Voting App at the root level. It's called docker-stack.yml. You can also just copy and paste it from here:

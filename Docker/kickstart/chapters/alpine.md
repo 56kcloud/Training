@@ -83,12 +83,13 @@ Containers which do one task and then exit can be very useful. You could build a
 
 OK, that's some actual output. In this case, the Docker client ran the `echo` command inside our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Compare the same process to booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
-    Try another command:
+4. Try another command:
+
     ```
     $ docker container run alpine /bin/sh
     ```
 
-Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to run:
+    Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to run:
 
     ```
     $docker container run -it alpine /bin/sh
@@ -97,14 +98,14 @@ Wait, nothing happened! Is that a bug? Well, no. These interactive shells will e
 You are now inside the container shell and you can try out a few commands like `ls -l`, `uname -a` and others. Exit out of the container by giving the `exit` command.
 
 
-Ok, now it's time to see the `docker contianer ps` or the shortcut `docker ps` command. The `docker ps` command shows you all containers that are currently running.
+5. Ok, now it's time to see the `docker contianer ps` or the shortcut `docker ps` command. The `docker ps` command shows you all containers that are currently running.
 
     ```
     $ docker container ps
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
     ```
 
-    Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
+6. Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
 
     ```
     $ docker container ps -a
@@ -115,7 +116,7 @@ Ok, now it's time to see the `docker contianer ps` or the shortcut `docker ps` c
     c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago      Exited (0) 12 minutes ago                       stupefied_mcclintock
     ```
 
-What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
+7. What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
 
     ```
     $ docker container run -it alpine /bin/sh

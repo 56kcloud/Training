@@ -1,10 +1,17 @@
 ## Deploying an app to a Swarm
 This portion of the tutorial will guide you through the creation and customization of a voting app. It's important that you follow the steps in order, and make sure to customize the portions that are customizable.
 
+> **Tasks**:
+>
+>
+> * [Task 1: Clone Voting App Repo](#Task_1)
+> * [Task 2: Create Docker Swarm](#Task_2)
+> * [Task 3: Customize the Voting App](#Task_3)
+
 **Important.**
 To complete this section, you will need to have Docker installed on your machine as mentioned in the [Setup](./setup.md) section. You'll also need to have git installed. There are many options for installing it. For instance, you can get it from [GitHub](https://help.github.com/articles/set-up-git/).
 
-### Voting app
+### <a name="Task_1"></a>Task 1: Clone Voting app
 For this application we will use the [Docker Example Voting App](https://github.com/docker/example-voting-app). This app consists of five components:
 
 * Python webapp which lets you vote between two options
@@ -20,18 +27,18 @@ git clone https://github.com/docker/example-voting-app.git
 cd example-voting-app
 ```
 
-### Deploying the app
+### <a name="Task_2"></a>Task 2: Initiate Docker Swarm
 For this first stage, we will use existing images that are in Docker Store.
 
 This app relies on [Docker Swarm mode](https://docs.docker.com/engine/swarm/). Swarm mode is the cluster management and orchestration features embedded in the Docker engine. You can easily deploy to a swarm using a file that declares your desired state for the app. Swarm allows you to run your containers on more than one machine. In this tutorial, you can run on just one machine, or you can use something like [Docker for AWS](https://beta.docker.com/) or [Docker for Azure](https://beta.docker.com/) to quickly create a multiple node machine. Alternately, you can use Docker Machine to create a number of local nodes on your development machine. See [the Swarm Mode lab](../../swarm-mode/beginner-tutorial/README.md#creating-the-nodes-and-swarm) for more information.
 
-First, create a Swarm.
+1. Create a Swarm.
 
 ```
 docker swarm init --advertise-addr $(hostname -i)
 ```
 
-Next, you will need a [Docker Compose](https://docs.docker.com/compose) file. You don't need Docker Compose installed, though if you are using Docker for Mac or Docker for Windows you have it installed. However, `docker stack deploy` accepts a file in the Docker Compose format. The file you need is in Docker Example Voting App at the root level. It's called docker-stack.yml. You can also just copy and paste it from here:
+Next, you will need a [Docker Compose](https://docs.docker.com/compose) file. You don't need Docker Compose installed, though if you are using Docker for Mac or Docker for Windows you already have it installed. However, `docker stack deploy` accepts a file in the Docker Compose format. The file you need is in Docker Example Voting App at the root level. It's called docker-stack.yml. 
 
 ```
 version: "3"
@@ -202,7 +209,7 @@ Click on one to vote. You can check the results at `http://localhost:5001`.
 $ ssh -L 5000:localhost:5000 <ssh-user>@<CLOUD_INSTANCE_IP_ADDRESS>
 ```
 
-### Customize the app
+### <a name="Task_3"></a>Task 3:Customize the Voting App
 In this step, you will customize the app and redeploy it. We've supplied the same images but with the votes changed from Cats and Dogs to Java and .NET using the `after` tag.
 
 #### Change the images used
@@ -247,6 +254,7 @@ Redeployment is the same as deploying
 ```
 docker stack deploy --compose-file docker-stack.yml vote
 ```
+
 #### Another test run
 
 Now take it for a spin again. Go to the URLs you used in section [Deploying the App](#deploying-the-app) and see the new votes.

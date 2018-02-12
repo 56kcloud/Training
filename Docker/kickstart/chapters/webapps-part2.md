@@ -10,6 +10,8 @@ Now that we understand the structure of Docker images it's now time to start bui
 > * [Task 3: Create your first image](#Task_3)
 > * [Understanding Docker Volumes](#understanding-docker-volumes)
 
+**Prerequisite** Ensure you have a DockerID. If you don't have a DockerID you can get one for free via [Docker Cloud](https://cloud.docker.com)
+
 ## <a name="Task_1"></a>Task 1: Package and run a custom app using Docker
 
 In this step you'll learn how to package your own apps as Docker images using a [Dockerfile](https://docs.docker.com/engine/reference/builder/).
@@ -146,7 +148,7 @@ Let's have a look at the  Dockerfile we'll be using, which builds a simple websi
 
 When you're actively working on an application it is inconvenient to have to stop the container, rebuild the image, and run a new version every time you make a change to your source code.
 
-One way to streamline this process is to mount the source code directory on the local machine into the running container. This will allow any changes made to the files on the host to be immediately reflected in the container.
+One way to streamline this process is to bind mount the source code directory on the local machine into the running container. This will allow any changes made to the files on the host to be immediately reflected in the container.
 
 We do this using something called a [bind mount](https://docs.docker.com/engine/admin/volumes/bind-mounts/).
 

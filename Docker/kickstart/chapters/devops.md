@@ -1,6 +1,6 @@
 # Docker and DevOps
 
-Now that we understand the structure of Docker images it's now time to start building our very own Docker image from a `Dockerfile`
+Now that we understand how to build Docker images it's now time to start autobuilding our changes with a pipeline `Dockerfile`
 
 > **Tasks**:
 >
@@ -109,23 +109,31 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below. 
 
-**Be aware that we need to add all files in the directory so run `git add *` Additionally, the URL of the Repo requires updating with `git remote set-url origin https://github.com/vegasbrianc/autobuilds.git`**
+**Be aware that we need to add all files in the directory so run `git add `** 
+
+4. The URL of the Repo requires updating:
+
+    ```
+    $ git remote set-url origin https://github.com/vegasbrianc/autobuilds.git`
+    ```
 
 <center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>
 
-4. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) and in the upper right hand corner click create new Automated build.
+5. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) and in the upper right hand corner click create new Automated build.
 
 <center><img src="../images/create-autobuild-repo.png" title="Create Auto Build Repo"></center>
 
-5. Click the GitHub icon and link your GitHub account to Docker Hub
+6. Click the GitHub icon and link your GitHub account to Docker Hub
 
-6. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search and select the `autobuilds` GitHub repo we created in the previous section.
+7. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search and select the `autobuilds` GitHub repo we created in the previous section.
 
-7. Fill in a short description for our Autobuild Repo.
+8. Fill in a short description for our Autobuild Repo.
 
-8. Expand the next screen by clicking `Click here to cusomize`link. This will allow us to perform autobuilds based on certain tags or branches.
+9. Expand the next screen by clicking `Click here to cusomize` link. This will allow us to perform autobuilds based on certain tags or branches.
 
-9. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+10. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+
+11. In the `Build Settings` tab click the `Trigger`button to initate a build
 
 Once the autobuild has complete let's have a look around.
 
@@ -155,7 +163,7 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
     $ git push
     ```
 
-3. Head back to your [Docker Hub](www.hub.docker.com) account and click on the `Build Details` tab of your `autobuilds` repo. You should now see if you are quick enough that your build is queued ready to be built by Docker Hub. Next, it will run through the build and and report back the status of your new build. Click on the status of the build once it has completed building to view the logs.
+3. Head back to your [Docker Hub](www.hub.docker.com) account and click on the `Build Details` tab of your `autobuilds` repo (Keep refreshing the page). You should now see if you are quick enough that your build is queued ready to be built by Docker Hub. Next, it will run through the build and and report back the status of your new build. Click on the status of the build once it has completed building to view the logs.
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
 

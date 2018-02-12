@@ -15,6 +15,7 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
 
     To get started, let's run the following in our terminal:
+
     ```
     $ docker image pull alpine
     Unable to find image 'alpine:latest' locally
@@ -58,13 +59,13 @@ When you run `docker container run alpine`, you provided a command (`hostname`),
 
 2. Docker keeps a container running as long as the process it started inside the container is still running. In this case, the hostname process completes when the output is written, so the container exits. The Docker platform doesn't delete resources by default, so the container still exists in the Exited state.
 
-List all containers
+    List all containers:
 
-```
-$ docker container ps -a
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS            PORTS               NAMES
-888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
-```
+    ```
+    $ docker container ps -a
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS            PORTS               NAMES
+    888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
+    ```
 
 Notice that your Alpine Linux container is in the `Exited` state.
 
@@ -123,6 +124,7 @@ What you see above is a list of all containers that you ran. Notice that the `ST
     / # uname -a
     Linux 97916e8cb5dc 4.4.27-moby #1 SMP Wed Oct 26 14:01:48 UTC 2016 x86_64 Linux
     ```
+    
     Type `exit` or `CTRL-D` to exit the interactive container. Once we exit the container the container will also exit and stop.
 
     Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
@@ -192,7 +194,7 @@ Background containers are how you'll run most applications. Here's a simple exam
 
 1. Let's run MySQL in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
 
-We'll also use an environment variable (`--env`) to set the root password (NOTE: This should never be done in production):
+    We'll also use an environment variable (`--env`) to set the root password (NOTE: This should never be done in production):
 
     ```
     $ docker container run \
@@ -298,11 +300,11 @@ We'll also use an environment variable (`--env`) to set the root password (NOTE:
 ### Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
-    - *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-    - *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
-    - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
-    - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
-    - *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
+- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
+- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
+- *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
+- *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
+- *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
 
 ## Next Steps
 For the next step in the tutorial, head over to [Docker Networking](./networking-basics.md)

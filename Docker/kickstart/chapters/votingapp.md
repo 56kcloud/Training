@@ -331,5 +331,5 @@ Now place another vote `http://localhost:5000` and view the results `http://loca
     $ docker stack rm vote
     ```
 
-### Next steps
+### Next steps Docker Secrets
 For the next step in the tutorial, head over to [Docker Secrets](secrets.md)

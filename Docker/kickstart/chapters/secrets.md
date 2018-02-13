@@ -291,5 +291,10 @@ In this step you will remove all secrets and services,as well as clean up any ot
     $ rm sec.txt
     ```
 
-## Next Steps
-For the next step in the tutorial, head over to [Webapps with Docker](./swarm-kubernetes.md)
+## Docker & Kuberenetes
+
+A brief demo on Docker & Kubernetes
+
+## Next Steps, Monitoring with Prometheus
+
+For the next step in the tutorial, head over to [Monitoring with Prometheus](./prometheus)

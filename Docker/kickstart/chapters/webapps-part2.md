@@ -293,6 +293,17 @@ To save the changes you made to the `index.html` file earlier, you need to build
 
 4. Open the Tweet Web App in your Browser `http://0.0.0.0:8081` to view the old version of the website.
 
+Bravo, we have successfully deployed 2 versions of our web app in parralel to our Docker host.
+
+5. Stop the running containers
+
+    ```
+    $ docker container ps
+
+    $ docker container stop old_linux_tweet_app
+
+    $ docker container stop linux_tweet_app
+
 ### Review
 
 What did we just accomplish? 

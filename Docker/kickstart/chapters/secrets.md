@@ -29,7 +29,7 @@ Perform the following command from a *manager* node in your Swarm. This lab will
 1. Create a new text file containing the text you wish to use as your secret.
 
     ```
-    node1$ echo "secrets are important" > sec.txt
+    $ echo "secrets are important" > sec.txt
     ```
 
   The command shown above will create a new file called `sec.txt` in your
@@ -40,7 +40,8 @@ Perform the following command from a *manager* node in your Swarm. This lab will
 2. Confirm that the file was created.
 
     ```
-    node1$ ls -l
+    $ ls -l
+    
     total 4
     "-rw-r--r-- 1 root root 10 Mar 21 18:40 sec.txt
     ```
@@ -49,7 +50,8 @@ Perform the following command from a *manager* node in your Swarm. This lab will
 created in the previous step.
 
     ```
-    node1$ docker secret create sec1 ./sec.txt
+    $ docker secret create sec1 ./sec.txt
+    
     ftu76ghgsk7f9fmcrj3wx3xcd
     ```
 
@@ -78,7 +80,8 @@ Perform all of the following commands from a Swarm *manager*.  The lab assumes y
 1. List existing secrets with the `docker secret ls` command.
 
     ```
-    node1$ docker secret ls
+    $ docker secret ls
+    
     ID                     NAME      CREATED             UPDATED
     ftu76ghg...rj3wx3xcd   sec1      11 seconds ago      11 seconds ago
     ```
@@ -86,7 +89,8 @@ Perform all of the following commands from a Swarm *manager*.  The lab assumes y
 2. Inspect the **sec1** secret.
 
     ```
-    node1$ docker secret inspect sec1
+    $ docker secret inspect sec1
+    
     [
       {
         "ID": "ftu76ghgsk7f9fmcrj3wx3xcd",
@@ -105,10 +109,6 @@ Perform all of the following commands from a Swarm *manager*.  The lab assumes y
   Notice that the `docker secret inspect` command does not display the
   unencrypted contents of the secret.
 
-You can use the `docker secret rm` command to delete secrets. To delete the
-**sec1** secret you would use the command `docker secret rm sec1`. **Do not
-delete the sec1 secret as you will use it in the next section.**
-
 
 ## <a name="Task_3"></a>Task 3: Access the secret within an app
 
@@ -124,7 +124,8 @@ shown in the examples below.
 1. Create a new service and attach the `sec1` secret.
 
     ```
-    node1$ docker service create --name sec-test --secret="sec1" redis:alpine
+    $ docker service create --name sec-test --secret="sec1" redis:alpine
+
     p858ush7oeei8647na2xa12sc
     ```
 
@@ -135,7 +136,8 @@ shown in the examples below.
 2. Verify the service is running.
 
     ```
-    node1$ docker service ls
+    $ docker service ls
+    
     ID             NAME       MODE         REPLICAS   IMAGE
     p858ush7oeei   sec-test   replicated   1/1        redis:alpine
     ```
@@ -144,7 +146,7 @@ shown in the examples below.
 it.
 
     ```
-    node1$ docker service inspect sec-test
+    $ docker service inspect sec-test
     [
       {
         "ID": "p858ush7oeei8647na2xa12sc",
@@ -183,14 +185,16 @@ following along there will only be one task running in the service).
     //Run the following docker service ps command to see which node
     the service task is running on.
 
-    node1$ docker service ps sec-test
+    $ docker service ps sec-test
+    
     ID          NAME        IMAGE         NODE    DESIRED STATE  CURRENT STATE   
     9qqp...htd  sec-test.1  redis:alpine  node1   Running        Running 8 mins..
 
     //Log on to the node running the service task (node1 in this example, but
     might be different in your lab) and run a docker ps command.
 
-    node1$ docker ps --filter name=sec-test
+    $ docker ps --filter name=sec-test
+    
     CONTAINER ID    IMAGE                     COMMAND                  CREATED   STATUS      PORTS      NAMES
     5652c1688f40    redis@sha256:9cd..c3ee7   "docker-entrypoint..."   15 mins   Up 15 mins  6379/tcp   sec-test.1.9qqp...vu2aw
     ```
@@ -210,7 +214,8 @@ service task. Be sure to substitute the Container ID in the command below with
 a the container ID form your environment (see output of previous step).
 
     ```
-    node1$ docker exec -it 5652c1688f40 sh
+    $ docker exec -it <CONTAINER ID> sh
+    
     data#
     ```
 
@@ -235,7 +240,8 @@ a the container ID form your environment (see output of previous step).
 7. View the unencrypted contents of the *secret*.
 
     ```
-    node1$ cat /run/secrets/sec1
+    $ cat /run/secrets/sec1
+    
     secrets are important
     ```
 
@@ -279,7 +285,7 @@ In this step you will remove all secrets and services,as well as clean up any ot
     <Snip>
     ```
 
-3. If you haven;t already done so, delete the file that you used as the source of the secret data in Step 1. The lab assumed this was **node1** in your lab.
+3. If you haven;t already done so, delete the file that you used as the source of the secret data in Step 1.
 
     ```
     $ rm sec.txt

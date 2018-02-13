@@ -297,4 +297,4 @@ A brief demo on Docker & Kubernetes
 
 ## Next Steps, Monitoring with Prometheus
 
-For the next step in the tutorial, head over to [Monitoring with Prometheus](./prometheus)
+For the next step in the tutorial, head over to [Monitoring with Prometheus](https://github.com/vegasbrianc/prometheus)

@@ -1,26 +1,26 @@
-# Additional Docker Ressources
+# Additional Kubernetes Ressources
 
-This repo contains [Docker](https://docker.com) labs and tutorials, useful links, newsletters, and general Docker ressources. We welcome contributions and want to grow the repo.
+This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful links, newsletters, and general ressources. We welcome contributions and want to grow the repo.
 
 #### Useful Links
 
-* [Awesome Docker](http://veggiemonk.github.io/awesome-docker/)
-* [Docker Documentation](http://docs.docker.com)
-* [Docker Labs](https://github.com/docker/labs)
-* [Play-with-Docker](https://labs.play-with-docker.com)
+* [Awesome Kubernetes](http://veggiemonk.github.io/awesome-docker/)
+* [Kubernetes Documentation](http://docs.docker.com)
+* [Kubernetes Labs](https://github.com/docker/labs)
+* [Play-with-K8](https://labs.play-with-docker.com)
 
 
 #### Newsletters
 
-* [Docker Newsletter](http://email.docker.com/ZJI6a09YT0000w0vp30KLFC)
+* [Kubernetes Newsletter](http://email.docker.com/ZJI6a09YT0000w0vp30KLFC)
 * [5 for Friday](http://brianchristner.us3.list-manage.com/track/click?u=fc0e7be4fb674995b89251efb&id=7205e15ac9&e=f62a500248)
+* [Kube Weekly](http://us10.forward-to-friend.com/forward?u=3885586f8f1175194017967d6&id=e3cbd3a3a0&e=fa2e44186e)
 * [The New Stack]()
 * [Sysdig]()
 * []
 
 #### Useful Projects
 
-* [Brian Christner](www.github.com/vegasbrianc/prometheus)
 * [Cloud Native Foundation](https://www.cncf.io)
 * [Jess Frazzle]()
 * [Prometheus](prometheus.io)

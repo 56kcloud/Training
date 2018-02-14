@@ -14,15 +14,15 @@ This repo contains [Docker](https://docker.com) labs and tutorials, useful links
 
 * [Docker Newsletter](http://email.docker.com/ZJI6a09YT0000w0vp30KLFC)
 * [5 for Friday](http://brianchristner.us3.list-manage.com/track/click?u=fc0e7be4fb674995b89251efb&id=7205e15ac9&e=f62a500248)
-* [The New Stack]()
-* [Sysdig]()
+* [The New Stack](https://thenewstack.io)
+* [Sysdig](https://sysdig.com/blog)
 * []
 
 #### Useful Projects
 
 * [Brian Christner](www.github.com/vegasbrianc/prometheus)
 * [Cloud Native Foundation](https://www.cncf.io)
-* [Jess Frazzle]()
+* [Jess Frazzle](https://github.com/jessfraz/dockerfiles)
 * [Prometheus](prometheus.io)
 * [Traefik Proxy](https://traefik.io)
 * 

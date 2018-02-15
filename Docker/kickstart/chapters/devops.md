@@ -8,7 +8,6 @@ Now that we understand how to build Docker images it's now time to start autobui
 > * [Task 1: Push your image to Docker Hub](#Task_1)
 > * [Task 2: Setup a Automated Build](#Task_2)
 > * [Task 3: Unit Test our Automated Builds](#Task_3)
-> * [Understanding Docker Volumes](#understanding-docker-volumes)
 
 ## <a name="Task_1"></a>Task 1: Push your image to Docker Hub
 

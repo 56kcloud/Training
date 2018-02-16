@@ -1,7 +1,7 @@
 # JumpStart Guide
 This quick HOWTO is to support downloading the starting the K8s LAB and tools quickly while readly avaliable internet is possilbe
 
-Explaintions are not givien as this information is NOT to support How but to allos a user to Copy/Past the contnet this neeed to quickly get there enviroment setup effectivitly while access to a fest internet is possible :wq
+Explaintions are not givien as this information is NOT to support How but to allos a user to Copy/Past the contnet this neeed to quickly get there enviroment setup effectivitly while access to a fest internet is possible
 
 ## Tools
  - minikube

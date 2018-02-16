@@ -10,7 +10,7 @@ This repo contains [Kubernetes](https://kubernetes.io) labs and tutorials author
 * [kops, kubectl CLI overview](https://kubernetes.io/docs/user-guide/walkthrough/)
 * [Application Deployment (Scaling, labeling, health checks)](https://kubernetes.io/docs/user-guide/walkthrough/k8s201/)
 * [Kubernetes logging, monitoring and securing containers](https://kubernetes.io/docs/tasks/debug-application-cluster/core-metrics-pipeline/)
-* [Third-Party Implementation of Sponsors Tools and Services (CoScale)](third-party-coscale.md)
+* [Third-Party Implementation of Sponsors Tools and Services (CoScale)](quickstart-coscale.md)
 
 #### Additional Kubernetes Ressources
 

@@ -32,15 +32,16 @@ Linux-Ubuntu: socat "apt-get install socat"
 Linux:
 
 	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-    
+ 
 	brew update && brew install kops
 
 OSX:
-		
+
     brew cask install minikube
-	brew install kubernetes-cli
+    brew install kubernetes-cli
 
 Windows: https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe
+
 Kops is not supported on Windows :(
 
 ### Starting minikube

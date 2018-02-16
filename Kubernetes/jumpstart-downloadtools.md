@@ -71,7 +71,7 @@ Kops is not supported on Windows :(
 ### Testing Minikube
 We can quickly test minikube by running an image, 
 
-	>kubectl create namespace devclube
+	>kubectl create namespace devclub
 	># now we use that namespace
 	>kubectl run nginx --image nginx --namespace devclub
 	>kubectl get pod -n devclub 

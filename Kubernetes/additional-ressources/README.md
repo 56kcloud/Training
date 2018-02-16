@@ -11,6 +11,9 @@ This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful l
 * [Helm](https://helm.sh/)
 * [Kubernetes Examples](https://github.com/kubernetes/examples)
 * [Istio - Service Mesh](https://istio.io/)
+* [Certified Kubernetes Offerings](https://www.cncf.io/certification/software-conformance/#logos)
+* [Kubernetes Cloud Controller Manager](https://kubernetes.io/docs/tasks/administer-cluster/running-cloud-controller/)
+
 
 
 #### Newsletters

@@ -4,7 +4,7 @@ This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful l
 
 #### Useful Links
 
-* [Awesome Kubernetes](http://veggiemonk.github.io/awesome-docker/)
+* [Awesome Kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
 * [Kubernetes Documentation](http://docs.docker.com)
 * [Kubernetes Labs](https://github.com/docker/labs)
 * [Play-with-K8](https://labs.play-with-docker.com)
@@ -12,7 +12,7 @@ This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful l
 
 #### Newsletters
 
-* [Kubernetes Newsletter](http://email.docker.com/ZJI6a09YT0000w0vp30KLFC)
+* [Kubernetes Newsletter]()
 * [5 for Friday](http://brianchristner.us3.list-manage.com/track/click?u=fc0e7be4fb674995b89251efb&id=7205e15ac9&e=f62a500248)
 * [Kube Weekly](http://us10.forward-to-friend.com/forward?u=3885586f8f1175194017967d6&id=e3cbd3a3a0&e=fa2e44186e)
 * [The New Stack]()

@@ -23,8 +23,59 @@ Fast internet, 50Mbits+ possible over WLAN, 500MB~1.GB of data to download. (tak
 
 ## Download and Install
 
+#### Requirements: 
+Working Hypervisor: virtualbox, KVM, Hyper-V
+Linux-Ubuntu: socat "apt-get install socat"
 
+### Links to Binaries
 
+Linux:
+
+	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+    
+	brew update && brew install kops
+
+OSX:
+		
+    brew cask install minikube
+	brew install kubernetes-cli
+
+Windows: https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe
+Kops is not supported on Windows :(
+
+### Starting minikube
+
+	cd/ into the DIR where minikube is (best in a new directory)
+    minikube start                                                   
+    Starting local Kubernetes v1.9.0 cluster...           
+    Starting VM...                                          
+    Downloading Minikube ISO                                                         
+     142.22 MB / 142.22 MB [============================================] 100.00% 0s
+    Getting VM IP address...                              
+    Moving files into cluster...                                                                    
+    Downloading localkube binary                                                              
+     162.41 MB / 162.41 MB [============================================] 100.00% 0s      
+     65 B / 65 B [======================================================] 100.00% 0s                         
+    Setting up certs...                                         
+    Connecting to cluster...                                        
+    Setting up kubeconfig...                                                    
+    Starting cluster components...                                                                           
+    Kubectl is now configured to use the cluster.                                      
+    Loading cached images from config file.        
+    >minikube start
+    >minikube status
+    minikube: Running
+    cluster: Running
+    kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+
+### Testing Minikube
+We can quickly test minikube by running an image, 
+
+	>kubectl create namespace devclube
+	># now we use that namespace
+	>kubectl run nginx --image nginx --namespace devclub
+	>kubectl get pod -n devclub 
+	# we should see the nginix pod
 
 ## Execute tools
 

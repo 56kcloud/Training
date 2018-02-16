@@ -8,6 +8,7 @@ This repo contains [Docker](https://docker.com) labs and tutorials, useful links
 * [Docker Documentation](http://docs.docker.com)
 * [Docker Labs](https://github.com/docker/labs)
 * [Play-with-Docker](https://labs.play-with-docker.com)
+* [More Hands-On Docker Training](http://training.play-with-docker.com/alacart/)
 
 
 #### Newsletters

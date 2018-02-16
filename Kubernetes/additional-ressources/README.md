@@ -8,6 +8,8 @@ This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful l
 * [Kubernetes Documentation](http://docs.docker.com)
 * [Kubernetes Labs](https://github.com/docker/labs)
 * [Play-with-K8](https://labs.play-with-docker.com)
+* [Helm](https://helm.sh/)
+* [Kubernetes Examples](https://github.com/kubernetes/examples)
 
 
 #### Newsletters
@@ -15,9 +17,8 @@ This repo contains [Kubernetes](https://kubernetes) labs and tutorials, useful l
 * [Kubernetes Newsletter]()
 * [5 for Friday](http://brianchristner.us3.list-manage.com/track/click?u=fc0e7be4fb674995b89251efb&id=7205e15ac9&e=f62a500248)
 * [Kube Weekly](http://us10.forward-to-friend.com/forward?u=3885586f8f1175194017967d6&id=e3cbd3a3a0&e=fa2e44186e)
-* [The New Stack]()
-* [Sysdig]()
-* []
+* [The New Stack](https://thenewstack.io/)
+* [Sysdig](https://sysdig.com/blog/)
 
 #### Useful Projects
 

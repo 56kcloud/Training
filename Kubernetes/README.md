@@ -7,7 +7,7 @@ This repo contains [Kubernetes](https://kubernetes.io) labs and tutorials author
 * [Minikube Setup & Prerquisites](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 * [Install Kubernetes MiniKube](https://kubernetes.io/docs/getting-started-guides/minikube/)
 * [Introduction to Kubernetes](https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/)
-* [KubeCtl for Docker Users](https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/)
+* [kubectl for Docker Users](https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/)
 * [Install & Test Helm](/helm/quickstart-helm.md)
 * [kops, kubectl CLI overview](https://kubernetes.io/docs/user-guide/walkthrough/)
 * [Application Deployment (Scaling, labeling, health checks)](https://kubernetes.io/docs/user-guide/walkthrough/k8s201/)

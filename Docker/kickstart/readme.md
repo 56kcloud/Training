@@ -9,5 +9,5 @@ This Docker tutorial consists of the following sections:
 * [Docker & DevOps](chapters/devops.md)
 * [Networking](chapters/networking-basics.md)
 * [Secret Management](chapters/secrets.md)
-* [Docker Swarm & Kuberenetes](chapters/swarm-kubernetes.md)
 * [Build and Deploy a Monitoring Stack](chapters/prometheus.md)
+* [Custom Apps Mongo & Web Servers](chapters/mongo.md)

@@ -142,11 +142,11 @@ A Docker image is built up from a series of layers. Each layer represents an ins
 
 This Dockerfile contains four commands, each of which creates a layer. The `FROM` statement starts out by creating a layer from the ubuntu:15.04 image. The `COPY` command adds some files from your Docker client’s current directory. The `RUN` command builds your application using the make command. Finally, the last layer specifies what command to run within the container. 
 
-<center><img src="../images/container-layers.jpg" title="Container Layers"></center>
+<center><img src="https://raw.githubusercontent.com/56kcloud/Training/master/Docker/kickstart/images/container-layers.jpg" title="Container Layers"></center>
 
 Multipe Containers can use the same Image. Each container has its own writable container layer, and all changes are stored in this container layer, multiple containers can share access to the same underlying image and yet have their own data state. The diagram below shows multiple containers sharing the same Ubuntu 15.04 image.
 
-<center><img src="../images/sharing-layers.jpg" title="Sharing Layers"></center>
+<center><img src="https://raw.githubusercontent.com/56kcloud/Training/master/Docker/kickstart/images/sharing-layers.jpg" title="Sharing Layers"></center>
 
 The following exercises will help to illustrate those concepts in practice. 
 

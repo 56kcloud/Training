@@ -19,7 +19,7 @@ This repo contains [Docker](https://docker.com) labs and tutorials, useful links
 * [Sysdig](https://sysdig.com/blog)
 * []
 
-#### Useful Projects
+#### Useful Projects
 
 * [Brian Christner](www.github.com/vegasbrianc/prometheus)
 * [Cloud Native Foundation](https://www.cncf.io)

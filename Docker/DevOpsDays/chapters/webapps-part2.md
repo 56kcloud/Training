@@ -343,4 +343,4 @@ Great! So you have now looked at `docker run`, played with a Docker container an
 
 
 ## Next Steps
-For the next step in the tutorial head over to [Docker Secrets](./secrets)
+For the next step in the tutorial head over to [Docker Secrets](./secrets.md)

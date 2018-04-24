@@ -2,17 +2,6 @@
 
 In this lab you'll learn how to deploy MongoDB with Docker.
 
-You will complete the following steps as part of this lab.
-
-- [Task 1 - Create a Secret](#Task_1)
-- [Task 2 - Manage Secrets](#Task_2)
-- [Task 3 - Access the secret within an app](#Task_3)
-- [Task 4 - Clean-up](#Task_4)
-
-In this lab the terms *service task* and *container* are used interchangeably.
-In all examples in the lab a *service tasks* is a container that is running as
-part of a service.
-
 ## Overview MongoDB and Docker
 
 MongoDB is a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemas.

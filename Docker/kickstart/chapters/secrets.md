@@ -297,4 +297,4 @@ A brief demo on Docker & Kubernetes
 
 ## Next Steps, Deploying a MongoDB Container
 
-For the next step in the tutorial, head over to [MogoDB and Containers](./mongo)
+For the next step in the tutorial, head over to [MogoDB and Containers](./mongo.md)

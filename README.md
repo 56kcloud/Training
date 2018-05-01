@@ -16,4 +16,3 @@ Welcome to [56K.Cloud](https://www.56k.cloud) Training & Labs. This repo contain
 We want to see this repo grow, so if you have a tutorial to submit, or contributions to existing tutorials, please see this guide:
 
 [Guide to submitting your own tutorial](contribute.md)
-

@@ -36,4 +36,4 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 3. Below the timer on the upper left side, click *+Add New instance* button
 
 ## Next Steps
-For the next step in the tutorial, head over to [Getting Started with Logging](getting-started.md
+For the next step in the tutorial, head over to [Getting Started with Logging](./logging/getting-started.md)

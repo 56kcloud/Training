@@ -125,7 +125,7 @@ Uh oh, what happend?
 
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command
 
-The `docker logs` command is a powerful command and is used for troubleshooting, analysis, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
+The `docker logs` command is a powerful command and is used for troubleshooting, analyze, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
 
 1. Great! Let's now take a look at the `docker logs` help to better understand how we can best use the command
 

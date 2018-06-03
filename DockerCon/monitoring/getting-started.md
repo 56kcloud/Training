@@ -1,18 +1,20 @@
 # Our First Containers
 
-The wait is finally over. It's time to roll up our sleeves and start our first container. Get Ready.
+The wait is finally over. It's time to roll up our sleeves and start monitoring containers. Get Ready.
 
 > **Tasks**:
 >
 >
-> * [Task 1: Run our First Container](#Task_1)
-> * [Task 2: Run an Interactive Container](#Task_2)
-> * [Task 3: Run a background MySQL container](#Task_3)
+> * [Task 1: Start Play-With-Docker](#Task_1)
+> * [Task 2: Docker Stats](#Task_2)
+> * [Task 3: Docker Top](#Task_3)
 > * [Terminology Covered in this section](#Terminology)
 
-## <a name="Task_1"></a>Task 1: Running your first container
+## <a name="Task_1"></a>Task 1: Starting Play-with-Docker
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
+First, lets open the Play-with-Docker enviornment.
+
+[Play-with-Docker](http://play-with-docker.com/)
 
 1. To get started, let's run the following in our terminal:
 

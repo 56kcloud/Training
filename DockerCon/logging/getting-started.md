@@ -48,7 +48,7 @@ Uh oh, what happend?
 
 3. Let's check the logs
 
-```
+    ```
     $ docker logs nginx
     ERROR: you need to share your Docker host socket with a volume at /tmp/docker.sock
     Typically you should run your jwilder/nginx-proxy with: `-v /var/run/docker.sock:/tmp/docker.sock:ro`

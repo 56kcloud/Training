@@ -41,12 +41,12 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     ```
     $ docker ps
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
-    
     ```
 
-Uh oh, what happend?
+    Uh oh, what happend?
+    We can actually use the `docker logs` command on stopped containers.
 
-3. Let's check the logs
+3. Check the logs of the `NGINX` container to see why it didn't start
 
     ```
     $ docker logs nginx
@@ -63,6 +63,8 @@ Uh oh, what happend?
     $ docker rm -f nginx
     ```
 
+    > This is the forceful way to remove it. Not recommend in production
+
 5. Start `NGINX` with the suggestions from the log file
 
     ```
@@ -76,6 +78,7 @@ Uh oh, what happend?
     ```
     $ docker ps
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
+    960ab9aed7af        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   3 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp   nginx
     ```
 
 7. Test the `NGINX` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0:8080` (PWD just click the link provided above the terminal)
@@ -84,7 +87,7 @@ Uh oh, what happend?
     $ curl 0.0.0.0:8080
     ```
 
-    Go ahead and curl or refresh the NGINX a couple more times.
+    Go ahead and send a few curl/refresh request to the `NGINX` container.
 
 8. Check the logs
 
@@ -92,17 +95,21 @@ Uh oh, what happend?
     $ docker logs nginx
     ```
 
+    > What do we see different? We should now see the each curl/refresh we sent to the `NGINX` container
+
 9. Restart the `NGINX` container
 
      ```
     $ docker restart nginx
     ```
 
-10. Again, Check the logs. What do you notice?
+10. Check the logs again. What do you notice?
 
     ```
     $ docker logs nginx
     ```
+
+    > The logs still persist inside the container from our previous tests.
 
 11. Stop and remove the NGINX container
 
@@ -118,15 +125,17 @@ Uh oh, what happend?
     jwilder/nginx-proxy:alpine
     ```
 
-13. Again, Check the logs. What do you notice?
+13. Check the logs. What do you notice?
 
     ```
     $ docker logs nginx
     ```
 
+    > This time we removed the container and started a new container. It is important to notice now the logs didn't persist. This is why it is important we persist logs outside of the containers.
+
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command
 
-The `docker logs` command is a powerful command and is used for troubleshooting, analyze, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
+The `docker logs` command is a powerful command and is used for troubleshooting, analyzing, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
 
 1. Great! Let's now take a look at the `docker logs` help to better understand how we can best use the command
 
@@ -164,7 +173,7 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 4. Follow the log for real-time updates. 
     
     ```
-    $ docker logs -f nginx
+    $ docker logs -t -f nginx
     ```
 
     Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
@@ -187,7 +196,7 @@ We have now seen how logging works in a single container. Now, we want to see wh
     $ docker-compose up -d
     ```
 
-3. Once you stack has started. Check the logs of the voting app stack.
+3. Once the voting application stack has started. Check the logs of the voting app stack.
 
 
     ```
@@ -195,6 +204,33 @@ We have now seen how logging works in a single container. Now, we want to see wh
     ```
 
     What we notice is that Docker color codes the log based on container names. Since we have 5 different containers this makes it easier when viewing from a terminal window.
+
+4. Expanding the command to capture certain containers
+
+    ```
+    $ docker-compose logs |grep vote_1
+    ```
+
+5. Open a browser tab `http://0.0.0.0:5000` and place a few votes and watch the logs. 
+
+    > Since no timestamp is in the log it is difficult to see if new votes arrived or not.
+
+6. Combing everything we learned
+
+    ```
+    $ docker-compose logs --follow -t |grep vote_1
+    ```
+
+    > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs
+
+## Recap
+
+What did we learn in this section?
+
+* Running `docker logs` on stopped containers
+* Logs don't persist in the container once the container is removed
+* The `docker logs`command is actually quite powerful and can be combined with other tools
+* `docker-compose logs` works similiarly to `docker logs` but displays all containers in the stack
 
 
 ## Next Steps, Docker Swarm & Logs

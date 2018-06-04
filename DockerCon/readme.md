@@ -15,7 +15,7 @@ This Docker tutorial consists of the following sections:
 
 ## Monitoring
 
-* [Docker Getting Started with Monitoring](./monitoring/getting-started.md)
+* [Docker Getting Started with Monitoring](./monitoring/stats.md)
 * [cAdvisor](./monitoring/cadvisor.md)
 * [Prometheus](./monitoring/prometheus.md)
 * [Monitoring Containers with Prometheus Stack](./monitoring/monitoring-stack.md)

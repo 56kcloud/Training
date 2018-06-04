@@ -35,6 +35,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
     alpine                  latest              3fd9065eaf02        2 weeks ago         4.15MB
     hello-world             latest              f2a91732366c        2 months ago        1.85kB
+    
     ```
 
 ### Run a single-task Alpine Linux Container
@@ -65,6 +66,7 @@ When you run `docker container run alpine`, you provided a command (`hostname`),
     $ docker container ps -a
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS            PORTS               NAMES
     888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
+    
     ```
 
     Notice that your Alpine Linux container is in the `Exited` state.
@@ -79,6 +81,7 @@ Containers which do one task and then exit can be very useful. You could build a
     ```
     $ docker container run alpine echo "hello from alpine"
     hello from alpine
+    
     ```
 
     OK, that's some actual output. In this case, the Docker client ran the `echo` command inside our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Compare the same process to booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
@@ -87,6 +90,7 @@ Containers which do one task and then exit can be very useful. You could build a
 
     ```
     $ docker container run alpine /bin/sh
+    
     ```
 
     Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to run:

@@ -1,31 +1,24 @@
-# Our First Containers
+# Docker Services & Swarm Logging
 
-The wait is finally over. It's time to roll up our sleeves and start our first container. Get Ready.
+In this section we will have a look at how Docker services and Docker Swarm are logged.
 
 > **Tasks**:
 >
 >
-> * [Task 1: Run our First Container](#Task_1)
-> * [Task 2: Run an Interactive Container](#Task_2)
+> * [Task 1: Docker Services Logging](#Task_1)
+> * [Task 2: Docker Swarm Logging](#Task_2)
 > * [Task 3: Run a background MySQL container](#Task_3)
-> * [Terminology Covered in this section](#Terminology)
 
-## <a name="Task_1"></a>Task 1: Running your first container
+## <a name="Task_1"></a>Task 1: Logging Docker Services
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
+In this task we will enable [Docker Swarm](www.docker.com/swarm). Once Swarm is enabled we will deploy `docker services` and understand how to log services
 
 1. To get started, let's run the following in our terminal:
 
     ```
-    $ docker image pull alpine
-    Unable to find image 'alpine:latest' locally
-    latest: Pulling from library/alpine
-    88286f41530e: Pull complete
-    Digest: sha256:f006ecbb824d87947d0b51ab8488634bf69fe4094959d935c0c103f4820a417d
-    Status: Downloaded newer image for alpine:latest
+    $ docker swarm init
+   
     ```
-
-> **Note:** Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. Try the commands from the Getting Started tutorial to [verify your installation](https://docs.docker.com/engine/getstarted/step_one/#/step-3-verify-your-installation). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) to get rid of this issue.
 
 2. The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
 
@@ -319,14 +312,5 @@ Let's clean up for the next lab.
 
 
 
-### Terminology
-In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
-
-- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
-- *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
-- *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
-- *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
-
-## Next Steps, Docker Networking
-For the next step in the tutorial, head over to [Docker Networking](./networking-basics.md)
+## Next Steps, Docker Log Drivers
+For the next step in the tutorial, head over to [Docker Log Drivers](./log-drivers.md)

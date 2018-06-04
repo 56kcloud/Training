@@ -33,6 +33,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     Digest: sha256:6181afd7ce4a0291bf73b1787be33928213203401ccbeee2cd720db5d700636b
     Status: Downloaded newer image for jwilder/nginx-proxy:alpine
     673f5eed33e6ebea397bb162567a66923f3772c6e409f0de4614467d0f157f93
+    
     ```
 
 2. Ensure the `NGINX` container is running

@@ -15,6 +15,8 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 *All commands work in either bash or Powershell on Windows*
 
 	Once you are done installing Docker, test your Docker installation by running the following:
+	
+
 	```
 	$ docker container run hello-world
 	Unable to find image 'hello-world:latest' locally
@@ -23,11 +25,12 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 	a3ed95caeb02: Pull complete
 	Digest: sha256:8be990ef2aeb16dbcb9271ddfe2610fa6658d13f6dfb8bc72074cc1ca36966a7
 	Status: Downloaded newer image for hello-world:latest
+	```
 
 	Hello from Docker.
 	This message shows that your installation appears to be working correctly.
 	...
-	```
+	
 
 ### Plan B Play-with-Docker (PWD)
 

@@ -1,6 +1,6 @@
-# Our First Containers
+# cAdvisor
 
-The wait is finally over. It's time to roll up our sleeves and start our first container. Get Ready.
+The wait is finally over. It's time to roll up our sleeves and gather some metrics from containers.
 
 > **Tasks**:
 >

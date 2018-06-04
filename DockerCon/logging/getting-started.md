@@ -55,14 +55,12 @@ Uh oh, what happend?
     See the documentation at http://git.io/vZaGJ
     WARNING: /etc/nginx/dhparam/dhparam.pem was not found. A pre-generated dhparam.pem will be used for now while a new one
     is being generated in the background.  Once the new dhparam.pem is in place, nginx will be reloaded.
-    
     ```
 
 4. OK, stop and remove the `NGINX` container
 
     ```
     $ docker rm -f nginx
-    
     ```
 
 5. Start `NGINX` with the suggestions from the log file
@@ -71,7 +69,6 @@ Uh oh, what happend?
     $ docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
     --name nginx \
     jwilder/nginx-proxy:alpine
-    
     ```
 
 6. Ensure the `NGINX` container is running
@@ -79,14 +76,12 @@ Uh oh, what happend?
     ```
     $ docker ps
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
-    
     ```
 
 7. Test the `NGINX` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0:8080` (PWD just click the link provided above the terminal)
 
     ```
     $ curl 0.0.0.0:8080
-    
     ```
 
     Go ahead and curl or refresh the NGINX a couple more times.
@@ -95,28 +90,24 @@ Uh oh, what happend?
 
     ```
     $ docker logs nginx
-    
     ```
 
 9. Restart the `NGINX` container
 
      ```
     $ docker restart nginx
-    
     ```
 
 10. Again, Check the logs. What do you notice?
 
     ```
     $ docker logs nginx
-    
     ```
 
 11. Stop and remove the NGINX container
 
     ```
     $ docker rm -f nginx
-    
     ```
 
 12. Start `NGINX` again
@@ -125,14 +116,12 @@ Uh oh, what happend?
     $ docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
     --name nginx \
     jwilder/nginx-proxy:alpine
-    
     ```
 
 13. Again, Check the logs. What do you notice?
 
     ```
     $ docker logs nginx
-    
     ```
 
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command
@@ -155,14 +144,12 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
         --tail string    Number of lines to show from the end of the logs (default "all")
     -t, --timestamps     Show timestamps
         --until string   Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
-
     ```
 
 2. Add timestamps to our logging output. This will help with narrowing down when events occured if no timestamp is created in the log message.
 
     ```
     $ docker logs -t nginx
-    
     ```
 
 3. Tail the last `n` number of lines in the log file
@@ -172,14 +159,12 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 
     ```
     $ docker logs --tail 5 nginx
-    
     ```
 
 4. Follow the log for real-time updates. 
     
     ```
     $ docker logs -f nginx
-    
     ```
 
     Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
@@ -192,7 +177,6 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
     ```
     $ git clone https://github.com/dockersamples/example-voting-app.git
-    
     ```
 
 2. Start the Voting App with docker-compose.
@@ -201,7 +185,6 @@ We have now seen how logging works in a single container. Now, we want to see wh
     $ cd example-voting-app
 
     $ docker-compose up -d
-    
     ```
 
 3. Once you stack has started. Check the logs of the voting app stack.
@@ -209,7 +192,6 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
     ```
     $ docker-compose logs
-    
     ```
 
     What we notice is that Docker color codes the log based on container names. Since we have 5 different containers this makes it easier when viewing from a terminal window.

@@ -1,29 +1,24 @@
-# cAdvisor
+# Google cAdvisor (Container Asvisor)
 
-The wait is finally over. It's time to roll up our sleeves and gather some metrics from containers.
+[cAdvisor](https://hub.docker.com/r/google/cadvisor/) is an amazing tool. It is an all-in-one tool for grabbing real-time metrics from all the containers running on a single host and exposing these metrics.
+
+In this section we will deploy a cAdvisor container and walk through the UI, configurations, and take a look at the metrics which it exposes.
 
 > **Tasks**:
 >
 >
-> * [Task 1: Run our First Container](#Task_1)
-> * [Task 2: Run an Interactive Container](#Task_2)
-> * [Task 3: Run a background MySQL container](#Task_3)
+> * [Task 1: Deploy cAdvisor](#Task_1)
+> * [Task 2: Tour the UI and configurations](#Task_2)
+> * [Task 3: Exposed Metrics](#Task_3)
 > * [Terminology Covered in this section](#Terminology)
 
-## <a name="Task_1"></a>Task 1: Running your first container
+## <a name="Task_1"></a>Task 1: Deploy cAdvisor
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
+Let's get started with deploying cAdvisor. First, we will review the Docker & GitHub Repos
 
-1. To get started, let's run the following in our terminal:
+1. Navigate to [cAdvisor GitHub Repo](https://github.com/google/cadvisor)
 
-    ```
-    $ docker image pull alpine
-    Unable to find image 'alpine:latest' locally
-    latest: Pulling from library/alpine
-    88286f41530e: Pull complete
-    Digest: sha256:f006ecbb824d87947d0b51ab8488634bf69fe4094959d935c0c103f4820a417d
-    Status: Downloaded newer image for alpine:latest
-    ```
+2. Now, lets have a look at the GitHub
 
 > **Note:** Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. Try the commands from the Getting Started tutorial to [verify your installation](https://docs.docker.com/engine/getstarted/step_one/#/step-3-verify-your-installation). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) to get rid of this issue.
 

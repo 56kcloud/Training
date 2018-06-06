@@ -8,6 +8,7 @@ Let's take a look at Docker Logging
 > * [Task 1: Run our First Container](#Task_1)
 > * [Task 2: Understanding the Docker Logs command](#Task_2)
 > * [Task 3: docker-compose logs](#Task_3)
+> * [Recap topics covered in this section](#Recap)
 
 ## <a name="Task_1"></a>Task 1: Running your first container
 
@@ -223,15 +224,14 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
     > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs
 
-## Recap
+## <a name="Terminology"></a>Recap
 
 What did we learn in this section?
 
 * Running `docker logs` on stopped containers
-* Logs don't persist in the container once the container is removed
-* The `docker logs`command is actually quite powerful and can be combined with other tools
-* `docker-compose logs` works similiarly to `docker logs` but displays all containers in the stack
-
+* Logs don't persist in containers once the container is removed
+* The `docker logs`command is actually quite powerful and can be combined with other tools like the Linux `grep` command or others
+* `docker-compose logs` works similiarly to `docker logs` but displays all containers in the compose stack
 
 ## Next Steps, Docker Swarm & Logs
 For the next step in the workshop, head over to [Docker Services & Swarm Logging](./swarm-logs.md)

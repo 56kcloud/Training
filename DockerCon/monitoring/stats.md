@@ -8,7 +8,6 @@ Time to dive into the world of monitoring. First, we will explore the various bu
 > * [Task 1: Docker Stats](#Task_1)
 > * [Task 2: Docker System info, events, df](#Task_2)
 > * [Task 3: Docker Top](#Task_3)
-> * [Terminology Covered in this section](#Terminology)
 
 ## <a name="Task_1"></a>Task 1: Docker Stats
 

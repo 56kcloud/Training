@@ -17,7 +17,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 1. To get started, let's run the following in our terminal:
 
     ```
-    $ docker run -d --name nginx -p 8080:80 jwilder/nginx-proxy:alpine
+    $ docker container run -d --name nginx -p 8080:80 jwilder/nginx-proxy:alpine
     Unable to find image 'jwilder/nginx-proxy:alpine' locally
     alpine: Pulling from jwilder/nginx-proxy
     ff3a5c916c92: Already exists
@@ -40,7 +40,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 2. Ensure the `NGINX` container is running
 
     ```
-    $ docker ps
+    $ docker container ps
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
     ```
 
@@ -61,7 +61,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 4. OK, remove the `NGINX` container
 
     ```
-    $ docker rm -f nginx
+    $ docker container rm -f nginx
     ```
 
     > This is the forceful way to remove it. With great power comes great responsability. You are warned!
@@ -69,7 +69,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 5. Start `NGINX` with the suggestions from the log file
 
     ```
-    $ docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
+    $ docker container run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
     --name nginx \
     jwilder/nginx-proxy:alpine
     ```
@@ -77,7 +77,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 6. Ensure the `NGINX` container is running
 
     ```
-    $ docker ps
+    $ docker container ps
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
     960ab9aed7af        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   3 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp   nginx
     ```
@@ -93,7 +93,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 8. Check the logs
 
     ```
-    $ docker logs nginx
+    $ docker container logs nginx
     ```
 
     > What do we see different? We should now see the each curl/refresh we sent to the `NGINX` container
@@ -106,13 +106,13 @@ Now, we will connect a `whoami` container to the NGINX proxy. This whoami contai
 
 9. Start the `whoami` container 
 
-    `$ docker run -d -e VIRTUAL_HOST=whoami.local --name whoami jwilder/whoami`
+    `$ docker container run -d -e VIRTUAL_HOST=whoami.local --name whoami jwilder/whoami`
     
     > The `jwilder/nginx-proxy`polls for new containers containing the environment variable `VIRTUAL_HOST` When this variable is seen it       > is automatically registered with the proxy
     
 10. Let's check the logs to see if it the `whoami` container registered with the proxy
 
-    ` $ docker logs nginx`
+    ` $ docker container logs nginx`
     
     We should see the whoami ID register with the proxy
     ```
@@ -127,21 +127,21 @@ Now, we will connect a `whoami` container to the NGINX proxy. This whoami contai
     $ curl -H "Host: whoami.local" localhost:8080
     I'm d4d73cb5ef99
     ``` 
-12. Finally, run the `docker logs` command on the proxy to ensure everything is now working as expected
+12. Finally, run the `docker container logs` command on the proxy to ensure everything is now working as expected
 
-    `docker logs nginx`
+    `docker container logs nginx`
     
     > We now see the hostname which is queried and a `HTTP 200` success code
 
 
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command
 
-The `docker logs` command is a powerful command and is used for troubleshooting, analyzing, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
+The `docker container logs` command is a powerful command and is used for troubleshooting, analyzing, and general information gathering. The command is useful to Developers to debug new applications as well as Operations for information gathering.
 
-1. Great! Let's now take a look at the `docker logs` help to better understand how we can best use the command
+1. Great! Let's now take a look at the `docker container logs` help to better understand how we can best use the command
 
     ```
-    $ docker logs --help
+    $ docker container logs --help
 
     Usage:  docker logs [OPTIONS] CONTAINER
 
@@ -159,7 +159,7 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 2. Add timestamps to our logging output. This will help with narrowing down when events occured if no timestamp is created in the log message.
 
     ```
-    $ docker logs -t nginx
+    $ docker container logs -t nginx
     ```
 
 3. Tail the last `n` number of lines in the log file
@@ -168,13 +168,13 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 
 
     ```
-    $ docker logs --tail 5 nginx
+    $ docker container logs --tail 5 nginx
     ```
 
 4. Follow the log for real-time updates. 
     
     ```
-    $ docker logs -t -f nginx
+    $ docker container logs -t -f nginx
     ```
 
     Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
@@ -183,13 +183,13 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 5. Restart the `NGINX` container
 
      ```
-    $ docker restart nginx
+    $ docker container restart nginx
     ```
 
 6. Check the logs again. What do you notice?
 
     ```
-    $ docker logs nginx
+    $ docker container logs nginx
     ```
 
     > The logs still persist inside the container from our previous tests.
@@ -197,7 +197,7 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 7. Stop and remove the NGINX container
 
     ```
-    $ docker rm -f nginx
+    $ docker container rm -f nginx
     ```
 
 8. Start `NGINX` again
@@ -211,10 +211,15 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
 9. Check the logs. What do you notice?
 
     ```
-    $ docker logs nginx
+    $ docker container logs nginx
     ```
 
     > This time we removed the container and started a new container. It is important to notice now the logs didn't persist. This is why   it is important we persist logs outside of the containers.
+
+10. Cleanup running containers
+
+    `$ docker container rm -f whoami nginx`
+
 
 ### <a name="Task_3"></a>Task 3: docker-compose and logging
 

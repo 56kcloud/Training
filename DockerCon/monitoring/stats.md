@@ -5,320 +5,90 @@ Time to dive into the world of monitoring. First, we will explore the various bu
 > **Tasks**:
 >
 >
-> * [Task 1: Docker Stats, Top and other tools](#Task_1)
-> * [Task 2: ](#Task_2)
+> * [Task 1: Docker Stats](#Task_1)
+> * [Task 2: Docker System info, events, df](#Task_2)
 > * [Task 3: Docker Top](#Task_3)
 > * [Terminology Covered in this section](#Terminology)
 
-## <a name="Task_1"></a>Task 1: Starting Play-with-Docker
+## <a name="Task_1"></a>Task 1: Docker Stats
 
-First, lets open the Play-with-Docker enviornment.
+First, we need to start some containers to monitor. Return back to the voting application directory we used in the loggging section and start the Vote App stack. `docker stats` uses the same concept as most monitoring tools as it is queriying the docker daemon directly for informaiton. We can query ID's, Names, CPU, Memory, Network, storage, and processes.
 
-[Play-with-Docker](http://play-with-docker.com/)
-
-1. To get started, let's run the following in our terminal:
+1. To get started, let's start the vote application stack again:
 
     ```
-    $ docker image pull alpine
-    Unable to find image 'alpine:latest' locally
-    latest: Pulling from library/alpine
-    88286f41530e: Pull complete
-    Digest: sha256:f006ecbb824d87947d0b51ab8488634bf69fe4094959d935c0c103f4820a417d
-    Status: Downloaded newer image for alpine:latest
+    $ cd example-voting-app
+
+    $ docker-compose up -d
     ```
 
-> **Note:** Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. Try the commands from the Getting Started tutorial to [verify your installation](https://docs.docker.com/engine/getstarted/step_one/#/step-3-verify-your-installation). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) to get rid of this issue.
-
-2. The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
+2. Now, let's take a look at the `stats` of the individual containers running in the Vote App stack 
 
     ```
-    $ docker images
+    $ docker stats
 
-    REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-    alpine                  latest              3fd9065eaf02        2 weeks ago         4.15MB
-    hello-world             latest              f2a91732366c        2 months ago        1.85kB
+    CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+    d4bd451f0b68        demo3_worker_1      0.98%               21.77MiB / 1.952GiB   1.09%               466kB / 717kB       43MB / 0B           17
+    1aaa67a5a5a8        redis               0.46%               1.344MiB / 1.952GiB   0.07%               330kB / 153kB       2MB / 0B            4
+    d6d556507c0f        demo3_vote_1        0.40%               31.23MiB / 1.952GiB   1.56%               3.34kB / 0B         14.3MB / 0B         3
+    511eb5d3a5f4        db                  0.33%               8.641MiB / 1.952GiB   0.43%               432kB / 346kB       27.4MB / 119kB      8
+    7c726e569b7b        demo3_result_1      0.07%               38.05MiB / 1.952GiB   1.90%               154kB / 45.6kB      35.3MB / 12.3kB     20
     ```
 
-### Run a single-task Alpine Linux Container
+    > Notice the screen refreshes automaitcally. We also notice that no limits have been set for Memory. Shame shame!
 
-1. Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker container run` command.
+3. We can also narrow the `stats` command to just a selected container
 
-    ```
-    $ docker container run alpine hostname
+    ``` 
+    $ docker stats redis
+    CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+    1aaa67a5a5a8        redis               0.46%               1.344MiB / 1.952GiB   0.07%               657kB / 302kB       2MB / 0B            4
+    ``` 
 
-    888e89a3b36
+### <a name="Task_2"></a>Task 2: Docker System info and df
 
-    ```
+Docker has some great built-in tools. We just have to know where to find them.
 
-What happened? Behind the scenes, a lot of stuff happened. When you call `container run`,
-1. The Docker client contacts the Docker daemon
-2. The Docker daemon checks local store if the image (alpine in this case) is available locally, and if not, dowloads it from Docker Store. (Since we have issued `docker pull alpine` before, the download step is not necessary)
-3. The Docker daemon creates the container and then runs a command in that container.
-4. The Docker daemon streams the output of the command to the Docker client
+1. The `docker system info` command provides an overview of the docker host indicating total available CPU, memory, storage, etc
 
-When you run `docker container run alpine`, you provided a command (`hostname`), so Docker started the command specified and returned the hostname (`888e89a3b36`) of the container.
+    `$ docker system info`
 
-
-2. Docker keeps a container running as long as the process it started inside the container is still running. In this case, the hostname process completes when the output is written, so the container exits. The Docker platform doesn't delete resources by default, so the container still exists in the Exited state.
-
-    List all containers:
-
-    ```
-    $ docker container ps -a
-    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS            PORTS               NAMES
-    888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
-    ```
-
-    Notice that your Alpine Linux container is in the `Exited` state.
-
-    Note: The container ID is the hostname that the container displayed. In the example above it's 888e89a3b36b
-
-Containers which do one task and then exit can be very useful. You could build a Docker image that executes a script to configure something. Anyone can execute that task just by running the container - they don't need the actual scripts or configuration information.
+    > Scroll through the output to see all the available information
 
 
-3. Let's try something more exciting.
+2. One of the most important commands in the Linux world to check stroage is `df` (Display free disk space) Docker has tailored the `df` command for containers. Now we see storage information about Containers, Images, and Volumes.
 
     ```
-    $ docker container run alpine echo "hello from alpine"
-    hello from alpine
+    $ docker system df
+    TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+    Images              51                  14                  6.868GB             6.349GB (92%)
+    Containers          21                  5                   679.2kB             378.9kB (55%)
+    Local Volumes       19                  4                   116.4MB             79.21MB (68%)
+    Build Cache                                                 0B                  0B
     ```
 
-    OK, that's some actual output. In this case, the Docker client ran the `echo` command inside our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Compare the same process to booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
-
-4. Try another command:
-
-    ```
-    $ docker container run alpine /bin/sh
-    ```
-
-    Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to run:
-
-    ```
-    $docker container run -it alpine /bin/sh
-    ```
-
-You are now inside the container shell and you can try out a few commands like `ls -l`, `uname -a` and others. Exit out of the container by giving the `exit` command.
-
-
-5. Ok, now it's time to see the `docker contianer ps` or the shortcut `docker ps` command. The `docker ps` command shows you all containers that are currently running.
-
-    ```
-    $ docker container ps
-    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-    ```
-
-6. Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
-
-    ```
-    $ docker container ps -a
-    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-    36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
-    a6a9d46d0b2f        alpine              "echo 'hello from alp"   6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
-    ff0a5c3750b9        alpine              "ls -l"                  8 minutes ago       Exited (0) 8 minutes ago                        elated_ramanujan
-    c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago      Exited (0) 12 minutes ago                       stupefied_mcclintock
-    ```
-
-7. What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
-
-    ```
-    $ docker container run -it alpine /bin/sh
-    / # ls
-    bin      dev      etc      home     lib      linuxrc  media    mnt      proc     root     run      sbin     sys      tmp      usr      var
-    / # uname -a
-    Linux 97916e8cb5dc 4.4.27-moby #1 SMP Wed Oct 26 14:01:48 UTC 2016 x86_64 Linux
-    ```
-    
-    Type `exit` or `CTRL-D` to exit the interactive container. Once we exit the container the container will also exit and stop.
-
-    Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
-
-That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker container run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker container run`.
-
-
-### <a name="Task_2"></a>Task 2: Run an interactive Ubuntu container
-
-You can run a container based on a different version of Linux than what is running on your Docker host.
-
-In the next example, we are going to run an Ubuntu Linux container.
-
-1. Run a Docker container and access its shell.
-
-    In this case we're giving the `docker container run` command three parameters:
-
-    * `--interactive` says you want an interactive session
-    * `--tty` allocates a psuedo-tty
-    * `--rm` tells Docker to go ahead and remove the container when it's done executing
-
-    The first two parameters allow you to interact with the Docker container.
-
-    We're also telling the container to run `bash` as its main process (PID 1).
-
-    ```
-    $ docker container run --interactive --tty --rm ubuntu bash
-    ```
-
-    When the container starts you'll drop into the bash shell with the default prompt `root@<container id>:/#`. Docker has attached to the shell in the container, relaying input and output between your local session and the shell session in the container.
-
-2. Run some commands in the container:
-
-    - `ls /` - lists the contents of the root directory
-    - `ps aux` - shows all running processes in the container.
-    - `cat /etc/issue` - shows which Linux distro the container is running, in this case Ubuntu 16.04.3 LTS
-
-3. Type `exit` to leave the shell session. This will terminate the `bash` process, causing your container to exit.
-
-    > **Note:** As we used the `--rm` flag when we started the container, Docker removed that container when it stopped. This means if you run another `docker container ls --all` you won't see the Ubuntu container.
-
-4. For fun, let's check the version of our host VM
-
-    ```
-    $ cat /etc/issue
-
-    Ubuntu 16.04.3 LTS \n \l
-    ```
-
-    Notice that our host VM is Ubuntu, yet we were able to run an Ubuntu container. As previously mentioned, the distribution of Linux in the container does not need to match the distribution of Linux running on the Docker host.
-
-Interactive containers are useful when you are putting together your own image. You can run a container and verify all the steps you need to deploy your app, and capture them in a Dockerfile.
-
-> **Note:** You *can* [commit](https://docs.docker.com/engine/reference/commandline/commit/) a container to make an image from it - but you should avoid that wherever possible. It's much better to use a repeatable [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build your image. You'll see that shortly.
-
-5. To exit the shell of the Ubunutu container:
-
-	```
-	$ exit
-	```
-
-We can exit the TTY of the container with by typing `exit` or `CTRL-D`
-
-### <a name="Task_3"></a>Task 3: Run a background MySQL container
+### <a name="Task_3"></a>Task 3: Docker Top
 
 Background containers are how you'll run most applications. Here's a simple example using MySQL.
 
-1. Let's run MySQL in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
-
-    We'll also use an environment variable (`--env`) to set the root password (NOTE: This should never be done in production):
-
-    ```
-    $ docker container run \
-    --detach \
-    --name mydb \
-    --env MYSQL_ROOT_PASSWORD=my-secret-pw \
-    mysql:latest
-
-    Unable to find image 'mysql:latest' locallylatest: Pulling from library/mysql
-    aa18ad1a0d33: Pull complete
-    fdb8d83dece3: Pull complete
-    <Snip>
-     315e21657aa4: Pull complete
-    Digest: sha256:0dc3dacb751ef46a6647234abdec2d47400f0dfbe77ab490b02bffdae57846ed
-    Status: Downloaded newer image for mysql:latest
-    41d6157c9f7d1529a6c922acb8167ca66f167119df0fe3d86964db6c0d7ba4e0
-    ```
-
-    Once again, the image we requested was not available locally, so Docker pulled it from Docker Hub.
-
-    As long as the MySQL process is running, Docker will keep the container running in the background.
-
-2. List running containers
-
-    ```
-    $ docker container ls
-    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS            NAMES
-    3f4e8da0caf7        mysql:latest        "docker-entrypoint..."   52 seconds ago      Up 51 seconds       3306/tcp         mydb
-    ```
-
-    Notice your container is running
-
-3. You can check what's happening in your containers by using a couple of built-in Docker commands: `docker container logs` and `docker container top`
-
-    ```
-    $ docker container logs mydb
-    <output truncated>
-    2017-09-29T16:02:58.605004Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check.
-    2017-09-29T16:02:58.605026Z 0 [Note] Beginning of list of non-natively partitioned tables
-    2017-09-29T16:02:58.616575Z 0 [Note] End of list of non-natively partitioned tables
-    ```
-
-    This shows the logs from your Docker container.
+1. You can check the processes which run in your container siwth : `docker container top`
 
     Let's look at the running processes inside the container.
 
     ```
-    $ docker container top mydb
+    $ docker container top redis
     PID                 USER                TIME                COMMAND
-    6930                999                 0:00                mysqld
+    8480                rpc                 0:00                redis-server
     ```
 
-    You should see the MySQL demon (`mysqld`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `mysqld` process running as the main process of the container (PID 1) try:
+    You should see the redis demon (`redis-server`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `redis-server` process running as the main process of the container (PID 1) try:
 
     ```
-	$ docker container exec mydb ps -ef
-	UID         PID   PPID  C STIME TTY          TIME CMD
-	mysql         1      0  0 21:00 ?        00:00:01 mysqld
-	root        207      0  0 21:39 ?        00:00:00 ps -ef
+	$ docker container exec redis ps -ef
+	PID   USER     TIME   COMMAND
+    1 redis      0:00 redis-server
+   12 root       0:00 ps -ef
 	```
-
-    Although MySQL is running, it is isolated within the container because no network ports have been published to the host. Network traffic cannot reach containers from the host unless ports are explicitly published.
-
-4. List the MySQL version using `docker container exec`.
-
-   `docker container exec` allows you to run a command inside a container. In this example, we'll use `docker container exec` to run the command-line equivalent of `mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version` inside our MySQL container.
-
-    ```
-    $ docker container exec -it mydb \
-    mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
-
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
-    ```
-
-    The output above shows the MySQL version number, as well as a handy warning.
-
-5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MySQL container.  
-
-    ```
-    $ docker exec -it mydb sh
-    #
-    ```
-
-    Notice that your shell prompt has changed. This is because your shell is now connected to the `sh` process running inside of your container.
-
-6. Let's check the version number by running the same command we passed to the container in the previous step.
-
-    ```
-    # mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
-
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
-    ```
-
-    Notice the output is the same as before.
-
-7. Type `exit` to leave the interactive shell session.
-
-    Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mysqld` process still running.
-
-Let's clean up for the next lab.
-
-8. Stop the MySQL container
-
-    ````
-    $ docker container stop mydb
-    ```
-
-9. Remove the MySQL container
-
-    ```
-    $ docker container rm mydb
-    ```
-
-10. Delete the MySQL image
-
-    ```
-    $ docker image rm mysql
-    ```
-
 
 
 ### Terminology

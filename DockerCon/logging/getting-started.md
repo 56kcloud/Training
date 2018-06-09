@@ -12,7 +12,7 @@ Let's take a look at Docker Logging
 
 ## <a name="Task_1"></a>Task 1: Start a container to log
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a variant of NGINX called [jwilder/nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
+Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a variant of NGINX called [jwilder/nginx-proxy](https://hub.docker.com/r/library/traefik/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
 
 1. To get started, let's run the following in our terminal:
 
@@ -45,9 +45,9 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     ```
 
     Uh oh, what happend?
-    We can actually use the `docker logs` command on stopped containers.
+    We can actually use the `docker logs` command on stopped containers to troubleshoot. Great, let's do it.
 
-3. Check the logs of the `NGINX` container to see why it didn't start
+3. Check the logs of the `NGINX` container to see why the container didn't start
 
     ```
     $ docker logs nginx
@@ -58,13 +58,13 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     is being generated in the background.  Once the new dhparam.pem is in place, nginx will be reloaded.
     ```
 
-4. OK, stop and remove the `NGINX` container
+4. OK, remove the `NGINX` container
 
     ```
     $ docker rm -f nginx
     ```
 
-    > This is the forceful way to remove it. Not recommend in production
+    > This is the forceful way to remove it. With great power comes great responsability. You are warned!
 
 5. Start `NGINX` with the suggestions from the log file
 
@@ -97,42 +97,42 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     ```
 
     > What do we see different? We should now see the each curl/refresh we sent to the `NGINX` container
+    
+    
+We are still seeing an error in the log file which is `HTTP Error 503` Let's start a container and connect it to the reverse proxy to see if we can get everything healthy.
 
-9. Restart the `NGINX` container
 
-     ```
-    $ docker restart nginx
+Now, we will connect a `whoami` container to the NGINX proxy. This whoami container will register itself automatically with the proxy when we pass enviornment variables to the container.
+
+9. Start the `whoami` container 
+
+    `$ docker run -d -e VIRTUAL_HOST=whoami.local --name whoami jwilder/whoami`
+    
+    > The `jwilder/nginx-proxy`polls for new containers containing the environment variable `VIRTUAL_HOST` When this variable is seen it       > is automatically registered with the proxy
+    
+10. Let's check the logs to see if it the `whoami` container registered with the proxy
+
+    ` $ docker logs nginx`
+    
+    We should see the whoami ID register with the proxy
+    ```
+    dockergen.1 | 2018/06/09 21:36:52 Received event start for container d4d73cb5ef99
+    dockergen.1 | 2018/06/09 21:36:52 Generated '/etc/nginx/conf.d/default.conf' from 2 containers
+    dockergen.1 | 2018/06/09 21:36:52 Running 'nginx -s reload'
     ```
 
-10. Check the logs again. What do you notice?
-
+11. `curl` the whoami container using the Virtual Hostname we created
+    
     ```
-    $ docker logs nginx
-    ```
+    $ curl -H "Host: whoami.local" localhost:8080
+    I'm d4d73cb5ef99
+    ``` 
+12. Finally, run the `docker logs` command on the proxy to ensure everything is now working as expected
 
-    > The logs still persist inside the container from our previous tests.
+    `docker logs nginx`
+    
+    > We now see the hostname which is queried and a `HTTP 200` success code
 
-11. Stop and remove the NGINX container
-
-    ```
-    $ docker rm -f nginx
-    ```
-
-12. Start `NGINX` again
-
-    ```
-    $ docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
-    --name nginx \
-    jwilder/nginx-proxy:alpine
-    ```
-
-13. Check the logs. What do you notice?
-
-    ```
-    $ docker logs nginx
-    ```
-
-    > This time we removed the container and started a new container. It is important to notice now the logs didn't persist. This is why it is important we persist logs outside of the containers.
 
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command
 
@@ -178,6 +178,43 @@ The `docker logs` command is a powerful command and is used for troubleshooting,
     ```
 
     Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
+    
+
+5. Restart the `NGINX` container
+
+     ```
+    $ docker restart nginx
+    ```
+
+6. Check the logs again. What do you notice?
+
+    ```
+    $ docker logs nginx
+    ```
+
+    > The logs still persist inside the container from our previous tests.
+
+7. Stop and remove the NGINX container
+
+    ```
+    $ docker rm -f nginx
+    ```
+
+8. Start `NGINX` again
+
+    ```
+    $ docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
+    --name nginx \
+    jwilder/nginx-proxy:alpine
+    ```
+
+9. Check the logs. What do you notice?
+
+    ```
+    $ docker logs nginx
+    ```
+
+    > This time we removed the container and started a new container. It is important to notice now the logs didn't persist. This is why   it is important we persist logs outside of the containers.
 
 ### <a name="Task_3"></a>Task 3: docker-compose and logging
 
@@ -229,8 +266,9 @@ We have now seen how logging works in a single container. Now, we want to see wh
 What did we learn in this section?
 
 * Running `docker logs` on stopped containers
-* Logs don't persist in containers once the container is removed
+* Troubleshooting containers
 * The `docker logs`command is actually quite powerful and can be combined with other tools like the Linux `grep` command or others
+* Logs don't persist in containers once the container is removed
 * `docker-compose logs` works similiarly to `docker logs` but displays all containers in the compose stack
 
 ## Next Steps, Docker Swarm & Logs

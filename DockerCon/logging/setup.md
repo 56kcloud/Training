@@ -32,7 +32,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 	...
 	
 
-### Plan B Play-with-Docker (PWD)
+### Plan B: Play-with-Docker (PWD)
 
 1. If you don't have a docker account, please create one [Sign-up](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
 2. Login to [Play-with-Docker](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)

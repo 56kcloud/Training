@@ -5,12 +5,12 @@ Let's take a look at Docker Logging
 > **Tasks**:
 >
 >
-> * [Task 1: Run our First Container](#Task_1)
+> * [Task 1: Log our first containers](#Task_1)
 > * [Task 2: Understanding the Docker Logs command](#Task_2)
 > * [Task 3: docker-compose logs](#Task_3)
 > * [Recap topics covered in this section](#Recap)
 
-## <a name="Task_1"></a>Task 1: Running your first container
+## <a name="Task_1"></a>Task 1: Start a container to log
 
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a variant of NGINX called [jwilder/nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
 

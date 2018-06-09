@@ -56,7 +56,7 @@ Docker has some great built-in tools. We just have to know where to find them.
     > Scroll through the output to see all the available information
 
 
-2. One of the most important commands in the Linux world to check stroage is `df` (Display free disk space) Docker has tailored the `df` command for containers. Now we see storage information about Containers, Images, and Volumes.
+2. One of the most important commands in the Linux world to check stroage is `df` (Display free disk space). Docker has tailored the `df` command for containers. Now we see storage information about Containers, Images, and Volumes.
 
     ```
     $ docker system df
@@ -90,15 +90,5 @@ Background containers are how you'll run most applications. Here's a simple exam
    12 root       0:00 ps -ef
 	```
 
-
-### Terminology
-In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
-
-- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
-- *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
-- *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
-- *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
-
-## Next Steps, Docker Networking
-For the next step in the tutorial, head over to [Docker Networking](./networking-basics.md)
+## Next Steps, Google cAdvisor (Container Advisor)
+For the next step in the tutorial, head over to [Docker Networking](./cadvisor.md)

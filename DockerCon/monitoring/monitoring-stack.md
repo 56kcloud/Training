@@ -30,6 +30,20 @@ This section we will walk through the various components and explain where and h
 
 2. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
 
+3. Open the deployed components
+
+    **Prometheus:** `http://0.0.0.0:9090`
+
+    **node-exporter:** `http://0.0.0.0:9100/`
+
+    **Alertmanager:** `http://0.0.0.0:9093/`
+
+    **cAdvisor:** `http://0.0.0.0:8080/`
+
+    **Grafana:** `http://0.0.0.0:3000/` 
+    user - `admin`
+    password - `foobar`
+
 
 ### <a name="Task_2"></a>Task 2: Prometheus Walkthrough
 Now that we deployed the Prometheus Monitoring stack let's have a look at what is running:
@@ -46,7 +60,7 @@ Now that we deployed the Prometheus Monitoring stack let's have a look at what i
 1. Configs / Provisioning
 2. Data Sources
 3. Dashboards
-4. New Dashboards
+4. New Dashboards Import Dashboard 395 & 893
 
 
 

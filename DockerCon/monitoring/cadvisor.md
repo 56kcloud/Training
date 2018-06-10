@@ -10,7 +10,6 @@ In this section we will deploy a cAdvisor container and walk through the UI, con
 > * [Task 1: Deploy cAdvisor](#Task_1)
 > * [Task 2: Tour the cAdvisor UI and configurations](#Task_2)
 > * [Task 3: cAdvisor Exposed Metrics](#Task_3)
-> * [Terminology Covered in this section](#Terminology)
 
 ## <a name="Task_1"></a>Task 1: Deploy cAdvisor
 
@@ -68,17 +67,6 @@ Have a look at the cAdvisor UI. What we see here is a host performance view. Scr
 ### <a name="Task_3"></a>Task 3: cAdvisor Exposed Metrics
 
 Now, we will have a look to see how cAdvisor exposes the metrics it is gathering from running containers. As default, cAdvisor exposes metrics in the [Prometheus format](https://prometheus.io/docs/instrumenting/writing_exporters/)
-
-
-
-### Terminology
-In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
-
-- *Images* - The file system and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
-- *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
-- *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
-- *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
 
 ## Next Steps, Docker Networking
 For the next step in the tutorial, head over to [Prometheus](./prometheus.md)

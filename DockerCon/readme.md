@@ -11,11 +11,9 @@ This Docker tutorial consists of the following sections:
 * [Setup Docker or Play-with-Docker](./logging/setup.md)
 * [Docker Getting Started with Logging](./logging/getting-started.md)
 * [Docker Logging Drivers](./logging/log-drivers.md)
-* [Docker Swarm & Logging ](./logging/swarm-logs.md)
 
 ## Monitoring
 
 * [Docker Getting Started with Monitoring](./monitoring/stats.md)
 * [cAdvisor](./monitoring/cadvisor.md)
-* [Prometheus](./monitoring/prometheus.md)
 * [Monitoring Containers with Prometheus Stack](./monitoring/monitoring-stack.md)

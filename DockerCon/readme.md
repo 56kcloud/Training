@@ -10,7 +10,7 @@ This Docker tutorial consists of the following sections:
 
 * [Setup Docker or Play-with-Docker](./logging/setup.md)
 * [Docker Getting Started with Logging](./logging/getting-started.md)
-* [Docker Logging Drivers](./logging/log-drivers.md)
+* [Docker Swarm & Logging Drivers](./logging/log-drivers.md)
 
 ## Monitoring
 

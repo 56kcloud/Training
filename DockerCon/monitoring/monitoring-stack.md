@@ -66,7 +66,7 @@ Now that we deployed the Prometheus Monitoring stack let's have a look at what i
 
 4. Graph: 
 * In the Prometheus UI Click the Graph Menu.
-* Select the last metric in the list `up` from the drop down list and click `Execute`
+* Select the last metric in the list `up` from the drop down list and click `Execute`
 * Click on the following link which runs several Prometheus Queries [http://0.0.0.0:9090/graph?g0.range_input=1h&g0.expr=up&g0.tab=0&g1.range_input=1h&g1.expr=container_cpu_load_average_10s%7Bcontainer_label_com_docker_swarm_node_id!%3D%22%22%7D&g1.tab=0&g2.range_input=1h&g2.expr=container_memory_usage_bytes%7Bcontainer_label_com_docker_swarm_node_id!%3D%22%22%7D&g2.tab=0](http://0.0.0.0:9090/graph?g0.range_input=1h&g0.expr=up&g0.tab=0&g1.range_input=1h&g1.expr=container_cpu_load_average_10s%7Bcontainer_label_com_docker_swarm_node_id!%3D%22%22%7D&g1.tab=0&g2.range_input=1h&g2.expr=container_memory_usage_bytes%7Bcontainer_label_com_docker_swarm_node_id!%3D%22%22%7D&g2.tab=0)
 
 > INFO: Prometheus does not contain Users and Roles Access Control (RBAC). It is recommended that you deploy a proxy in front of Prometheus in order to protect your deployment with users/passwords.

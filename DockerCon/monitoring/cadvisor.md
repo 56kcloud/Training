@@ -17,7 +17,7 @@ In this section we will deploy a cAdvisor container and walk through the UI, con
 
 Let's get started with deploying cAdvisor. First, we will review the cAdvisor GitHub Repos. The repo contains a wealth of documentation from using the UI to configurations. Take some time and dive into the different aspects of cAdvisor.
 
-> We recommend using [Play-with-Docker](play-with-docker.com) for this exercise to alleviate any permissions issues or Windows issues with having to run sudo.
+> We recommend using [Play-with-Docker](https://labs.play-with-docker.com/) for this exercise to alleviate any permissions issues or Windows issues with having to run sudo.
 
 
 1. Clone the Voting App Repo
@@ -33,7 +33,9 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 
     $ docker swarm init --advertise-addr $(hostname -i)
 
-    $ docker stack deploy -c docker-
+    $ docker stack deploy -c docker-stack.yml vote
+    
+    ```
 
 3. Navigate to [cAdvisor GitHub Repo](https://github.com/google/cadvisor)
 
@@ -71,4 +73,4 @@ Have a look at the cAdvisor UI. What we see here is a host performance view. Scr
 Now, we will have a look to see how cAdvisor exposes the metrics it is gathering from running containers. As default, cAdvisor exposes metrics in the [Prometheus format](https://prometheus.io/docs/instrumenting/writing_exporters/)
 
 ## Next Steps, Docker Networking
-For the next step in the tutorial, head over to [Prometheus](./prometheus.md)
+For the next step in the tutorial, head over to [Prometheus](./monitoring-stack.md)

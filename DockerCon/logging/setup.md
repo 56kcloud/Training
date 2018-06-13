@@ -34,9 +34,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 
 ### Plan B: Play-with-Docker (PWD)
 
-1. If you don't have a docker account, please create one [Sign-up](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
-2. Login to [Play-with-Docker](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
-3. Below the timer on the upper left side, click *+Add New instance* button
+1. If you don't have a docker account, please create one [Sign-up](https://dockr.ly/dc18workshop)
 
 ## Next Steps
 For the next step in the tutorial, head over to [Getting Started with Logging](getting-started.md)

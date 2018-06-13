@@ -37,10 +37,10 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     
     ```
 
-2. Ensure the `NGINX` container is running
+2. Ensure the `NGINX` container is running by running the `ls` command with `-l` showing last container
 
     ```
-    $ docker container ps
+    $ docker container ps -l
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
     ```
 
@@ -77,7 +77,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 6. Ensure the `NGINX` container is running
 
     ```
-    $ docker container ps
+    $ docker container ps -l
     CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
     960ab9aed7af        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   3 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp   nginx
     ```

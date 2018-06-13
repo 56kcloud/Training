@@ -162,7 +162,7 @@ In the final section we will build a Dashboard based on the Prometheus stack. We
 13. Save Dashboard
 
 Here is what the final Dashboard should look like:
-<img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/56k.jpg" alt="cAdvisor Logo" width="150" height="99"> 
+<img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/dashboard.png" alt="Dashboard Workshop Demo" width="150" height="99"> 
 
 ### Import Dashboards
 In the last section we can quickly import Dashboards from [Grafana Dashboards](https://grafana.com/dashboards)

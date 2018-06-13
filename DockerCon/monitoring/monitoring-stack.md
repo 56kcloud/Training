@@ -1,6 +1,6 @@
 # Deploy the Promethues Monitoring Stack, understand the components, and monitor containers
 
-<img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/prometheus-logo.png" alt="Prometheus Logo" width="150" height="99"> 
+<img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/prometheus.gif" alt="Prometheus Logo" width="150" height="99"> 
 
 The wait is finally over let's get monitoring.
 

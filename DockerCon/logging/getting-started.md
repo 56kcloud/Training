@@ -277,4 +277,4 @@ What did we learn in this section?
 * `docker-compose logs` works similiarly to `docker logs` but displays all containers in the compose stack
 
 ## Next Steps, Docker Swarm & Logs
-For the next step in the workshop, head over to [Docker Services & Swarm Logging](./swarm-logs.md)
+For the next step in the workshop, head over to [Docker Services & Swarm Logging](./log-drivers.md)

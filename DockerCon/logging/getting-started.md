@@ -266,6 +266,17 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
     > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs
 
+### Cleanup
+
+1. Time to remove the running containers
+
+    ```
+    $ docker-compose stop
+
+    $ docker container rm -f nginx
+    ```
+
+
 ## <a name="Terminology"></a>Recap
 
 What did we learn in this section?

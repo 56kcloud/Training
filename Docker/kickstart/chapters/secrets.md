@@ -295,6 +295,6 @@ In this step you will remove all secrets and services,as well as clean up any ot
 
 A brief demo on Docker & Kubernetes
 
-## Next Steps, Deploying a MongoDB Container
+## Next Steps, Docker Monitoring with Prometheus
 
-For the next step in the tutorial, head over to [MogoDB and Containers](./mongo.md)
+For the next step in the tutorial, head over to [Docker monitoring](https://github.com/vegasbrianc/prometheus)

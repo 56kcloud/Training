@@ -98,7 +98,7 @@ Distribution is built into the Docker platform. You can build images locally and
 
 It's time to automated our build pipeline. First, we need to create a GitHub Repo. 
 
-1. Login to your [www.GitHub.com](www.github.com) account and click create new repository
+1. Login to your [www.GitHub.com](https://www.github.com) account and click create new repository
 
 <center><img src="../images/Create_new_git_repo.png" title="Create New Git Repo"></center>
 

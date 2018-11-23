@@ -37,7 +37,7 @@ For this exercise we're going to use the popular ELK logging stack:
     ```
     $ cd docker-elk/ && ls
     LICENSE           README.md         docker-stack.yml  elasticsearch     extensions        kibana
-    
+
     $ git checkout docker-stack
     Branch 'docker-stack' set up to track remote branch 'docker-stack' from 'origin'.
     Switched to a new branch 'docker-stack'
@@ -48,6 +48,7 @@ For this exercise we're going to use the popular ELK logging stack:
 1. Now we have the stack downloaded, we can deploy it to the Swarm.
 
     ```
+    $ docker swarm init
     $ docker stack deploy -c docker-stack.yml elk
     Creating network elk_elk
     Creating config elk_elastic_config
@@ -81,7 +82,7 @@ We can see that Docker created a lot of components on our Swarm.
     ```
 
 
-3. Once the services have all converged, let's check that we can hit the Kibana web UI in a browser. If you're using PWD then you can click the `5601` port button at the top of the screen. If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601`.
+3. Once the services have all converged, let's check that we can hit the Kibana web UI in a browser. If you're using PWD then you can click the `5601` port button at the top of the screen. If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601` or just http://localhost:5601
 
 You should see the Kibana dashboard appear.
 
@@ -95,6 +96,9 @@ Now that we have our logging infrastructure setup, let's create a service that w
 
     ```
     $ LOGSTASH=$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+
+    # on mac
+    $ LOGSTASH=$(ifconfig | grep 'inet addr' | grep 192 | awk '{print $3}'
     ```
 
 2. Now let's start a new test service and pass some logging options so that Docker knows to ship our logs to Logstash.
@@ -117,6 +121,11 @@ Now that we have our logging infrastructure setup, let's create a service that w
     4mrklhm2r3vh: running   [==================================================>]
     vu1dusztugvu: running   [==================================================>]
     verify: Service converged
+
+    sjgsvd69gad7lga35sigw6etu
+    overall progress: 1 out of 1 tasks
+    rt86o1i701zj: running   [==================================================>]
+    verify: Service converged
     ```
 
 Let's run through some of the options here:
@@ -129,7 +138,7 @@ Let's run through some of the options here:
 - `alpine` : the image we want to run
 - `ping google.com` : the command our service is going to run
 
-> **Notes:** 
+> **Notes:**
 > - More information about GELF can be found in the Docker [docs here](https://docs.docker.com/config/containers/logging/gelf/)
 > - GELF is just one driver available for Docker, for more check out [this page](https://docs.docker.com/config/containers/logging/configure/#supported-logging-drivers)
 > - The `tag` logging option is useful as we can use Go's templated strings in there for additional metadata, a full list of the available templates is [here](https://docs.docker.com/config/containers/logging/log_tags/)
@@ -144,6 +153,10 @@ Let's run through some of the options here:
     xc5210kz8d6x        logging-test1.vu1dusztugvumrbu3bt3wnqtx   alpine:latest       worker1             Running             Running 3 minutes ago
     a7p9pz88vgb3        logging-test1.0cjj9gwlbjkhev9m5ypu9hcl6   alpine:latest       manager3            Running             Running 3 minutes ago
     crzpzqp93vcr        logging-test1.oy0quc1fh770f3phjd2dlir5y   alpine:latest       worker2             Running             Running 3 minutes ago
+
+    $ docker service ps logging-test1
+    ID                  NAME                                      IMAGE               NODE                    DESIRED STATE       CURRENT STATE                ERROR               PORTS
+    t00q6jhv54zx        logging-test1.rt86o1i701zjuqxnjq5e0h7ui   alpine:latest       linuxkit-025000000001   Running             Running about a minute ago
     ```
 
 
@@ -167,7 +180,7 @@ Now that we have our ELK stack setup, and a service logging to it, let's look in
 
     ![](timestamp.png)
 
-    5. Click 'Discover' on the right-hand menu bar.
+    5. Click 'Discover' on the left-hand menu bar.
 
 2. You should now be looking at the main querying interface of Kibana. Let's add some fields to make the viewing pane a little cleaner.
 
@@ -183,7 +196,7 @@ Let's filter on everything from a specific host.
 
     2. Above the field list, click the 'Add Filter' button and then choose `source_host` as the field, `is` as the operator, and type your chosen IP into the `Value` field.
 
-    3. The output should change and you will see only logs from that host. 
+    3. The output should change and you will see only logs from that host.
 
 4. Now let's run another service so we can query on the tag field.
 
@@ -198,6 +211,16 @@ Let's filter on everything from a specific host.
         --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping facebook.com
+        ```
+
+        output:
+
+        ```bash
+        l7spcatz359qqehuj2sd0rddm
+        overall progress: 1 out of 1 tasks
+        1/1: running   [==================================================>]
+        verify: Service converged
+
         ```
 
         Note that we changed the `replica` count to only `1`, and the `tag` to `LogTest2` this time.

@@ -34,14 +34,16 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     Digest: sha256:6181afd7ce4a0291bf73b1787be33928213203401ccbeee2cd720db5d700636b
     Status: Downloaded newer image for jwilder/nginx-proxy:alpine
     673f5eed33e6ebea397bb162567a66923f3772c6e409f0de4614467d0f157f93
-    
+
     ```
 
 2. Ensure the `NGINX` container is running by running the `ls` command with `-l` showing last container
 
     ```
     $ docker container ps -l
-    CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
+    CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS                      PORTS               NAMES
+    4f2e87423ac3        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   14 seconds ago      Exited (1) 13 seconds ago                       nginx
+
     ```
 
     Uh oh, what happend?
@@ -97,23 +99,23 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     ```
 
     > What do we see different? We should now see the each curl/refresh we sent to the `NGINX` container
-    
-    
+
+
 We are still seeing an error in the log file which is `HTTP Error 503` Let's start a container and connect it to the reverse proxy to see if we can get everything healthy.
 
 
 Now, we will connect a `whoami` container to the NGINX proxy. This whoami container will register itself automatically with the proxy when we pass enviornment variables to the container.
 
-9. Start the `whoami` container 
+9. Start the `whoami` container
 
     `$ docker container run -d -e VIRTUAL_HOST=whoami.local --name whoami jwilder/whoami`
-    
+
     > The `jwilder/nginx-proxy`polls for new containers containing the environment variable `VIRTUAL_HOST` When this variable is seen it       > is automatically registered with the proxy
-    
+
 10. Let's check the logs to see if it the `whoami` container registered with the proxy
 
     ` $ docker container logs nginx`
-    
+
     We should see the whoami ID register with the proxy
     ```
     dockergen.1 | 2018/06/09 21:36:52 Received event start for container d4d73cb5ef99
@@ -122,15 +124,15 @@ Now, we will connect a `whoami` container to the NGINX proxy. This whoami contai
     ```
 
 11. `curl` the whoami container using the Virtual Hostname we created
-    
+
     ```
     $ curl -H "Host: whoami.local" localhost:8080
     I'm d4d73cb5ef99
-    ``` 
+    ```
 12. Finally, run the `docker container logs` command on the proxy to ensure everything is now working as expected
 
     `docker container logs nginx`
-    
+
     > We now see the hostname which is queried and a `HTTP 200` success code
 
 
@@ -171,14 +173,14 @@ The `docker container logs` command is a powerful command and is used for troubl
     $ docker container logs --tail 5 nginx
     ```
 
-4. Follow the log for real-time updates. 
-    
+4. Follow the log for real-time updates.
+
     ```
     $ docker container logs -t -f nginx
     ```
 
     Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
-    
+
 
 5. Restart the `NGINX` container
 
@@ -254,7 +256,7 @@ We have now seen how logging works in a single container. Now, we want to see wh
     $ docker-compose logs |grep vote_1
     ```
 
-5. Open a browser tab `http://0.0.0.0:5000` and place a few votes and watch the logs. 
+5. Open a browser tab `http://0.0.0.0:5000` and place a few votes and watch the logs.
 
     > Since no timestamp is in the log it is difficult to see if new votes arrived or not.
 
@@ -274,6 +276,7 @@ We have now seen how logging works in a single container. Now, we want to see wh
     $ docker-compose stop
 
     $ docker container rm -f nginx
+    # got this => Error: No such container: nginx
     ```
 
 

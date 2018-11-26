@@ -8,6 +8,7 @@ In the previous exercise we saw how to check out logs for running containers on 
 > * [Task 1: Setup the logging stack](#Task_1)
 > * [Task 2: Configure services to log centrally](#Task_2)
 > * [Task 3: Querying logs in Kibana](#Task_3)
+> * [Task 3: Create a Dashboard](#Task_4)
 > * [Recap topics covered in this section](#Recap)
 
 ## <a name="Task_1"></a>Task 1: Setup the logging stack
@@ -21,7 +22,8 @@ For this exercise we're going to use the popular ELK logging stack:
 1. To get started, let's run the following in our terminal:
 
     ```
-    $ git clone https://github.com/johnharris85/docker-elk.git
+    git clone https://github.com/johnharris85/docker-elk.git
+    
     Cloning into 'docker-elk'...
     remote: Counting objects: 1238, done.
     remote: Compressing objects: 100% (3/3), done.
@@ -35,10 +37,13 @@ For this exercise we're going to use the popular ELK logging stack:
 2. Move into the `docker-elk` directory and switch to the `docker-stack` branch.
 
     ```
-    $ cd docker-elk/ && ls
+    cd docker-elk/ 
+    ls
+
     LICENSE           README.md         docker-stack.yml  elasticsearch     extensions        kibana
 
-    $ git checkout docker-stack
+    git checkout docker-stack
+    
     Branch 'docker-stack' set up to track remote branch 'docker-stack' from 'origin'.
     Switched to a new branch 'docker-stack'
     ```
@@ -48,8 +53,9 @@ For this exercise we're going to use the popular ELK logging stack:
 1. Now we have the stack downloaded, we can deploy it to the Swarm.
 
     ```
-    $ docker swarm init
-    $ docker stack deploy -c docker-stack.yml elk
+    docker swarm init
+    docker stack deploy -c docker-stack.yml elk
+
     Creating network elk_elk
     Creating config elk_elastic_config
     Creating config elk_kibana_config
@@ -71,7 +77,7 @@ We can see that Docker created a lot of components on our Swarm.
 2. Let's `watch` the `docker service ls` command to make sure they all start without any errors:
 
     ```
-    $ watch docker service ls
+     watch docker service ls
 
     Every 2s: docker service ls                                2018-06-12 16:18:31
 
@@ -82,7 +88,13 @@ We can see that Docker created a lot of components on our Swarm.
     ```
 
 
-3. Once the services have all converged, let's check that we can hit the Kibana web UI in a browser. If you're using PWD then you can click the `5601` port button at the top of the screen. If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601` or just http://localhost:5601
+3. Once the services have all converged, let's check that we can hit the Kibana web UI in a browser. 
+
+**PWD**
+If you're using PWD then you can click the `5601` port button at the top of the screen. 
+
+**Deployed locally**
+If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601` or just http://localhost:5601
 
 You should see the Kibana dashboard appear.
 
@@ -95,20 +107,20 @@ Now that we have our logging infrastructure setup, let's create a service that w
 1. We have deployed Logstash and exposed port 12201 as an ingress port, which means we can hit any IP in our cluster on that port to send traffic to Logstash, regardless if it's running on that host or not. Let's grab the IP of the host we're on and use that.
 
     ```
-    $ LOGSTASH=$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+     LOGSTASH=(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print 1}')
 
-    # on mac
-    $ LOGSTASH=$(ifconfig | grep 'inet addr' | grep 192 | awk '{print $3}'
+    # Mac users
+     LOGSTASH=(ifconfig | grep 'inet addr' | grep 192 | awk '{print 3}')
     ```
 
 2. Now let's start a new test service and pass some logging options so that Docker knows to ship our logs to Logstash.
 
     ```
-    $ docker service create \
+     docker service create \
         --name logging-test1 \
         --mode global \
         --log-driver=gelf \
-        --log-opt gelf-address=udp://$LOGSTASH:12201 \
+        --log-opt gelf-address=udp://LOGSTASH:12201 \
         --log-opt tag="LogTest1 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping google.com
@@ -133,7 +145,7 @@ Let's run through some of the options here:
 - `--name logging-test1` : name of the service
 - `--mode global` : one container per Swarm host
 - `--log-driver=gelf` : we're going to use the GELF (Graylog Extended Log Format) driver
-- `--log-opt gelf-address=udp://$LOGSTASH:12201` : telling Docker where to send our GELF-formatted logs
+- `--log-opt gelf-address=udp://LOGSTASH:12201` : telling Docker where to send our GELF-formatted logs
 - `--log-opt tag="LogTest1 - {{.Name}}/{{.ImageName}}"` : adding a tag to our service for easier querying later
 - `alpine` : the image we want to run
 - `ping google.com` : the command our service is going to run
@@ -146,7 +158,7 @@ Let's run through some of the options here:
 3. Check the service is up:
 
     ```
-    $ docker service ps logging-test
+     docker service ps logging-test
     ID                  NAME                                      IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR          PORTS
     d9z4jarhh0bd        logging-test1.4mrklhm2r3vhoa6be3e47r50j   alpine:latest       manager1            Running             Running 3 minutes ago
     6k6rlloh8rk9        logging-test1.kw9vz2dve3t9hz06rrrvun9uf   alpine:latest       manager2            Running             Running 3 minutes ago
@@ -154,7 +166,7 @@ Let's run through some of the options here:
     a7p9pz88vgb3        logging-test1.0cjj9gwlbjkhev9m5ypu9hcl6   alpine:latest       manager3            Running             Running 3 minutes ago
     crzpzqp93vcr        logging-test1.oy0quc1fh770f3phjd2dlir5y   alpine:latest       worker2             Running             Running 3 minutes ago
 
-    $ docker service ps logging-test1
+     docker service ps logging-test1
     ID                  NAME                                      IMAGE               NODE                    DESIRED STATE       CURRENT STATE                ERROR               PORTS
     t00q6jhv54zx        logging-test1.rt86o1i701zjuqxnjq5e0h7ui   alpine:latest       linuxkit-025000000001   Running             Running about a minute ago
     ```
@@ -203,11 +215,11 @@ Let's filter on everything from a specific host.
     1. Back on one of your manager nodes, run the following:
 
         ```
-        $ docker service create \
+         docker service create \
         --name logging-test2 \
         --replicas 1 \
         --log-driver=gelf \
-        --log-opt gelf-address=udp://$LOGSTASH:12201 \
+        --log-opt gelf-address=udp://LOGSTASH:12201 \
         --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping facebook.com
@@ -242,9 +254,53 @@ You should see the list of logs update to show only those from your new service.
 6. Feel free to play around with other services and tags, and construct different queries in the Kibana UI. Documentation on the Lucene syntax that ElasticSearch and Kibana use for querying can be [found here](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/query-dsl-query-string-query.html#query-string-syntax).
 
 
+### <a name="Task_4"></a>Task 4: Create a Dashboard
+In this section we will create a simple dashboard based on the ping data we are receiving.
+
+1. Click 'Visualize' on the left-hand menu bar.
+2. Click "Create new Visualization"
+3. Select the Data -> Metric visualization
+
+![](elk_visualization.png)
+
+4. On the left-hand menu select 'Count' as the aggregation type and fill in the custom label to name your visualization.
+5. Upper right hand of the ELK screen on the menu bar, select Save.
+6. Type in a name of the visualization
+
+
+**Next, we will create a pie graph**
+
+1. Click 'Visualize' on the left-hand menu bar.
+2. Click "Create new Visualization" this time it is '+' symbol
+3. Select the Basic charts -> Pie visualization
+
+![](elk_visualization.png)
+
+4. On the left-hand menu select 'Count' as the aggregation type and fill in the custom label to name your visualization.
+5. Expand the Buckets section
+6. Select 'Count' as the aggregation type
+7. Field -> host.keyword
+8. Order by -> metric: Count by host
+9. Order -> Decending -> 5
+10. Custom Label -> Hosts
+11. Upper right hand of the ELK screen on the menu bar, select Save.
+12. Type in a name of the visualization
+
+![](configs.png)
+
+**Finally, put the two new visualizations in a Dashboard**
+
+1. Click 'Dashboard' on the left-hand menu bar.
+2. Click 'Add' button either in the middle of the screen or upper right hand corner menu
+3. Click the names of the two visualizations that we named earlier.
+
+![](dashboard.png)
+
+
 ### Recap
 What did we learn in this section?
 
 * Setting up an ELK stack in our Swarm cluster
 * Configuring Docker services to ship logs to our central ELK stack
 * Filtering and querying on logs in Kibana
+* Create a simple dashboard

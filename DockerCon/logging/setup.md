@@ -18,7 +18,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 	
 
 	```
-	$ docker container run hello-world
+	docker container run hello-world
 	Unable to find image 'hello-world:latest' locally
 	latest: Pulling from library/hello-world
 	03f4658f8b78: Pull complete
@@ -34,7 +34,8 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 
 ### Plan B: Play-with-Docker (PWD)
 
-1. If you don't have a docker account, please create one [Sign-up](https://dockr.ly/dc18workshop)
+1. If you don't have a docker account, please create one [Sign-up](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
+2. Login to Play-with-Docker [PWD](https://labs.play-with-docker.com/)
 
 ## Next Steps
 For the next step in the tutorial, head over to [Getting Started with Logging](getting-started.md)

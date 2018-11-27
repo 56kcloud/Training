@@ -37,5 +37,11 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 1. If you don't have a docker account, please create one [Sign-up](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
 2. Login to Play-with-Docker [PWD](https://labs.play-with-docker.com/)
 
+### Start the Docker Pull & deploy
+
+``` 
+git clone https://github.com/dockersamples/example-voting-app.git && cd example-voting-app && docker-compose up -d
+```
+
 ## Next Steps
 For the next step in the tutorial, head over to [Getting Started with Logging](getting-started.md)

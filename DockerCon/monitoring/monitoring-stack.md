@@ -30,9 +30,15 @@ This section we will walk through the various components and explain where and h
 
     **Grafana:** The open-source dashboard visualization tool
 
-2. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
+2. Clone the monitoring Repo
 
-3. Open the deployed components
+```
+git clone https://github.com/vegasbrianc/prometheus.git
+```
+
+3. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
+
+4. Open the deployed components
 
     **Prometheus:** `http://0.0.0.0:9090`
 

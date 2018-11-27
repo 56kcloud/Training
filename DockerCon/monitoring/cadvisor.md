@@ -19,11 +19,6 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 
 > We recommend using [Play-with-Docker](https://labs.play-with-docker.com/) for this exercise to alleviate any permissions issues or Windows issues with having to run sudo.
 
-
-1. Clone the Voting App Repo
-
-    ```
-    $ git clone https://github.com/dockersamples/example-voting-app.git
     ```
 
 1. Enable Docker Swarm the Voting App with docker-compose.
@@ -71,6 +66,17 @@ Have a look at the cAdvisor UI. What we see here is a host performance view. Scr
 ### <a name="Task_3"></a>Task 3: cAdvisor Exposed Metrics
 
 Now, we will have a look to see how cAdvisor exposes the metrics it is gathering from running containers. As default, cAdvisor exposes metrics in the [Prometheus format](https://prometheus.io/docs/instrumenting/writing_exporters/)
+
+## Cleanup
+
+```
+docker stack rm vote
+````
+
+```
+docker rm -F cadvisor
+``` 
+
 
 ## Next Steps, Docker Networking
 For the next step in the tutorial, head over to [Prometheus](./monitoring-stack.md)

@@ -107,8 +107,7 @@ Now that we have our logging infrastructure setup, let's create a service that w
 1. We have deployed Logstash and exposed port 12201 as an ingress port, which means we can hit any IP in our cluster on that port to send traffic to Logstash, regardless if it's running on that host or not. Let's grab the IP of the host we're on and use that.
 
     ```
-     LOGSTASH=(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print 1}')
-
+     LOGSTASH=$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
     # Mac users
      LOGSTASH=(ifconfig | grep 'inet addr' | grep 192 | awk '{print 3}')
     ```

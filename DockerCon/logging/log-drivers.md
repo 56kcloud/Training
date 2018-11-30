@@ -42,6 +42,9 @@ For this exercise we're going to use the popular ELK logging stack:
 
     LICENSE           README.md         docker-stack.yml  elasticsearch     extensions        kibana
 
+    ```
+
+    ```
     git checkout docker-stack
     
     Branch 'docker-stack' set up to track remote branch 'docker-stack' from 'origin'.
@@ -107,10 +110,11 @@ Now that we have our logging infrastructure setup, let's create a service that w
 1. We have deployed Logstash and exposed port 12201 as an ingress port, which means we can hit any IP in our cluster on that port to send traffic to Logstash, regardless if it's running on that host or not. Let's grab the IP of the host we're on and use that.
 
     ```
-     LOGSTASH=(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print 1}')
+    # Play-with-Docker users
+     LOGSTASH=(hostname -i)
 
     # Mac users
-     LOGSTASH=(ifconfig | grep 'inet addr' | grep 192 | awk '{print 3}')
+     LOGSTASH=0.0.0.0
     ```
 
 2. Now let's start a new test service and pass some logging options so that Docker knows to ship our logs to Logstash.
@@ -120,7 +124,7 @@ Now that we have our logging infrastructure setup, let's create a service that w
         --name logging-test1 \
         --mode global \
         --log-driver=gelf \
-        --log-opt gelf-address=udp://LOGSTASH:12201 \
+        --log-opt gelf-address=udp://$LOGSTASH:12201 \
         --log-opt tag="LogTest1 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping google.com
@@ -253,8 +257,11 @@ You should see the list of logs update to show only those from your new service.
 
 6. Feel free to play around with other services and tags, and construct different queries in the Kibana UI. Documentation on the Lucene syntax that ElasticSearch and Kibana use for querying can be [found here](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/query-dsl-query-string-query.html#query-string-syntax).
 
+## Next Steps & Extra Credit
+For the next step in the tutorial, head over to the [Docker Monitoring](getting-started.md) section
 
-### <a name="Task_4"></a>Task 4: Create a Dashboard
+
+### <a name="Task_4"></a>Task 4: Extra Time Create a Dashboard
 In this section we will create a simple dashboard based on the ping data we are receiving.
 
 1. Click 'Visualize' on the left-hand menu bar.

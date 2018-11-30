@@ -74,7 +74,7 @@ docker stack rm vote
 ````
 
 ```
-docker rm -F cadvisor
+docker rm -f cadvisor
 ``` 
 
 

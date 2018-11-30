@@ -110,9 +110,13 @@ Now that we have our logging infrastructure setup, let's create a service that w
 1. We have deployed Logstash and exposed port 12201 as an ingress port, which means we can hit any IP in our cluster on that port to send traffic to Logstash, regardless if it's running on that host or not. Let's grab the IP of the host we're on and use that.
 
     ```
+<<<<<<< HEAD
     # Play-with-Docker users
      LOGSTASH=(hostname -i)
 
+=======
+     LOGSTASH=$(ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+>>>>>>> 5e303d716225b03afb0bac3485c97fa2df553fac
     # Mac users
      LOGSTASH=0.0.0.0
     ```

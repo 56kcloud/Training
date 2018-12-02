@@ -253,7 +253,7 @@ We have now seen how logging works in a single container. Now, we want to see wh
 4. Expanding the command to capture certain containers
 
     ```
-     docker-compose logs |grep vote_1
+     docker-compose logs redis
     ```
 
 5. Open a browser tab `http://0.0.0.0:5000` and place a few votes and watch the logs. For those using PWD, click the link that appeared at the top the dashboard.
@@ -263,7 +263,7 @@ We have now seen how logging works in a single container. Now, we want to see wh
 6. Combing everything we learned
 
     ```
-     docker-compose logs --follow -t |grep vote_1
+     docker-compose logs --follow -t redis
     ```
 
     > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs

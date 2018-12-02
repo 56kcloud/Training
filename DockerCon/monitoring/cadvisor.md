@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/cadvisor-logo.png" alt="cAdvisor Logo" width="150" height="99"> 
 
-[cAdvisor](https://hub.docker.com/r/google/cadvisor/) is an amazing tool. It is an all-in-one tool for grabbing real-time metrics from all the containers running on a single host and exposing these metrics. The cAdvisor collects, aggregates, processes, and exports usaage and performance information from running containers.
+[cAdvisor](https://hub.docker.com/r/google/cadvisor/) is an amazing tool. It is an all-in-one tool for grabbing real-time metrics from all the containers running on a single host and exposing these metrics. The cAdvisor collects, aggregates, processes, and exports usage and performance information from running containers.
 
 In this section we will deploy a cAdvisor container and walk through the UI, configurations, and take a look at the metrics which it exposes.
 

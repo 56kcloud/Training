@@ -137,11 +137,6 @@ Now that we have our logging infrastructure setup, let's create a service that w
     4mrklhm2r3vh: running   [==================================================>]
     vu1dusztugvu: running   [==================================================>]
     verify: Service converged
-
-    sjgsvd69gad7lga35sigw6etu
-    overall progress: 1 out of 1 tasks
-    rt86o1i701zj: running   [==================================================>]
-    verify: Service converged
     ```
 
 Let's run through some of the options here:
@@ -162,7 +157,7 @@ Let's run through some of the options here:
 3. Check the service is up:
 
     ```
-     docker service ps logging-test
+     docker service ps logging-test1
     ID                  NAME                                      IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR          PORTS
     d9z4jarhh0bd        logging-test1.4mrklhm2r3vhoa6be3e47r50j   alpine:latest       manager1            Running             Running 3 minutes ago
     6k6rlloh8rk9        logging-test1.kw9vz2dve3t9hz06rrrvun9uf   alpine:latest       manager2            Running             Running 3 minutes ago
@@ -170,9 +165,6 @@ Let's run through some of the options here:
     a7p9pz88vgb3        logging-test1.0cjj9gwlbjkhev9m5ypu9hcl6   alpine:latest       manager3            Running             Running 3 minutes ago
     crzpzqp93vcr        logging-test1.oy0quc1fh770f3phjd2dlir5y   alpine:latest       worker2             Running             Running 3 minutes ago
 
-     docker service ps logging-test1
-    ID                  NAME                                      IMAGE               NODE                    DESIRED STATE       CURRENT STATE                ERROR               PORTS
-    t00q6jhv54zx        logging-test1.rt86o1i701zjuqxnjq5e0h7ui   alpine:latest       linuxkit-025000000001   Running             Running about a minute ago
     ```
 
 
@@ -257,11 +249,8 @@ You should see the list of logs update to show only those from your new service.
 
 6. Feel free to play around with other services and tags, and construct different queries in the Kibana UI. Documentation on the Lucene syntax that ElasticSearch and Kibana use for querying can be [found here](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/query-dsl-query-string-query.html#query-string-syntax).
 
-## Next Steps & Extra Credit
-For the next step in the tutorial, head over to the [Docker Monitoring](getting-started.md) section
 
-
-### <a name="Task_4"></a>Task 4: Extra Time Create a Dashboard
+### <a name="Task_4"></a>Task 4: Create a Dashboard
 In this section we will create a simple dashboard based on the ping data we are receiving.
 
 1. Click 'Visualize' on the left-hand menu bar.
@@ -311,3 +300,7 @@ What did we learn in this section?
 * Configuring Docker services to ship logs to our central ELK stack
 * Filtering and querying on logs in Kibana
 * Create a simple dashboard
+
+
+## Next Steps
+For the next step in the tutorial, head over to the [Docker Monitoring](getting-started.md) section

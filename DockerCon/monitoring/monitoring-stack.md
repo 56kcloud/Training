@@ -102,21 +102,21 @@ Grafana is an amazing tool which is easy to configure and use. Since Grafana ver
 
 8. In the Datasource Menu select the Plugins menu
 
-
 ### <a name="Task_3"></a>Task 4: Monitoring Containers / Hosts with the Prometheus Stack
 
 In the final section we will build a Dashboard based on the Prometheus stack. We will create a simple Status Dashboard highlighting the Systems State, Containers performance, and Diskspace. Let's do this!
 
 ### Create Single Stat Uptime
-1. In the Grafana UI click the `+` -> Create Dashboard menu
+1. In the Grafana UI click the + -> Create Dashboard menu
 2. Select Single Stat
 3. On the Panel Title click the Menu -> Edit button.
 4. Click the Datasource option -> Prometheus
-5. Add the query `time() - node_boot_time_seconds` which takes the current time and subtracts it from the boot time to give us Uptime of the server
+5. Add the `time() - avg(node_boot_time_seconds)` which takes the current time and subtracts it from the boot time to give us the average Uptime of all servers in the cluster
 6. Click the Options Tab -> Set the unit to Time -> Seconds
 7. Set the Decimal to 0
 8. Click the General Tab and Rename the Panel to Uptime
 9. Save Dashboard
+
 
 ### Create Single Stat Targets Online
 1. At the top right of the screen click -> Add Panel(looks like a graph) -> Single Stat button and move it next to the Uptime panel
@@ -126,10 +126,16 @@ In the final section we will build a Dashboard based on the Prometheus stack. We
 5. Add the query `sum(up)`
 6. Click the Options Tab
 7. Check the Background box (Invert the colors if the background is Red)
-8. Set the threshold to `0,3`
+8. Set the threshold to `0,9`
 9. Click the Value Mappings Menu
 10. Set the following Value Mappings:
-* 3 -> Up
+* 9 -> Up
+* 8 -> Down
+* 7 -> Down
+* 6 -> Down
+* 5 -> Down
+* 4 -> Down
+* 3 -> Down
 * 2 -> Down
 * 1 -> Down
 * 0 -> Down
@@ -140,32 +146,34 @@ In the final section we will build a Dashboard based on the Prometheus stack. We
 1. At the top right of the screen click -> Add Panel -> Graph button and move it below the single stat panels
 2. On the Panel Title click the Menu -> Edit button.
 3. Click the Datasource option -> Prometheus
-4. Add the Metric `container_memory_usage_bytes{name=~".+"}`
+4. Add the Metric `topk(5, container_memory_usage_bytes{name=~".+"})`
 5. To make the container names more readable add `{{name}}`to the Legend Format field
 6. Select the Axes Tab
 7. Change the Unit on `Left Y` to Data (Metric) -> Bytes
 8. Switch to General Tab
 9. Rename panel to `Memory Usage by Container`
 10. Switch to the Display Tab
-11. Under the Stacking & Null value click stack
-12. Under Mode options select Fill = 5
-13. Save Dashboard
+11. Under Mode options select Fill = 5
+12. Save Dashboard
 
 ### Create CPU Usage by Container Graph
 1. At the top right of the screen click -> Add Panel -> Graph button and move it below the single stat panels
 2. On the Panel Title click the Menu -> Edit button.
 3. Click the Datasource option -> Prometheus
 4. Add the Metric 
-`sum(rate(container_cpu_usage_seconds_total{name=~".+"}[15s])) by (name) * 100`
+`container_cpu_load_average_10s{image!=""}`
 5. To make the container names more readable add `{{name}}`to the Legend Format field
 6. Select the Axes Tab
-7. Change the Unit on `Left Y` to None -> Percent (0-100)
+7. Change the Unit on `Left Y` to None -> Percent (0-1.0)
 8. Switch to General Tab
 9. Rename panel to `CPU Usage by Container`
-10. Switch to the Display Tab
-11. Under the Stacking & Null value click stack
-12. Under Mode options select Fill = 5
+10. Switch to the Legend Tab
+11. Select values `Avg` and `Current`
+12. Under Options Select `Show` and `Table`
 13. Save Dashboard
+
+## Change the time range
+1. The upper right hand corner of Grafana, select the quick range `15 minutes`.
 
 Here is what the final Dashboard should look like:
 

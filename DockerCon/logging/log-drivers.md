@@ -124,7 +124,7 @@ Now that we have our logging infrastructure setup, let's create a service that w
         --name logging-test1 \
         --mode global \
         --log-driver=gelf \
-        --log-opt gelf-address=udp://$LOGSTASH:12201 \
+        --log-opt gelf-address=udp://${LOGSTASH}:12201 \
         --log-opt tag="LogTest1 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping google.com
@@ -144,7 +144,7 @@ Let's run through some of the options here:
 - `--name logging-test1` : name of the service
 - `--mode global` : one container per Swarm host
 - `--log-driver=gelf` : we're going to use the GELF (Graylog Extended Log Format) driver
-- `--log-opt gelf-address=udp://LOGSTASH:12201` : telling Docker where to send our GELF-formatted logs
+- `--log-opt gelf-address=udp://${LOGSTASH}:12201` : telling Docker where to send our GELF-formatted logs
 - `--log-opt tag="LogTest1 - {{.Name}}/{{.ImageName}}"` : adding a tag to our service for easier querying later
 - `alpine` : the image we want to run
 - `ping google.com` : the command our service is going to run
@@ -215,7 +215,7 @@ Let's filter on everything from a specific host.
         --name logging-test2 \
         --replicas 1 \
         --log-driver=gelf \
-        --log-opt gelf-address=udp://LOGSTASH:12201 \
+        --log-opt gelf-address=udp://${LOGSTASH}:12201 \
         --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
         alpine \
         ping facebook.com
@@ -303,4 +303,4 @@ What did we learn in this section?
 
 
 ## Next Steps
-For the next step in the tutorial, head over to the [Docker Monitoring](getting-started.md) section
+For the next step in the tutorial, head over to the [Docker Monitoring](../monitoring/stats.md) section.

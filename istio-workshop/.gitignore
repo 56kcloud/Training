@@ -1,0 +1,3 @@
+*/**/install_istio.yaml
+*/**/target
+*/0_cluster/*.sh

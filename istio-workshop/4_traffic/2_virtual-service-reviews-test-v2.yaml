@@ -13,7 +13,7 @@ spec:
     route:
     - destination:
         host: reviews
-        subset: v./3  2
+        subset: v2
   - route:
     - destination:
         host: reviews

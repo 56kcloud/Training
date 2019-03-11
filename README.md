@@ -6,7 +6,6 @@ Welcome to [56K.Cloud](https://www.56k.cloud) Training & Labs. This repo contain
 
 #### Tutorials:
 * [DockerCon Monitoring & Logging](DockerCon/readme.md)
-* [DevOpsDays Zurich 2018](DevOpsDays/readme.md)
 * [Docker](Docker/README.md)
 * [Kubernetes](Kubernetes/README.md)
 * [DevOps](DevOps/README.md)

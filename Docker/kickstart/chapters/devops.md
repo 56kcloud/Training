@@ -113,7 +113,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 4. The URL of the Repo requires updating:
 
     ```
-    $ git remote set-url origin https://github.com/vegasbrianc/autobuilds.git
+    $ git remote set-url origin https://github.com/<your GitHub username>/<your github repo name>.git
     ```
 
 <center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>

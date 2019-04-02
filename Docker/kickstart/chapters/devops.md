@@ -108,31 +108,59 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below. 
 
-**Be aware that we need to add all files in the directory so run `git add `** 
-
-4. The URL of the Repo requires updating:
+4. Remove the Git directory
 
     ```
-    $ git remote set-url origin https://github.com/<your GitHub username>/<your github repo name>.git
+    $ rm -Rf .git
     ```
 
-<center><img src="../images/git_initialze.png" title="Initialze Git Local Repo"></center>
+5. Initalize the Git directory
 
-5. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) and in the upper right hand corner click create new Automated build.
+    ```
+    $ git init
+    ```
 
-<center><img src="../images/create-autobuild-repo.png" title="Create Auto Build Repo"></center>
+6. Add your Git Repo configuration to the local index
 
-6. Click the GitHub icon and link your GitHub account to Docker Hub
+    ```
+    $ git remote add origin https://github.com/<your GitHub username>/<your github repo name>.git
+    ```
 
-7. You will now see your GitHub user on the left and all your GitHub Repos on the right. In the right panel search and select the `autobuilds` GitHub repo we created in the previous section.
+7. Add all files to Git index
 
-8. Fill in a short description for our Autobuild Repo.
+    ```
+    $ git add *
+    ```
 
-9. Expand the next screen by clicking `Click here to cusomize` link. This will allow us to perform autobuilds based on certain tags or branches.
+8. Commit Linux Tweet App files to the GitHub Autobuilds Repo
 
-10. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+    ```
+    $ git commit -m "First commit to Autobuilds"
+    ```
 
-11. In the `Build Settings` tab click the `Trigger`button to initate a build
+9. Push the changes to GitHub
+
+    ```
+    $ git push --set-upstream origin master
+    ```  
+
+
+10. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) click Repositories at the top menu bar and select the `Autobuilds` Repository
+
+11. At the top menu click `Builds`
+
+12. Connect GitHub and go back to the Repos -> Autobuilds Repo -> Builds
+
+9. Click `Configure Autobuilds`
+
+10. Select your GitHub User and the Autobuilds Repo
+<center><img src="../images/autobuilds.png" title="Configure Autobuilds"></center>
+
+11. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+
+12. Click `Save & Build`
+
+13. Navigate to the Recent Builds and click on the `Build in Master` to view the build logs
 
 Once the autobuild has complete let's have a look around.
 

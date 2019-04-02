@@ -62,7 +62,7 @@ Let's have a look at the  Dockerfile we'll be using, which builds a simple websi
     - [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose) documents which ports the application uses.
     - [CMD](https://docs.docker.com/engine/reference/builder/#cmd) specifies what command to run when a container is started from the image. Notice that we can specify the command, as well as run-time arguments.
 
-3. In order to make commands more copy/paste friendly, export an environment variable containing your DockerID (if you don't have a DockerID you can get one for free via [Docker Cloud](https://cloud.docker.com))
+3. In order to make commands more copy/paste friendly, export an environment variable containing your DockerID (if you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com))
 
     ```
     $ export DOCKERID=<your docker id>

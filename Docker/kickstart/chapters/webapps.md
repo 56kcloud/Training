@@ -207,10 +207,10 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 ## Layers and Copy on Write
 
 
-1. Pull the Debian:Jessie image
+1. Pull the Debian:Stretch image
 
     ```
-    $ docker image pull debian:jessie
+    $ docker image pull debian:stretch-slim
     jessie: Pulling from library/debian
     85b1f47fba49: Pull complete
     Digest: sha256:f51cf81db2de8b5e9585300f655549812cdb27c56f8bfb992b8b706378cd517d
@@ -257,7 +257,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 3. Start a Debian container, shell into it.   
 
     ```
-    $ docker run --tty --interactive --name debian debian:jessie bash
+    $ docker run --tty --interactive --name debian debian:stretch-slim bash
     root@e09203d84deb:/#
     ```
 
@@ -281,26 +281,6 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
     OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer.  The unified view is exposed through its own directory called merged. 
 
-    We can use Docker's *inspect* command to look at where these directories live on our Docker host's file system. 
-
-    > Note: The *inspect* command uses Go templates to allow us to extract out specific information from its output. For more information on how these templates work with *inspect* read this [excellent tutorial](http://container-solutions.com/docker-inspect-template-magic/). 
-
-    ```
-    $ docker inspect -f '{{json .GraphDriver.Data}}' debian | python -mjson.tool
-        
-    {
-      "LowerDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e-init/diff:/var/lib/docker/overlay2/c2e2db4221ad5dca9f35a92e04d17c79b861ddee30015fa3ddc77c66ae1bf758/diff",
-      "MergedDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/merged",
-      "UpperDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/diff",
-      "WorkDir": "/var/lib/docker/overlay2/0dad4d523351851af4872f8c6706fbdf36a6fa60dc7a29fff6eb388bf3d7194e/work"
-    }
-    ```
-
-    > Note: `WorkDir` is a working directory for the Overlay2 driver
-
-    Since the change we made is the newest modification to the Debian container's file system, it's going to be stored in `UpperDir`. 
-
-
 6. Stop the contianer
 
     ```
@@ -312,7 +292,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     ```
     $ docker container ls --all
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS           PORTS               NAMES
-    674d7abf10c6        debian:jessie       "bash"              36 minutes ago      Exited (0) 2 minutes ago                       debian
+    674d7abf10c6        debian:stretch-slim "bash"              36 minutes ago      Exited (0) 2 minutes ago                       debian
     ```
 
 8. Sart the Debian container again

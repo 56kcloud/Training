@@ -10,130 +10,166 @@ Let's take a look at Docker Logging
 > * [Task 3: docker-compose logs](#Task_3)
 > * [Recap topics covered in this section](#Recap)
 
-## <a name="Task_1"></a>Task 1: Start a container to log
+## <a name="Task_1"></a>Task 1: Start a Traefik Proxy to log
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a variant of NGINX called [jwilder/nginx-proxy](https://hub.docker.com/r/library/traefik/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
+Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a reverse proxy called [Traefik](https://traefik.io/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
 
-1. To get started, let's run the following in our terminal:
-
-    ```
-     docker container run -d --name nginx -p 8080:80 jwilder/nginx-proxy:alpine
-    Unable to find image 'jwilder/nginx-proxy:alpine' locally
-    alpine: Pulling from jwilder/nginx-proxy
-    ff3a5c916c92: Already exists
-    b430473be128: Pull complete
-    7d4e05a01906: Pull complete
-    8aeac9a3205f: Pull complete
-    4051da9b64e1: Pull complete
-    6e3d3f4d490b: Pull complete
-    c12a8c9833a1: Pull complete
-    e5211b7bcfb8: Pull complete
-    84f8322407bb: Pull complete
-    8072554e5444: Pull complete
-    2872c76767cf: Pull complete
-    Digest: sha256:6181afd7ce4a0291bf73b1787be33928213203401ccbeee2cd720db5d700636b
-    Status: Downloaded newer image for jwilder/nginx-proxy:alpine
-    673f5eed33e6ebea397bb162567a66923f3772c6e409f0de4614467d0f157f93
+1. To get started, create a new file named `traefik.toml`and add the below configuration to the newly created file.
 
     ```
+    ################################################################
+    # API and dashboard configuration
+    ################################################################
+    123[api]
+    ################################################################
+    # Docker configuration backend
+    ################################################################
+    [docker]
+    domain = "docker.local"
+    watch = true
+    ################################################################
+    # Enable Access Logs
+    ################################################################
+    [accessLog]
+    ```
 
-2. Ensure the `NGINX` container is running by running the `ls` command with `-l` showing last container
+2. Start the `Traefik` proxy. Ensure the `traefik.toml` is in your current working directory.
+
+  ```
+  docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
+  ```
+
+
+2. Ensure the `Traefik` container is running by running the `ls` command with `-l` showing last container
 
     ```
      docker container ps -l
-    CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS                      PORTS               NAMES
-    4f2e87423ac3        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   14 seconds ago      Exited (1) 13 seconds ago                       nginx
+   CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS       NAMES
+   0b2062765e41        traefik             "/traefik"          8 minutes ago       Exited (1) 8 minutes ago                  Traefik
 
     ```
 
     Uh oh, what happend?
     We can actually use the `docker logs` command on stopped containers to troubleshoot. Great, let's do it.
 
-3. Check the logs of the `NGINX` container to see why the container didn't start
+3. Check the logs of the `Traefik` container to see why the container didn't start
 
     ```
-     docker logs nginx
-    ERROR: you need to share your Docker host socket with a volume at /tmp/docker.sock
-    Typically you should run your jwilder/nginx-proxy with: `-v /var/run/docker.sock:/tmp/docker.sock:ro`
-    See the documentation at http://git.io/vZaGJ
-    WARNING: /etc/nginx/dhparam/dhparam.pem was not found. A pre-generated dhparam.pem will be used for now while a new one
-    is being generated in the background.  Once the new dhparam.pem is in place, nginx will be reloaded.
+     docker logs traefik
+    2019/04/25 15:11:51 Error reading TOML config file /etc/traefik/traefik.toml : Near line 3 (last key parsed ''): bare keys cannot         contain '['
     ```
 
-4. OK, remove the `NGINX` container
+4. OK, remove the `Traefik` container
 
     ```
-     docker container rm -f nginx
+     docker container rm -f traefik
     ```
 
     > This is the forceful way to remove it. With great power comes great responsability. You are warned!
 
-5. Start `NGINX` with the suggestions from the log file
+5. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
+    ```
+    ################################################################
+    # API and dashboard configuration
+    ################################################################
+    [api]
+    ################################################################
+    # Docker configuration backend
+    ################################################################
+    [docker]
+    domain = "docker.local"
+    watch = true
+    ################################################################
+    # Enable Access Logs
+    ################################################################
+    [accessLog]
+    ``` 
+
+5. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
 
     ```
-     docker container run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
-    --name nginx \
-    jwilder/nginx-proxy:alpine
+      docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
-6. Ensure the `NGINX` container is running
+6. Ensure the `Traefik` container is running
 
     ```
      docker container ps -l
-    CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
-    960ab9aed7af        jwilder/nginx-proxy:alpine   "/app/docker-entrypo…"   3 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp   nginx
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                         NAMES
+    e72a26a2b752        traefik             "/traefik"          5 seconds ago       Up 3 seconds        0.0.0.0:80->80/tcp,0.0.0.0:8080->8080/tcp   traefik
     ```
 
-7. Test the `NGINX` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0:8080` (PWD just click the link provided above the terminal)
+7. Test the `Traefik` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0` (PWD just click the link provided above the terminal)
 
     ```
      curl 0.0.0.0:8080
     ```
 
-    Go ahead and send a few curl/refresh request to the `NGINX` container.
+    Go ahead and send a few curl/refresh request to the `Traefik` container.
 
 8. Check the logs
 
     ```
-     docker container logs nginx
+     docker container logs traefik
     ```
 
-    > What do we see different? We should now see the each curl/refresh we sent to the `NGINX` container
+    > What do we see different? We should now see the each curl/refresh we sent to the `Traefik` container
 
 
-We are still seeing an error in the log file which is `HTTP Error 503` Let's start a container and connect it to the reverse proxy to see if we can get everything healthy.
+We should see a 404 error about no backends configured.
 
 
-Now, we will connect a `whoami` container to the NGINX proxy. This whoami container will register itself automatically with the proxy when we pass environment variables to the container. This will now route traffic from `0.0.0.0:8080`from the NGINX proxy to our new whoami application.
+Now, we will connect a `whoami` container to the Traefik proxy. This whoami container will register itself automatically with the proxy when we pass environment variables to the container. This will now route traffic from `0.0.0.0:8080`from the NGINX proxy to our new whoami application.
 
 9. Start the `whoami` container
 
-    ` docker container run -d -e VIRTUAL_HOST=whoami.local --name whoami jwilder/whoami`
+    `docker run -d --name test emilevauge/whoami`
 
-    > The `jwilder/nginx-proxy`polls for new containers containing the environment variable `VIRTUAL_HOST` When this variable is seen it       > is automatically registered with the proxy
+    > `Traefik` watches the Docker daemon for any new containers that start. When a new container starts it automatically registers it with `Traefik`
 
 10. Let's check the logs to see if it the `whoami` container registered with the proxy
 
-    `  docker container logs nginx`
+    `  docker container logs traefik`
 
     We should see the whoami ID register with the proxy
     ```
-    dockergen.1 | 2018/06/09 21:36:52 Received event start for container d4d73cb5ef99
-    dockergen.1 | 2018/06/09 21:36:52 Generated '/etc/nginx/conf.d/default.conf' from 2 containers
-    dockergen.1 | 2018/06/09 21:36:52 Running 'nginx -s reload'
+    172.17.0.1 - - [25/Apr/2019:15:37:33 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 5 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:36 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 6 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-test-docker-local-0" "http://172.17.0.5:80" 0ms
     ```
 
 11. `curl` the whoami container using the Virtual Hostname we created
 
     ```
-     curl -H "Host: whoami.local" 127.0.0.1:8080
-    I'm d4d73cb5ef99
+     curl --header 'Host: test.docker.local' 'http://localhost:80/'
+
+    Response
+    Hostname: 299f3c36eb18
+    IP: 127.0.0.1
+    IP: 172.17.0.5
+    GET / HTTP/1.1
+    Host: test.docker.local
+    User-Agent: curl/7.47.0
+    Accept: */*
+    Accept-Encoding: gzip
+    X-Forwarded-For: 172.17.0.1
+    X-Forwarded-Host: test.docker.local
+    X-Forwarded-Port: 80
+    X-Forwarded-Proto: http
+    X-Forwarded-Server: 10744bcc8a7d
+    X-Real-Ip: 172.17.0.1
     ```
 12. Finally, run the `docker container logs` command on the proxy to ensure everything is now working as expected
 
-    `docker container logs nginx`
+    `docker container logs traefik`
 
     > We now see the hostname which is queried and a `HTTP 200` success code
+    
+    ```
+      172.17.0.1 - - [25/Apr/2019:15:37:33 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 5 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:36 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 6 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-test-docker-local-0" "http://172.17.0.5:80" 0ms
+    ```
 
 
 ### <a name="Task_2"></a>Task 2: Understanding the Docker Logs Command

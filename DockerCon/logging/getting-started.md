@@ -40,7 +40,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
   ```
 
 
-2. Ensure the `Traefik` container is running by running the `ls` command with `-l` showing last container
+3. Ensure the `Traefik` container is running by running the `ls` command with `-l` showing last container
 
     ```
      docker container ps -l
@@ -52,14 +52,14 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     Uh oh, what happend?
     We can actually use the `docker logs` command on stopped containers to troubleshoot. Great, let's do it.
 
-3. Check the logs of the `Traefik` container to see why the container didn't start
+4. Check the logs of the `Traefik` container to see why the container didn't start
 
     ```
      docker logs traefik
     2019/04/25 15:11:51 Error reading TOML config file /etc/traefik/traefik.toml : Near line 3 (last key parsed ''): bare keys cannot         contain '['
     ```
 
-4. OK, remove the `Traefik` container
+5. OK, remove the `Traefik` container
 
     ```
      docker container rm -f traefik
@@ -67,7 +67,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
     > This is the forceful way to remove it. With great power comes great responsability. You are warned!
 
-5. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
+6. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
     ```
     ################################################################
     # API and dashboard configuration
@@ -85,13 +85,13 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     [accessLog]
     ``` 
 
-5. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
+7. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
 
     ```
       docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
-6. Ensure the `Traefik` container is running
+8. Ensure the `Traefik` container is running
 
     ```
      docker container ps -l
@@ -99,7 +99,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     e72a26a2b752        traefik             "/traefik"          5 seconds ago       Up 3 seconds        0.0.0.0:80->80/tcp,0.0.0.0:8080->8080/tcp   traefik
     ```
 
-7. Test the `Traefik` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0` (PWD just click the link provided above the terminal)
+9. Test the `Traefik` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0` (PWD just click the link provided above the terminal)
 
     ```
      curl 0.0.0.0:8080
@@ -107,7 +107,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
     Go ahead and send a few curl/refresh request to the `Traefik` container.
 
-8. Check the logs
+10. Check the logs
 
     ```
      docker container logs traefik
@@ -121,13 +121,13 @@ We should see a 404 error about no backends configured.
 
 Now, we will connect a `whoami` container to the Traefik proxy. This whoami container will register itself automatically with the proxy when we pass environment variables to the container. This will now route traffic from `0.0.0.0:8080`from the NGINX proxy to our new whoami application.
 
-9. Start the `whoami` container
+10. Start the `whoami` container
 
     `docker run -d --name test emilevauge/whoami`
 
     > `Traefik` watches the Docker daemon for any new containers that start. When a new container starts it automatically registers it with `Traefik`
 
-10. Let's check the logs to see if it the `whoami` container registered with the proxy
+11. Let's check the logs to see if it the `whoami` container registered with the proxy
 
     `  docker container logs traefik`
 
@@ -138,7 +138,7 @@ Now, we will connect a `whoami` container to the Traefik proxy. This whoami cont
     172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-test-docker-local-0" "http://172.17.0.5:80" 0ms
     ```
 
-11. `curl` the whoami container using the Virtual Hostname we created
+12. `curl` the whoami container using the Virtual Hostname `test.docker.local`configured in `Traefik`
 
     ```
      curl --header 'Host: test.docker.local' 'http://localhost:80/'

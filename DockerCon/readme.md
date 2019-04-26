@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/56k.jpg" alt="56K.Cloud Logo" width="150" height="99"> <img src="https://raw.githubusercontent.com/56kcloud/Training/master/img/docker_logo.png" alt="DockerCon Barcelona 2019" width="180" height="129">
 
-Welcome to the DockerCon 2018 Docker Logging & Monitoring Workshop presented by [56K.Cloud](https://www.56k.cloud)
+Welcome to the DockerCon 2019 Docker Logging & Monitoring Workshop presented by [Brian Christner](https://twitter.com/idomyowntricks) from [56K.Cloud](https://www.56k.cloud)
 
 This Docker tutorial consists of the following sections:
 

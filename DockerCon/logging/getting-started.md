@@ -119,11 +119,11 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 We should see a 404 error about no backends configured.
 
 
-Now, we will connect a `whoami` container to the Traefik proxy. This whoami container will register itself automatically with the proxy when we pass environment variables to the container. This will now route traffic from `0.0.0.0:8080`from the NGINX proxy to our new whoami application.
+Now, we will connect a `whoami` container to the `Traefik` proxy. This `whoami` container will register itself automatically with the proxy. The `Traefik` proxy routes traffic from `0.0.0.0`from the `Traefik` proxy to our new `whoami` application.
 
 10. Start the `whoami` container
 
-    `docker run -d --name test emilevauge/whoami`
+    `docker run -d --name whoami emilevauge/whoami`
 
     > `Traefik` watches the Docker daemon for any new containers that start. When a new container starts it automatically registers it with `Traefik`
 
@@ -197,66 +197,68 @@ The `docker container logs` command is a powerful command and is used for troubl
 2. Add timestamps to our logging output. This will help with narrowing down when events occured if no timestamp is created in the log message.
 
     ```
-     docker container logs -t nginx
+     docker container logs -t traefik
     ```
 
 3. Tail the last `n` number of lines in the log file
 
-    This is extremly helpful when logs become very big. If you were to run a `docker logs` command on a large log it could over run your terminal winder
+    This is extremely helpful when logs become very big. If you were to run a `docker logs` command on a large log it could over run your terminal winder
 
 
     ```
-     docker container logs --tail 5 nginx
+     docker container logs --tail 5 traefik
     ```
 
 4. Follow the log for real-time updates.
 
     ```
-     docker container logs -t -f nginx
+     docker container logs -t -f traefik
     ```
+    
+    Curl or refresh the `whoami` container a couple times to see the log update.
+    
+    ``` 
+    curl --header 'Host: test.docker.local' 'http://localhost:80/'
+    ``` 
 
-    Curl or refresh the URL 0.0.0.0:8080 a couple times to see the log update
 
-
-5. Restart the `NGINX` container
+5. Restart the `Traefik` container
 
      ```
-     docker container restart nginx
+     docker container restart traefik
     ```
 
 6. Check the logs again. What do you notice?
 
     ```
-     docker container logs nginx
+     docker container logs traefik
     ```
 
     > The logs still persist inside the container from our previous tests.
 
-7. Stop and remove the NGINX container
+7. Stop and remove the `Traefik` container
 
     ```
-     docker container rm -f nginx
+     docker container rm -f traefik
     ```
 
-8. Start `NGINX` again
+8. Start `Traefik` again
 
     ```
-     docker run  -d -p 8080:80 -v /var/run/docker.sock:/tmp/docker.sock:ro \
-    --name nginx \
-    jwilder/nginx-proxy:alpine
+     docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
 9. Check the logs. What do you notice?
 
     ```
-     docker container logs nginx
+     docker container logs traefik
     ```
 
     > This time we removed the container and started a new container. It is important to notice now the logs didn't persist. This is why   it is important we persist logs outside of the containers.
 
 10. Cleanup running containers
 
-    ` docker container rm -f whoami nginx`
+    ` docker container rm -f whoami traefik`
 
 
 ### <a name="Task_3"></a>Task 3: docker-compose and logging

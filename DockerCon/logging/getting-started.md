@@ -14,7 +14,13 @@ Let's take a look at Docker Logging
 
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a reverse proxy called [Traefik](https://traefik.io/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
 
-1. To get started, create a new file named `traefik.toml`and add the below configuration to the newly created file.
+1. To get started, create a new directory `traefik` 
+
+   ``` 
+   mkdir traefik
+   ``` 
+
+2. Now create a new file named `traefik.toml`and add the below configuration to the newly created file.
 
     ```
     ################################################################
@@ -33,14 +39,14 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     [accessLog]
     ```
 
-2. Start the `Traefik` proxy. Ensure the `traefik.toml` is in your current working directory.
+3. Start the `Traefik` proxy. Ensure the `traefik.toml` is in your current working directory.
 
   ```
   docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
   ```
 
 
-3. Ensure the `Traefik` container is running by running the `ls` command with `-l` showing last container
+4. Ensure the `Traefik` container is running by running the `ls` command with `-l` showing last container
 
     ```
      docker container ps -l
@@ -52,14 +58,14 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     Uh oh, what happend?
     We can actually use the `docker logs` command on stopped containers to troubleshoot. Great, let's do it.
 
-4. Check the logs of the `Traefik` container to see why the container didn't start
+5. Check the logs of the `Traefik` container to see why the container didn't start
 
     ```
      docker logs traefik
     2019/04/25 15:11:51 Error reading TOML config file /etc/traefik/traefik.toml : Near line 3 (last key parsed ''): bare keys cannot         contain '['
     ```
 
-5. OK, remove the `Traefik` container
+6. OK, remove the `Traefik` container
 
     ```
      docker container rm -f traefik
@@ -67,7 +73,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
     > This is the forceful way to remove it. With great power comes great responsability. You are warned!
 
-6. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
+7. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
     ```
     ################################################################
     # API and dashboard configuration
@@ -85,13 +91,13 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     [accessLog]
     ``` 
 
-7. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
+8. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
 
     ```
       docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
-8. Ensure the `Traefik` container is running
+9. Ensure the `Traefik` container is running
 
     ```
      docker container ps -l
@@ -99,21 +105,21 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     e72a26a2b752        traefik             "/traefik"          5 seconds ago       Up 3 seconds        0.0.0.0:80->80/tcp,0.0.0.0:8080->8080/tcp   traefik
     ```
 
-9. Test the `Traefik` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0` (PWD just click the link provided above the terminal)
+10. Test the `Traefik` container with `curl` or open a browser tab and navigate to: `https://0.0.0.0`
 
     ```
-     curl 0.0.0.0:8080
+     curl 0.0.0.0
     ```
 
     Go ahead and send a few curl/refresh request to the `Traefik` container.
 
-10. Check the logs
+11. Check the logs
 
     ```
      docker container logs traefik
     ```
 
-    > What do we see different? We should now see the each curl/refresh we sent to the `Traefik` container
+    > What do we see different? We should now see each curl/refresh we sent to the `Traefik` container
 
 
 We should see a 404 error about no backends configured.
@@ -121,29 +127,21 @@ We should see a 404 error about no backends configured.
 
 Now, we will connect a `whoami` container to the `Traefik` proxy. This `whoami` container will register itself automatically with the proxy. The `Traefik` proxy routes traffic from `0.0.0.0`from the `Traefik` proxy to our new `whoami` application.
 
-10. Start the `whoami` container
+12. Start the `whoami` container
 
     `docker run -d --name whoami emilevauge/whoami`
 
-    > `Traefik` watches the Docker daemon for any new containers that start. When a new container starts it automatically registers it with `Traefik`
+    > `Traefik` watches the Docker daemon for new containers that join and start on thee server. When a new container starts it automatically registers it with `Traefik`
 
-11. Let's check the logs to see if it the `whoami` container registered with the proxy
-
-    `  docker container logs traefik`
-
-    We should see the whoami ID register with the proxy
-    ```
-    172.17.0.1 - - [25/Apr/2019:15:37:33 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 5 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
-    172.17.0.1 - - [25/Apr/2019:15:37:36 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 6 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
-    172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-test-docker-local-0" "http://172.17.0.5:80" 0ms
-    ```
-
-12. `curl` the whoami container using the Virtual Hostname `test.docker.local`configured in `Traefik`
+13. `curl` the whoami container using the Virtual Hostname `test.docker.local`configured in `Traefik`
 
     ```
-     curl --header 'Host: test.docker.local' 'http://localhost:80/'
+     curl --header 'Host: whoami.docker.local' 'http://localhost:80/'
+    ```
 
-    Response
+Response
+    
+    ``` 
     Hostname: 299f3c36eb18
     IP: 127.0.0.1
     IP: 172.17.0.5
@@ -159,16 +157,16 @@ Now, we will connect a `whoami` container to the `Traefik` proxy. This `whoami` 
     X-Forwarded-Server: 10744bcc8a7d
     X-Real-Ip: 172.17.0.1
     ```
-12. Finally, run the `docker container logs` command on the proxy to ensure everything is now working as expected
+14. Finally, run the `docker container logs` command on the proxy to ensure everything is now working as expected
 
     `docker container logs traefik`
 
     > We now see the hostname which is queried and a `HTTP 200` success code
     
     ```
-      172.17.0.1 - - [25/Apr/2019:15:37:33 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 5 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
-    172.17.0.1 - - [25/Apr/2019:15:37:36 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 6 "Host-test-docker-local-0" "http://172.17.0.5:80" 1ms
-    172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-test-docker-local-0" "http://172.17.0.5:80" 0ms
+    172.17.0.1 - - [25/Apr/2019:15:37:33 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 5 "Host-whomai-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:36 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 6 "Host-whoami-docker-local-0" "http://172.17.0.5:80" 1ms
+    172.17.0.1 - - [25/Apr/2019:15:37:37 +0000] "GET / HTTP/1.1" 200 326 "-" "curl/7.47.0" 7 "Host-whoami-docker-local-0" "http://172.17.0.5:80" 0ms
     ```
 
 
@@ -215,14 +213,14 @@ The `docker container logs` command is a powerful command and is used for troubl
      docker container logs -t -f traefik
     ```
     
-    Curl or refresh the `whoami` container a couple times to see the log update.
+    Curl the `whoami` container a couple times to see the log update. Remember the IP address of the node you are on by looking at the command prompt `root@ip_address`. Switch to a different worker node and run the below command.
     
     ``` 
-    curl --header 'Host: test.docker.local' 'http://localhost:80/'
+    curl --header 'Host: whoami.docker.local' 'http://<ip_address_host>:80/'
     ``` 
 
 
-5. Restart the `Traefik` container
+5. Switch back to the original Worker and Restart the `Traefik` container
 
      ```
      docker container restart traefik
@@ -265,7 +263,7 @@ The `docker container logs` command is a powerful command and is used for troubl
 
 We have now seen how logging works in a single container. Now, we want to see what logs look like when multiple containers are running in a compose file. In this example we will use the docker voting application. This stack contains 5 different containers running with one docker-compose file.
 
-1. Clone the Voting App Repo
+1. In the `Setup`section we cloned the Repo. If you haven't done so please do it now
 
     ```
      git clone https://github.com/dockersamples/example-voting-app.git
@@ -298,20 +296,20 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
     > Since no timestamp is in the log it is difficult to see if new votes arrived or not.
 
-6. Combing everything we learned
+6. Combing everything we learned follow and timestamp the logs
 
     ```
-     docker-compose logs --follow -t redis
+     docker-compose logs -f -t redis
     ```
 
-    > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs
+    > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs. For PWD, navigate to UCP ->
 
 ### Cleanup
 
-1. Time to remove the running containers
+1. Time to stop and remove the running containers
 
     ```
-     docker-compose stop
+     docker-compose rm -fs
     ```
 
 
@@ -319,11 +317,11 @@ We have now seen how logging works in a single container. Now, we want to see wh
 
 What did we learn in this section?
 
-* Running `docker logs` on stopped containers
+* Running `docker container logs` on stopped containers
 * Troubleshooting containers
-* The `docker logs`command is actually quite powerful and can be combined with other tools like the Linux `grep` command or others
+* The `docker container logs`command is actually quite powerful and can be combined with other tools like the Linux `grep` command or others
 * Logs don't persist in containers once the container is removed
-* `docker-compose logs` works similarly to `docker logs` but displays all containers in the compose stack
+* `docker-compose logs` works similarly to `docker container logs` but displays all containers in the compose stack
 
 ## Next Steps, Docker Swarm & Logs
 For the next step in the workshop, head over to [Docker Swarm & Logging](./log-drivers.md)

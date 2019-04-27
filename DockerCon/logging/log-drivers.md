@@ -1,6 +1,6 @@
 # Docker Swarm & Logging
 
-In the previous exercise we saw how to check out logs for running containers on a single host. In this section we'll be creating services across a Swarm and shipping those logs to a centralised location for easier storage and querying.
+In the previous exercise we saw how to check out logs for running containers on a single host. In this section we'll be creating services across a Swarm and shipping those logs to a centralized location for easier storage and querying.
 
 > **Tasks**:
 >
@@ -19,7 +19,9 @@ For this exercise we're going to use the popular ELK logging stack:
 - [Logstash](https://www.elastic.co/products/logstash) (for ingesting raw logs and optionally transforming them before sending them to ElasticSearch)
 - [Kibana](https://www.elastic.co/products/kibana) (a web UI for querying into ElasticSearch)
 
-1. To get started, let's run the following in our terminal:
+1. **Change to the Manager Node** 
+
+2. To get started, let's run the following in our terminal:
 
     ```
     git clone https://github.com/johnharris85/docker-elk.git
@@ -56,7 +58,6 @@ For this exercise we're going to use the popular ELK logging stack:
 1. Now we have the stack downloaded, we can deploy it to the Swarm.
 
     ```
-    docker swarm init
     docker stack deploy -c docker-stack.yml elk
 
     Creating network elk_elk
@@ -91,10 +92,10 @@ We can see that Docker created a lot of components on our Swarm.
     ```
 
 
-3. Once the services have all converged, let's check that we can hit the Kibana web UI in a browser. 
+3. Once the services have all converged, let's check that we can access the Kibana web UI. 
 
 **PWD**
-If you're using PWD then you can click the `5601` port button at the top of the screen. 
+If you're using PWD then open UCP -> Swarm -> Services -> elk_kibana. Open the endpoint URL in a browser tab. 
 
 **Deployed locally**
 If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601` or just http://localhost:5601

@@ -14,10 +14,11 @@ Let's take a look at Docker Logging
 
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run a reverse proxy called [Traefik](https://traefik.io/) container (a high-performance webserver, load-balancer, and proxy) on your system and get hands-on with the `docker logs` command.
 
-1. To get started, create a new directory `traefik` 
+1. To get started, create a new directory `traefik` and change to the `traefik`directory
 
    ``` 
    mkdir traefik
+   cd traefik
    ``` 
 
 2. Now create a new file named `traefik.toml`and add the below configuration to the newly created file.

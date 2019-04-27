@@ -21,7 +21,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
    cd traefik
    ``` 
 
-2. Now create a new file named `traefik.toml`and add the below configuration to the newly created file.
+2. Using your favorite editor create a new file named `traefik.toml`and add the below configuration to the newly created file.
 
     ```
     ################################################################
@@ -43,7 +43,9 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 3. Start the `Traefik` proxy. Ensure the `traefik.toml` is in your current working directory.
 
   ```
-  docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
+  docker run -d -p 8080:8080 -p 80:80 --name traefik \
+  -v $PWD/traefik.toml:/etc/traefik/traefik.toml  \
+  -v /var/run/docker.sock:/var/run/docker.sock traefik
   ```
 
 
@@ -62,8 +64,9 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 5. Check the logs of the `Traefik` container to see why the container didn't start
 
     ```
-     docker logs traefik
-    2019/04/25 15:11:51 Error reading TOML config file /etc/traefik/traefik.toml : Near line 3 (last key parsed ''): bare keys cannot         contain '['
+     docker container logs traefik
+     2019/04/25 15:11:51 Error reading TOML config file /etc/traefik/traefik.toml : 
+     Near line 3 (last key parsed ''): bare keys cannot         contain '['
     ```
 
 6. OK, remove the `Traefik` container
@@ -95,7 +98,9 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 8. Start `Traefik` with the fixed configuration file. Ensure the `traefik.toml` is in your current working directory.
 
     ```
-      docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
+    docker run -d -p 8080:8080 -p 80:80 --name traefik \
+    -v $PWD/traefik.toml:/etc/traefik/traefik.toml  \
+    -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
 9. Ensure the `Traefik` container is running
@@ -123,16 +128,18 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
     > What do we see different? We should now see each curl/refresh we sent to the `Traefik` container
 
 
-We should see a 404 error about no backends configured.
+    We should see a 404 error about no backends configured.
 
 
 Now, we will connect a `whoami` container to the `Traefik` proxy. This `whoami` container will register itself automatically with the proxy. The `Traefik` proxy routes traffic from `0.0.0.0`from the `Traefik` proxy to our new `whoami` application.
 
+`Traefik` watches the Docker daemon for new containers that join and start on thee server. When a new container starts it automatically registers it with `Traefik`
+
 12. Start the `whoami` container
 
-    `docker run -d --name whoami emilevauge/whoami`
-
-    > `Traefik` watches the Docker daemon for new containers that join and start on thee server. When a new container starts it automatically registers it with `Traefik`
+    ```
+    docker run -d --name whoami emilevauge/whoami
+    ```
 
 13. `curl` the whoami container using the Virtual Hostname `test.docker.local`configured in `Traefik`
 

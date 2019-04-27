@@ -112,7 +112,7 @@ Now that we have our logging infrastructure setup, let's create a service that w
 
     ```
     # Play-with-Docker users
-     LOGSTASH=(hostname -i)
+     LOGSTASH=localhost
 
     # Mac users
      LOGSTASH=0.0.0.0
@@ -201,15 +201,15 @@ Hover over the `message` field on the left-hand field list, and hit the `add` bu
 
 Let's filter on everything from a specific host.
 
-    1. Click on the `source_host` field in the left-hand field list and remember one of the host IP addresses.
+- Click on the `source_host` field in the left-hand field list and remember one of the host IP addresses.
 
-    2. Above the field list, click the 'Add Filter' button and then choose `source_host` as the field, `is` as the operator, and type your chosen IP into the `Value` field.
+- Above the field list, click the 'Add Filter' button and then choose `source_host` as the field, `is` as the operator, and type your chosen IP into the `Value` field.
 
-    3. The output should change and you will see only logs from that host.
+- The output should change and you will see only logs from that host.
 
-4. Now let's run another service so we can query on the tag field.
+- Now let's run another service so we can query on the tag field.
 
-    1. Back on one of your manager nodes, run the following:
+- Back on one of your manager nodes, run the following:
 
         ```
          docker service create \
@@ -240,9 +240,9 @@ Let's filter on everything from a specific host.
 
 In the search bar at the top of the UI, enter the following query:
 
-    ```
-    tag: LogTest2*
-    ```
+```
+tag: LogTest2*
+```
 
 You should see the list of logs update to show only those from your new service.
 

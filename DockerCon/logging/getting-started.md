@@ -221,12 +221,13 @@ The `docker container logs` command is a powerful command and is used for troubl
      docker container logs -t -f traefik
     ```
     
-    Curl the `whoami` container a couple times to see the log update. Remember the IP address of the node you are on by looking at the command prompt `root@ip_address`. Switch to a different worker node and run the below command.
+    Curl the `whoami` container a couple times to see the log update. Remember the IP address of the node you are on by looking at the command prompt `root@ip_address`. 
+    
+    Switch to a different worker node and run the below command.
     
     ``` 
     curl --header 'Host: whoami.docker.local' 'http://<ip_address_host>:80/'
     ``` 
-
 
 5. Switch back to the original Worker and Restart the `Traefik` container
 
@@ -251,7 +252,9 @@ The `docker container logs` command is a powerful command and is used for troubl
 8. Start `Traefik` again
 
     ```
-     docker run -d -p 8080:8080 -p 80:80 --name traefik -v $PWD/traefik.toml:/etc/traefik/traefik.toml -v /var/run/docker.sock:/var/run/docker.sock traefik
+    docker run -d -p 8080:8080 -p 80:80 --name traefik \
+    -v $PWD/traefik.toml:/etc/traefik/traefik.toml  \
+    -v /var/run/docker.sock:/var/run/docker.sock traefik
     ```
 
 9. Check the logs. What do you notice?
@@ -300,17 +303,11 @@ We have now seen how logging works in a single container. Now, we want to see wh
      docker-compose logs redis
     ```
 
-5. Open a browser tab `http://0.0.0.0:5000` and place a few votes and watch the logs. For those using PWD, click the link that appeared at the top the dashboard.
-
-    > Since no timestamp is in the log it is difficult to see if new votes arrived or not.
-
-6. Combing everything we learned follow and timestamp the logs
+5. Combing everything we learned follow and timestamp the logs
 
     ```
      docker-compose logs -f -t redis
     ```
-
-    > Again place some more votes on `http://0.0.0.0:5000` and see the difference in the logs. For PWD, navigate to UCP ->
 
 ### Cleanup
 

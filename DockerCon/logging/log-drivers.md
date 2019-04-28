@@ -211,30 +211,30 @@ Let's filter on everything from a specific host.
 
 - Back on one of your manager nodes, run the following:
 
-        ```
-         docker service create \
-        --name logging-test2 \
-        --replicas 1 \
-        --log-driver=gelf \
-        --log-opt gelf-address=udp://${LOGSTASH}:12201 \
-        --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
-        alpine \
-        ping facebook.com
-        ```
+     ```
+    docker service create \
+    --name logging-test2 \
+    --mode global \
+    --log-driver=gelf \
+    --log-opt gelf-address=udp://${LOGSTASH}:12201 \
+    --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
+    alpine \
+    ping facebook.com
+    ```
 
-        output:
+    output:
 
-        ```bash
-        l7spcatz359qqehuj2sd0rddm
-        overall progress: 1 out of 1 tasks
-        1/1: running   [==================================================>]
-        verify: Service converged
+    ```
+    bash
+    l7spcatz359qqehuj2sd0rddm
+    overall progress: 1 out of 1 tasks
+    1/1: running   [==================================================>]
+    verify: Service converged
+    ```
 
-        ```
+    Note that we changed the `replica` count to only `1`, and the `tag` to `LogTest2` this time.
 
-        Note that we changed the `replica` count to only `1`, and the `tag` to `LogTest2` this time.
-
-    2. Once the service has converged head back to Kibana.
+    - Once the service has converged head back to Kibana.
 
 5. Let's also query on the contents of the `tag` field.
 

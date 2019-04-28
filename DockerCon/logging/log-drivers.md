@@ -203,7 +203,7 @@ Let's filter on everything from a specific host.
 
 - Click on the `source_host` field in the left-hand field list and remember one of the host IP addresses.
 
-- Above the field list, click the 'Add Filter' button and then choose `source_host` as the field, `is` as the operator, and type your chosen IP into the `Value` field.
+- Above the field list, click the `Add Filter` button and then choose `source_host` as the field, `is` as the operator, and type your chosen IP into the `Value` field.
 
 - The output should change and you will see only logs from that host.
 
@@ -220,19 +220,12 @@ Let's filter on everything from a specific host.
     --log-opt tag="LogTest2 - {{.Name}}/{{.ImageName}}" \
     alpine \
     ping facebook.com
-    ```
 
-    output:
-
-    ```
-    bash
     l7spcatz359qqehuj2sd0rddm
     overall progress: 1 out of 1 tasks
     1/1: running   [==================================================>]
     verify: Service converged
     ```
-
-    Note that we changed the `replica` count to only `1`, and the `tag` to `LogTest2` this time.
 
     - Once the service has converged head back to Kibana.
 
@@ -247,14 +240,13 @@ tag: LogTest2*
 You should see the list of logs update to show only those from your new service.
 
 
-
 6. Feel free to play around with other services and tags, and construct different queries in the Kibana UI. Documentation on the Lucene syntax that ElasticSearch and Kibana use for querying can be [found here](https://www.elastic.co/guide/en/elasticsearch/reference/6.x/query-dsl-query-string-query.html#query-string-syntax).
 
 
 ### <a name="Task_4"></a>Task 4: Create a Dashboard
 In this section we will create a simple dashboard based on the ping data we are receiving.
 
-1. Click 'Visualize' on the left-hand menu bar.
+1. Click `Visualize` on the left-hand menu bar.
 2. Click "Create new Visualization"
 3. Select the Data -> Metric visualization
 
@@ -267,15 +259,17 @@ In this section we will create a simple dashboard based on the ping data we are 
 
 **Next, we will create a pie graph**
 
-1. Click 'Visualize' on the left-hand menu bar.
+1. Click `Visualize` on the left-hand menu bar.
 2. Click "Create new Visualization" this time it is '+' symbol
 3. Select the Basic charts -> Pie visualization
 
-![](elk_visualization.png)
+![](pie_chart.png)
 
-4. On the left-hand menu select 'Count' as the aggregation type and fill in the custom label to name your visualization.
+4. On the left-hand menu select `Count` as the aggregation type and fill in the custom label to name your visualization.
 5. Expand the Buckets section
-6. Select 'Count' as the aggregation type
+6. Select `Count` as the aggregation type
+7. Bucket -> Split Splices
+8. Aggregation Type -> Term
 7. Field -> host.keyword
 8. Order by -> metric: Count by host
 9. Order -> Decending -> 5
@@ -293,6 +287,14 @@ In this section we will create a simple dashboard based on the ping data we are 
 
 ![](dashboard.png)
 
+### Clean Up
+
+1. Remove the ELK Swarm Stack and running services
+
+  ```
+  docker service rm logging-test1 logging-test2
+  docker stack rm elk
+  ```
 
 ### Recap
 What did we learn in this section?

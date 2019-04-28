@@ -11,6 +11,8 @@ The wait is finally over let's get monitoring.
 > * [Task 2: Prometheus Walkthrough](#Task_2)
 > * [Task 3: Getting familiar with Grafana](#Task_3)
 > * [Task 4: Monitoring containers with the Prom Stack](#Task_4)
+> * [Recap topics covered in this section](#Recap)
+
 
 ## <a name="Task_1"></a>Task 1: Deploy the monitoring stack
 
@@ -30,15 +32,21 @@ This section we will walk through the various components and explain where and h
 
     **Grafana:** The open-source dashboard visualization tool
 
-2. Clone the monitoring Repo
+2. Clone the monitoring repository and change into the `prometheus` directory
 
-```
-git clone https://github.com/vegasbrianc/prometheus.git
-```
+  ```
+  git clone https://github.com/vegasbrianc/prometheus.git
+  cd prometheus
+  ```
 
-3. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
+3. Deploy the Prometheus monitoring stack
+ 
+ ```
+ docker stack deploy -c docker-stack.yml prom
+ ``` 
+4. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
 
-4. Open the deployed components
+5. Open the deployed components
 
     **Prometheus:** `http://0.0.0.0:9090`
 
@@ -188,3 +196,12 @@ In the last section we can quickly import Dashboards from [Grafana Dashboards](h
 New Dashboards Import Dashboard 395 & 893
 4. Now search [Grafana Dashboards](https://grafana.com/dashboards) for a Docker Dashboard. Select a dashboard and find the ID# of the dashboard
 5. Import the Dashboad using steps 1-3 above
+
+## <a name="Terminology"></a>Recap
+
+What did we learn in this section?
+
+* Deploy Alertmanager, cAdvisor, Grafana, node-exporter, & Prometheus 
+* Explore the components of the Prometheus stack
+* Familiarize with Grafana
+* Build Grafana Dashboards

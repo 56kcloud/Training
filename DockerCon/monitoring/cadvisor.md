@@ -12,6 +12,7 @@ In this section we will deploy a cAdvisor container and walk through the UI, con
 > * [Task 1: Deploy cAdvisor](#Task_1)
 > * [Task 2: Tour the cAdvisor UI and configurations](#Task_2)
 > * [Task 3: cAdvisor Exposed Metrics](#Task_3)
+> * [Recap topics covered in this section](#Recap)
 
 ## <a name="Task_1"></a>Task 1: Deploy cAdvisor
 
@@ -24,11 +25,11 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 1. Enable Docker Swarm the Voting App with docker-compose.
 
     ```
-    $ cd example-voting-app
+    cd example-voting-app
 
-    $ docker swarm init --advertise-addr $(hostname -i)
+    docker swarm init --advertise-addr $(hostname -i)
 
-    $ docker stack deploy -c docker-stack.yml vote
+    docker stack deploy -c docker-stack.yml vote
     
     ```
 
@@ -69,14 +70,21 @@ Now, we will have a look to see how cAdvisor exposes the metrics it is gathering
 
 ## Cleanup
 
-```
-docker stack rm vote
-````
+  ```
+  docker stack rm vote
+  ```
 
-```
-docker rm -f cadvisor
-``` 
+  ```
+  docker rm -f cadvisor
+  ``` 
 
+## <a name="Terminology"></a>Recap
+
+What did we learn in this section?
+
+* Google's Container advisor `cAdvisor`
+* Deploy cAdvisor UI and configurations
+* cAdvisor exposed metrics
 
 ## Next Steps, Docker Networking
 For the next step in the tutorial, head over to [Prometheus](./monitoring-stack.md)

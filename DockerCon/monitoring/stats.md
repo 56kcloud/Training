@@ -8,23 +8,24 @@ Time to dive into the world of monitoring. First, we will explore the various bu
 > * [Task 1: Docker Stats](#Task_1)
 > * [Task 2: Docker System info, events, df](#Task_2)
 > * [Task 3: Docker Top](#Task_3)
+> * [Task 4: Recap](#Task_4)
 
 ## <a name="Task_1"></a>Task 1: Docker Stats
 
-First, we need to start some containers to monitor. Return back to the voting application directory we used in the loggging section and start the Vote App stack. `docker stats` uses the same concept as most monitoring tools as it is queriying the docker daemon directly for informaiton. We can query ID's, Names, CPU, Memory, Network, storage, and processes.
+First, we need to start some containers to monitor. Return back to the voting application directory we used in the logging section and start the Vote App stack. `docker stats` uses the same concept as most monitoring tools as it is querying the docker daemon directly for information. We can query ID's, Names, CPU, Memory, Network, storage, and processes.
 
 1. To get started, let's start the vote application stack again:
 
     ```
-    $ cd example-voting-app
+    cd example-voting-app
 
-    $ docker-compose up -d
+    docker-compose up -d
     ```
 
 2. Now, let's take a look at the `stats` of the individual containers running in the Vote App stack 
 
     ```
-    $ docker stats
+    docker stats
 
     CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
     d4bd451f0b68        demo3_worker_1      0.98%               21.77MiB / 1.952GiB   1.09%               466kB / 717kB       43MB / 0B           17
@@ -34,12 +35,12 @@ First, we need to start some containers to monitor. Return back to the voting ap
     7c726e569b7b        demo3_result_1      0.07%               38.05MiB / 1.952GiB   1.90%               154kB / 45.6kB      35.3MB / 12.3kB     20
     ```
 
-    > Notice the screen refreshes automaitcally. We also notice that no limits have been set for Memory. Shame shame!
+    > Notice the screen refreshes automatically. We also notice that no limits have been set for Memory. Shame shame!
 
 3. We can also narrow the `stats` command to just a selected container
 
     ``` 
-    $ docker stats redis
+    docker stats redis
     CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
     1aaa67a5a5a8        redis               0.46%               1.344MiB / 1.952GiB   0.07%               657kB / 302kB       2MB / 0B            4
     ``` 
@@ -50,15 +51,15 @@ Docker has some great built-in tools. We just have to know where to find them.
 
 1. The `docker system info` command provides an overview of the docker host indicating total available CPU, memory, storage, etc
 
-    `$ docker system info`
+    `docker system info`
 
     > Scroll through the output to see all the available information
 
 
-2. One of the most important commands in the Linux world to check stroage is `df` (Display free disk space). Docker has tailored the `df` command for containers. Now we see storage information about Containers, Images, and Volumes.
+2. One of the most important commands in the Linux world to check storage is `df` (Display free disk space). Docker has tailored the `df` command for containers. Now we see storage information about Containers, Images, and Volumes.
 
     ```
-    $ docker system df
+    docker system df
     TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
     Images              51                  14                  6.868GB             6.349GB (92%)
     Containers          21                  5                   679.2kB             378.9kB (55%)
@@ -70,12 +71,12 @@ Docker has some great built-in tools. We just have to know where to find them.
 
 Background containers are how you'll run most applications. Here's a simple example using MySQL.
 
-1. You can check the processes which run in your container siwth : `docker container top`
+1. You can check the processes which run in your containers : `docker container top`
 
     Let's look at the running processes inside the container.
 
     ```
-    $ docker container top redis
+    docker container top redis
     PID                 USER                TIME                COMMAND
     8480                rpc                 0:00                redis-server
     ```
@@ -83,11 +84,25 @@ Background containers are how you'll run most applications. Here's a simple exam
     You should see the redis demon (`redis-server`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `redis-server` process running as the main process of the container (PID 1) try:
 
     ```
-	$ docker container exec redis ps -ef
+	docker container exec redis ps -ef
 	PID   USER     TIME   COMMAND
     1 redis      0:00 redis-server
    12 root       0:00 ps -ef
 	```
+
+## Clean up
+Remove the example voting stack
+   ```
+   docker-compose rm -fs
+   ```
+## <a name="Terminology"></a>Recap
+
+What did we learn in this section?
+
+* Real-time CLI monitoring with `docker stats`
+* `docker system info`provides Docker Host information
+* Display free disk space using `docker system df`
+* `docker-compose top` displays processes running inside the containers.
 
 ## Next Steps, Google cAdvisor (Container Advisor)
 For the next step in the tutorial, head over to [Google cAdvisor](./cadvisor.md)

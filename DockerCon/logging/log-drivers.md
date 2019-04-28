@@ -289,7 +289,7 @@ In this section we will create a simple dashboard based on the ping data we are 
 
 ### Clean Up
 
-1. Remove the ELK Swarm Stack and running services
+Remove the ELK Swarm Stack and running services
 
   ```
   docker service rm logging-test1 logging-test2

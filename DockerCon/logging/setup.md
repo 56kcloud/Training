@@ -12,6 +12,10 @@ Getting all the tooling setup on your computer can be a daunting task, but getti
 
 **Ensure Docker Swarm is enabled**
 
+   ```
+   docker swarm init --advertise-addr <your_ip_address>
+   ```
+
 The *getting started* guide on Docker has detailed instructions for setting up Docker on [Mac](https://docs.docker.com/docker-for-mac/), [Linux](https://docs.docker.com/engine/installation/linux/) and [Windows](https://docs.docker.com/docker-for-windows/).
 
 *If you're using Docker for Windows* make sure you have [shared your drive](https://docs.docker.com/docker-for-windows/#shared-drives).

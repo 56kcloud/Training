@@ -21,21 +21,10 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 > We recommend using [Play-with-Docker](https://labs.play-with-docker.com/) for this exercise to alleviate any permissions issues or Windows issues with having to run sudo.
 
 
-1. Enable Docker Swarm the Voting App with docker-compose.
-
-    ```
-    cd example-voting-app
-
-    docker swarm init --advertise-addr $(hostname -i)
-
-    docker stack deploy -c docker-stack.yml vote
-    
-    ```
-
-3. Navigate to [cAdvisor GitHub Repo](https://github.com/google/cadvisor)
+1. Navigate to [cAdvisor GitHub Repo](https://github.com/google/cadvisor)
 
 
-4. Deploy cAdvisor
+2. Deploy cAdvisor
 
     ```
     sudo docker service create \
@@ -44,7 +33,8 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
     --name=cadvisor \
     google/cadvisor:latest
     ```
-    
+
+    > Since we are using `PWD` we cannot don't have permissions to bind mount root directories. For normal deployments please review the [cAdvisor documentation](https://github.com/google/cadvisor)
 
 ### <a name="Task_2"></a>Task 2: Tour the cAdvisor UI and configurations
 

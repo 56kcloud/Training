@@ -20,7 +20,23 @@ We will now deploy a complete monitoring stack based on the following services: 
 
 This section we will walk through the various components and explain where and how to configure the docker Swarm stack for Prometheus.
 
-1. Before we get started let's have a look at the different components
+1. For those using PWD Login to a different [PWD](https://labs.play-with-docker.com/) and create a Docker account if you don't already have one.
+
+2. Clone the monitoring repository and change into the `prometheus` directory
+
+  ```
+  git clone https://github.com/vegasbrianc/prometheus.git
+  cd prometheus
+  ```
+
+3. Deploy the Prometheus monitoring stack
+ 
+ ```
+ docker stack deploy -c docker-stack.yml prom
+ ``` 
+4. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
+
+5. Let's have a look at the different components deployed
 
     **Prometheus:** An open-source monitoring and alerting application that stores time series data with a powerful query language. Prometheus is pull based collection of metrics.
 
@@ -31,22 +47,6 @@ This section we will walk through the various components and explain where and h
     **cAdvisor:** The Container advisor collects metrics for all the running containers on each host which it runs.
 
     **Grafana:** The open-source dashboard visualization tool
-
-2. Switch to the Swarm Manager node.
-
-3. Clone the monitoring repository and change into the `prometheus` directory
-
-  ```
-  git clone https://github.com/vegasbrianc/prometheus.git
-  cd prometheus
-  ```
-
-4. Deploy the Prometheus monitoring stack
- 
- ```
- docker stack deploy -c docker-stack.yml prom
- ``` 
-5. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
 
 6. Open the deployed components
 
@@ -136,16 +136,10 @@ In the final section we will build a Dashboard based on the Prometheus stack. We
 5. Add the query `sum(up)`
 6. Click the Options Tab
 7. Check the Background box (Invert the colors if the background is Red)
-8. Set the threshold to `0,9`
+8. Set the threshold to `0,3`
 9. Click the Value Mappings Menu
 10. Set the following Value Mappings:
-* 9 -> Up
-* 8 -> Down
-* 7 -> Down
-* 6 -> Down
-* 5 -> Down
-* 4 -> Down
-* 3 -> Down
+* 3 -> Up
 * 2 -> Down
 * 1 -> Down
 * 0 -> Down

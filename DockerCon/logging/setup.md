@@ -3,14 +3,18 @@
 ### Prerequisites
 There are no specific skills needed for this tutorial beyond a basic comfort with the command line and using a text editor. Prior experience in developing web applications will be helpful but is not required.
 
+### Play-with-Docker (PWD)
+
+Login to Play-with-Docker [Play-with-Docker](https://dockr.ly/brian)
+
 ### Setting up your computer
 Getting all the tooling setup on your computer can be a daunting task, but getting Docker up and running on your favorite OS has become very easy.
+
+**Ensure Docker Swarm is enabled**
 
 The *getting started* guide on Docker has detailed instructions for setting up Docker on [Mac](https://docs.docker.com/docker-for-mac/), [Linux](https://docs.docker.com/engine/installation/linux/) and [Windows](https://docs.docker.com/docker-for-windows/).
 
 *If you're using Docker for Windows* make sure you have [shared your drive](https://docs.docker.com/docker-for-windows/#shared-drives).
-
-*Important note* If you're using an older version of Windows or MacOS you may need to use [Docker Machine](https://docs.docker.com/machine/overview/) instead.
 
 *All commands work in either bash or Powershell on Windows*
 
@@ -31,12 +35,6 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 	This message shows that your installation appears to be working correctly.
 	...
 	
-
-### Plan B: Play-with-Docker (PWD)
-
-1. If you don't have a docker account, please create one [Sign-up](https://store.docker.com/signup?next=%2F%3Fref%3Dlogin)
-2. Login to Play-with-Docker [PWD](https://labs.play-with-docker.com/)
-
 ### Start the Docker Pull & deploy
 
 ``` 

@@ -20,7 +20,6 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 
 > We recommend using [Play-with-Docker](https://labs.play-with-docker.com/) for this exercise to alleviate any permissions issues or Windows issues with having to run sudo.
 
-    ```
 
 1. Enable Docker Swarm the Voting App with docker-compose.
 
@@ -39,23 +38,17 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 4. Deploy cAdvisor
 
     ```
-    sudo docker run \
-    --volume=/:/rootfs:ro \
-    --volume=/var/run:/var/run:rw \
-    --volume=/sys:/sys:ro \
-    --volume=/var/lib/docker/:/var/lib/docker:ro \
-    --publish=8081:8080 \
+    sudo docker service create \
+    --publish published=8081,target=8080 \
     --detach=true \
     --name=cadvisor \
     google/cadvisor:latest
     ```
     
-    > Notice how we need to run cAdvisor with Sudo permissions as cAdvisor needs access to the rootfs & docker daemon
-    > Also, I changed the default port of 8080 to 8081 so we don't conflict with the vote stack
 
 ### <a name="Task_2"></a>Task 2: Tour the cAdvisor UI and configurations
 
-1. Once the cAdvisor is running open the `PWD` link 8081 which is located at the top of the screen
+1. Once the cAdvisor is running open the UCP -> Swarm -> Services -> cAdvisor link 8081 which is located at the top of the screen
 
 Have a look at the cAdvisor UI. What we see here is a host performance view. Scroll through the various screens to view Reservations, CPU, Memory, Network, and Storage.
 

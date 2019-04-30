@@ -32,21 +32,23 @@ This section we will walk through the various components and explain where and h
 
     **Grafana:** The open-source dashboard visualization tool
 
-2. Clone the monitoring repository and change into the `prometheus` directory
+2. Switch to the Swarm Manager node.
+
+3. Clone the monitoring repository and change into the `prometheus` directory
 
   ```
   git clone https://github.com/vegasbrianc/prometheus.git
   cd prometheus
   ```
 
-3. Deploy the Prometheus monitoring stack
+4. Deploy the Prometheus monitoring stack
  
  ```
  docker stack deploy -c docker-stack.yml prom
  ``` 
-4. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
+5. Next, we will head over to the Prometheus stack project. Open [Prometheus Monitoring Stack](https://github.com/vegasbrianc/prometheus) in a new tab.
 
-5. Open the deployed components
+6. Open the deployed components
 
     **Prometheus:** `http://0.0.0.0:9090`
 

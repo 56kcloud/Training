@@ -203,4 +203,4 @@ What did we learn in this section?
 * Build Grafana Dashboards
 
 ## Slides / Links / Resources 
-For the next step in the tutorial, head over to [Workshop Resources](.resources/links.md)
+For the next step in the tutorial, head over to [Workshop Resources](../resources/links.md)

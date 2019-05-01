@@ -14,10 +14,10 @@ Time to dive into the world of monitoring. First, we will explore the various bu
 
 First, we need to start some containers to monitor. Return back to the voting application directory we used in the logging section and start the Vote App stack. `docker stats` uses the same concept as most monitoring tools as it is querying the docker daemon directly for information. We can query ID's, Names, CPU, Memory, Network, storage, and processes.
 
-1. To get started, let's start the vote application stack again:
+1. To get started, let's start the compose demo application stack again:
 
     ```
-    cd example-voting-app
+    cd docker-compose-demo
 
     docker-compose up -d
     ```
@@ -91,7 +91,7 @@ Background containers are how you'll run most applications. Here's a simple exam
 	```
 
 ## Clean up
-Remove the example voting stack
+Remove the compose demo stack
    ```
    docker-compose rm -fs
    ```

@@ -24,8 +24,9 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
 1. Navigate to [cAdvisor GitHub Repo](https://github.com/google/cadvisor)
 
 
-2. Deploy cAdvisor
+2. Deploy cAdvisor:
 
+    **PWD USERS**
     ```
     sudo docker service create \
     --publish published=8081,target=8080 \
@@ -33,8 +34,23 @@ Let's get started with deploying cAdvisor. First, we will review the cAdvisor Gi
     --name=cadvisor \
     google/cadvisor:latest
     ```
+  > Since we are using `PWD` we cannot don't have permissions to bind mount root directories. For normal deployments please review the [cAdvisor documentation](https://github.com/google/cadvisor)
 
-    > Since we are using `PWD` we cannot don't have permissions to bind mount root directories. For normal deployments please review the [cAdvisor documentation](https://github.com/google/cadvisor)
+    **Docker for Desktop**
+
+    ```
+    sudo docker run \
+    --volume=/:/rootfs:ro \
+    --volume=/var/run:/var/run:ro \
+    --volume=/sys:/sys:ro \
+    --volume=/var/lib/docker/:/var/lib/docker:ro \
+    --volume=/dev/disk/:/dev/disk:ro \
+    --publish=8080:8080 \
+    --detach=true \
+    --name=cadvisor \
+    google/cadvisor:latest
+    ```
+
 
 ### <a name="Task_2"></a>Task 2: Tour the cAdvisor UI and configurations
 
@@ -44,7 +60,7 @@ Have a look at the cAdvisor UI. What we see here is a host performance view. Scr
 
 2. Scroll to the top of the screen and click `Docker Containers`
 
-> Here we see all the `Vote Stack` containers. Choose one of the containers and view the specific resource consumption of just that particular container.
+> Here we see all the `Compose Demo Stack` containers. Choose one of the containers and view the specific resource consumption of just that particular container.
 
 
 ### <a name="Task_3"></a>Task 3: cAdvisor Exposed Metrics

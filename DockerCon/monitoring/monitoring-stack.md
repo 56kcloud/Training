@@ -201,3 +201,6 @@ What did we learn in this section?
 * Explore the components of the Prometheus stack
 * Familiarize with Grafana
 * Build Grafana Dashboards
+
+## Slides / Links / Resources 
+For the next step in the tutorial, head over to [Workshop Resources](.resources/links.md)

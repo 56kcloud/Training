@@ -77,7 +77,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
     > This is the forceful way to remove it. With great power comes great responsability. You are warned!
 
-7. Fix the `traefik.toml` configuratiion file line 4 removing `123` in front of the `[API]` block
+7. Fix the `traefik.toml` configuration file line 4 removing `123` in front of the `[API]` block
     ```
     ################################################################
     # API and dashboard configuration
@@ -272,18 +272,18 @@ The `docker container logs` command is a powerful command and is used for troubl
 
 ### <a name="Task_3"></a>Task 3: docker-compose and logging
 
-We have now seen how logging works in a single container. Now, we want to see what logs look like when multiple containers are running in a compose file. In this example we will use the docker voting application. This stack contains 5 different containers running with one docker-compose file.
+We have now seen how logging works in a single container. Now, we want to see what logs look like when multiple containers are running in a compose file. In this example we will use the docker voting application. This stack contains 3 different containers running with one docker-compose file.
 
 1. In the `Setup`section we cloned the Repo. If you haven't done so please do it now
 
     ```
-     git clone https://github.com/dockersamples/example-voting-app.git
+     git clone https://github.com/vegasbrianc/docker-compose-demo.git
     ```
 
-2. Start the Voting App with docker-compose.
+2. Start the Compose demo with docker-compose.
 
     ```
-     cd example-voting-app
+     cd docker-compose-demo
 
      docker-compose up -d
     ```
@@ -295,18 +295,18 @@ We have now seen how logging works in a single container. Now, we want to see wh
      docker-compose logs
     ```
 
-    What we notice is that Docker color codes the log based on container names. Since we have 5 different containers this makes it easier when viewing from a terminal window.
+    What we notice is that Docker color codes the log based on container names. Since we have 3 different containers this makes it easier when viewing from a terminal window.
 
 4. Expanding the command to capture certain containers
 
     ```
-     docker-compose logs redis
+     docker-compose logs reverse-proxy
     ```
 
 5. Combing everything we learned follow and timestamp the logs
 
     ```
-     docker-compose logs -f -t redis
+     docker-compose logs -f -t reverse-proxy
     ```
 
 ### Cleanup

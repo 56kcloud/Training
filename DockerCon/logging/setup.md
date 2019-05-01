@@ -42,7 +42,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 ### Start the Docker Pull & deploy
 
 ``` 
-git clone https://github.com/dockersamples/example-voting-app.git && cd example-voting-app/ && docker-compose build
+git clone https://github.com/vegasbrianc/docker-compose-demo.git && cd docker-compose-demo/ && docker-compose pull
 ```
 
 ## Next Steps

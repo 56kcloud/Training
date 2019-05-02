@@ -55,6 +55,9 @@ For this exercise we're going to use the popular ELK logging stack:
 
 ### Deploy the ELK stack file to the Swarm
 
+**Docker Desktop Users:** Before continuing, check your Docker for Desktop preferences -> Kubernetes
+If "Deploy Docker Stacks to Kubernetes by default" is checked, uncheck. If left checked, the following command will fail.
+
 1. Now we have the stack downloaded, we can deploy it to the Swarm.
 
     ```

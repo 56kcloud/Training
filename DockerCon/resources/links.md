@@ -8,4 +8,4 @@ Here are some of the links mentioned during the workshop:
 * [Labs](www.github.com/56kcloud/Training/tree/master/DockerCon)
 * [GitLab Dashboards](https://monitor.gitlab.net)
 * [Grafana Dashboards](https://grafana.com/dashboards)
-* **Slides** - [DockerCon Monitoring & Logging Workshop](https://s3.eu-central-1.amazonaws.com/56k-share/DCSF19_Logginig_Monitoring_Workshop.pdf)
+* **Workshop Presentation** - [DockerCon Monitoring & Logging Workshop](https://s3.eu-central-1.amazonaws.com/56k-share/DCSF19_Logginig_Monitoring_Workshop.pdf)

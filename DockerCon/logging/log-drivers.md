@@ -24,7 +24,7 @@ For this exercise we're going to use the popular ELK logging stack:
 2. To get started, let's run the following in our terminal:
 
     ```
-    git clone https://github.com/johnharris85/docker-elk.git
+    git clone https://github.com/deviantony/docker-elk.git
     
     Cloning into 'docker-elk'...
     remote: Counting objects: 1238, done.
@@ -34,7 +34,7 @@ For this exercise we're going to use the popular ELK logging stack:
     Resolving deltas: 100% (468/468), done.
     ```
 
-> **Note:** The ELK stack we're using here is a Dockerized version originally created by [Anthony Lapenna](https://github.com/deviantony) but we're using a forked and slightly modified version for this tutorial.
+> **Note:** The ELK stack we're using here is a Dockerized version created by [Anthony Lapenna](https://github.com/deviantony)
 
 2. Move into the `docker-elk` directory and switch to the `docker-stack` branch.
 
@@ -46,12 +46,6 @@ For this exercise we're going to use the popular ELK logging stack:
 
     ```
 
-    ```
-    git checkout docker-stack
-    
-    Branch 'docker-stack' set up to track remote branch 'docker-stack' from 'origin'.
-    Switched to a new branch 'docker-stack'
-    ```
 
 ### Deploy the ELK stack file to the Swarm
 

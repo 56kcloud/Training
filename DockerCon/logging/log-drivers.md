@@ -97,6 +97,10 @@ If you're using PWD then open UCP -> Swarm -> Services -> elk_kibana. Open the e
 **Deployed locally**
 If you deployed to a local cluster, you should visit the IP of one of your nodes on port `5601` or just http://localhost:5601
 
+* user: elastic
+* password: changeme
+
+
 You should see the Kibana dashboard appear.
 
 ![](kibananew.png)

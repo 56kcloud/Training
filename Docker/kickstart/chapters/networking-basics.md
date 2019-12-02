@@ -9,7 +9,7 @@ You will complete the following steps as part of this lab.
 - [Task 3 - Inspect a network](#inspect)
 - [Task 4 - List network driver plugins](#list_drivers)
 - [Task 5 - Create Network](#create_network)
-- [Task 5 - Remove Network](#remove_network)
+- [Task 6 - Remove Network](#remove_network)
 
 # Prerequisites
 

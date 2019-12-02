@@ -14,8 +14,9 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 
 *All commands work in either bash or Powershell on Windows*
 
-	Once you are done installing Docker, test your Docker installation by running the following:
-	```
+Once you are done installing Docker, test your Docker installation by running the following:
+	
+	
 	$ docker container run hello-world
 	Unable to find image 'hello-world:latest' locally
 	latest: Pulling from library/hello-world
@@ -27,7 +28,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 	Hello from Docker.
 	This message shows that your installation appears to be working correctly.
 	...
-	```
+	
 
 ## Next Steps
 For the next step in the tutorial, head over to [1.0 Running your first container](alpine.md)

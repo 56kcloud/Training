@@ -8,6 +8,8 @@ You will complete the following steps as part of this lab.
 - [Task 2 - List networks](#list_networks)
 - [Task 3 - Inspect a network](#inspect)
 - [Task 4 - List network driver plugins](#list_drivers)
+- [Task 5 - Create Network](#create_network)
+- [Task 5 - Remove Network](#remove_network)
 
 # Prerequisites
 
@@ -130,6 +132,90 @@ Runtimes: runc
 ```
 
 The output above shows the **bridge**, **host**, **null**, and **overlay** drivers.
+
+# <a name="create_network"></a>Task 5: Create Network
+
+Now we will provision our own network called `my-network` with the following configuration
+
+`--driver` - indicated the network driver to utilize for the network
+`--internal` - configures the network as an internal private network with no internet access
+`--subnet`- define the subnet of the network
+`--ip-range` - IP range available to the containers on this network
+`--gateway`- Network gateway to be used
+
+
+```
+$ docker network create \
+--driver bridge \
+--internal \
+--subnet=172.28.0.0/16 \
+--ip-range=172.28.5.0/24 \
+--gateway=172.28.5.254 \
+my-network
+
+d6b825e0fb2d96f13719affc3e7658df2c9dc70ccfb4b9e6405348a1624e5d4b
+
+```
+
+Let's have a look at out newly created network
+
+```
+docker network ls                                                                                                                                                                                                                                                                                                                            
+NETWORK ID          NAME                DRIVER              SCOPE
+4504287a8cd2        bridge              bridge              local
+c6282c586073        docker_gwbridge     bridge              local
+f0d518128cc6        host                host                local
+18789d70fb40        my-network          bridge              local
+f806d1a20208        none                null                local
+```
+
+Now, inspect `my-network`
+
+```
+$ docker network inspect my-network                                                                                                                                                                                                                                                                                                            
+[
+    {
+        "Name": "my-network",
+        "Id": "09aefb1784bc64cd8ad9ef1e3a2132fa0812137b1ff8477c73eeb3050f9dcc21",
+        "Created": "2019-12-02T10:04:43.300611371Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.28.0.0/16",
+                    "IPRange": "172.28.5.0/24",
+                    "Gateway": "172.28.5.254"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+```
+
+# <a name="delete_network"></a>Task 6: Delete Network
+
+Cleanup the newly create `my-network`
+
+
+```
+$ docker network rm my-network
+
+```
 
 ## Next Steps, Web Apps
 For the next step in the tutorial, head over to [Webapps with Docker](./webapps.md)

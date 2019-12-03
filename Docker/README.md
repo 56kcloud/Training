@@ -1,5 +1,7 @@
 # Container, Cloud & DevOps Tutorials and Labs
 
+<img src="./img/56k.jpg" alt="56K.Cloud Logo" width="150" height="99">
+
 This repo contains [Docker](https://docker.com) labs and tutorials authored both by Docker, and by members of the community. We welcome contributions and want to grow the repo.
 
 #### Docker Tutorials:

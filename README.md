@@ -5,7 +5,7 @@
 Welcome to [56K.Cloud](https://www.56k.cloud) Training & Labs. This repo contains Docker, Kubernetes, Cloud, and DevOps Labs authored both by the respective companies or organizations, and by members of the community. We welcome contributions and want to grow the repo.
 
 #### Tutorials:
-* [DockerCon Monitoring & Logging](DockerCon/readme.md)
+* [Monitoring & Logging](DockerCon/readme.md)
 * [Docker](Docker/README.md)
 * [Kubernetes](Kubernetes/README.md)
 * [DevOps](DevOps/README.md)

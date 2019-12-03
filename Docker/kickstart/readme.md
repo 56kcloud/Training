@@ -10,4 +10,3 @@ This Docker tutorial consists of the following sections:
 * [Networking](chapters/networking-basics.md)
 * [Secret Management](chapters/secrets.md)
 * [Build and Deploy a Monitoring Stack](chapters/prometheus.md)
-* [Custom Apps Mongo & Web Servers](chapters/mongo.md)

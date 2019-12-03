@@ -9,4 +9,4 @@ This Docker tutorial consists of the following sections:
 * [Docker & DevOps](chapters/devops.md)
 * [Networking](chapters/networking-basics.md)
 * [Secret Management](chapters/secrets.md)
-* [Build and Deploy a Monitoring Stack](chapters/prometheus.md)
+* [Build and Deploy a Monitoring Stack](https://github.com/56kcloud/Training/blob/master/DockerCon/readme.md)

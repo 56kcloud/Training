@@ -33,7 +33,7 @@ The Docker Workshop utilizes [Katacoda](https://katacoda.com/) for the workshop 
 * [Build and Deploy a Monitoring Stack](https://github.com/56kcloud/Training/blob/master/DockerCon/readme.md)
 
 ## 7. Docker Swarm
-* [Getting Started with Swarm mode](https://www.katacoda.com/courses/docker/getting-started-with-swarm-mod)
+* [Getting Started with Swarm mode](https://www.katacoda.com/courses/docker/getting-started-with-swarm-mode)
 
 ## 8. Monitoring
 * [Graphing Docker Metrics with Prometheus](https://www.katacoda.com/courses/docker-orchestration/docker-metrics)

@@ -32,13 +32,13 @@ Now that we understand how to build Docker images it's now time to start autobui
 
 List the images on your Docker host. You will see that you now have two `linux_tweet_app` images - one tagged as `1.0` and the other as `2.0`.
 
-    ```
+    
     $ docker image ls
 
     REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
     vegasbrianc/linux_tweet_app   2.0                 01612e05312b        3 minutes ago       108MB
     vegasbrianc/linux_tweet_app   1.0                 bb32b5783cd3        7 minutes ago       108MB
-    ```
+    
 
 These images are only stored in your Docker host's local repository. We want to `push` these images to Docker Hub so we can access the images from anywhere.
 

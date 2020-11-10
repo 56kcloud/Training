@@ -176,9 +176,9 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
 > Using your favorite editor (vi, emacs, etc)
 
     Edit the index.html file and edit line number 33 and change the text to "DevOps is Awesome"
-    ```
+   
     $ vi index.html
-    ```
+    
 
 2. Commit our new changes to our GitHub Repo
     
@@ -209,7 +209,6 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
 .travis.yml should contain the following. Be sure to update your Docker ID:
 
-    ```
     sudo: required
 
     services:
@@ -224,7 +223,7 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
     script:
         - while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done
-    ```
+        
 
 4. Add the `.travis.yml` file to our GitHub repo.
     

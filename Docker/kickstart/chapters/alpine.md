@@ -12,7 +12,7 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 
 ## <a name="Task_1"></a>Task 1: Running your first container
 
-Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker run` command.
+Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker container run` command.
 
 1. To get started, let's run the following in our terminal:
 
@@ -27,10 +27,10 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
 > **Note:** Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. Try the commands from the Getting Started tutorial to [verify your installation](https://docs.docker.com/engine/getstarted/step_one/#/step-3-verify-your-installation). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) to get rid of this issue.
 
-2. The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
+2. The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in your system. You can use the `docker image ls` command to see a list of all images on your system.
 
     ```
-    $ docker images
+    $ docker image ls
 
     REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
     alpine                  latest              3fd9065eaf02        2 weeks ago         4.15MB
@@ -48,10 +48,10 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 
     ```
 
-What happened? Behind the scenes, a lot of stuff happened. When you call `container run`,
+What happened? Behind the scenes, a lot of stuff happened. When you call `docker container run`,
 1. The Docker client contacts the Docker daemon
-2. The Docker daemon checks local store if the image (alpine in this case) is available locally, and if not, dowloads it from Docker Store. (Since we have issued `docker pull alpine` before, the download step is not necessary)
-3. The Docker daemon creates the container and then runs a command in that container.
+2. The Docker daemon checks local store if the image (alpine in this case) is available locally, and if not, dowloads it from Docker Hub. (Since we have issued `docker pull alpine` before, the download step is not necessary)
+3. The Docker daemon creates the container and then runs a command in that container
 4. The Docker daemon streams the output of the command to the Docker client
 
 When you run `docker container run alpine`, you provided a command (`hostname`), so Docker started the command specified and returned the hostname (`888e89a3b36`) of the container.
@@ -62,7 +62,7 @@ When you run `docker container run alpine`, you provided a command (`hostname`),
     List all containers:
 
     ```
-    $ docker container ps -a
+    $ docker container ls -a
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS            PORTS               NAMES
     888e89a3b36b        alpine              "hostname"          50 seconds ago      Exited (0) 49 seconds ago             awesome_elion
     ```
@@ -92,23 +92,23 @@ Containers which do one task and then exit can be very useful. You could build a
     Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to run:
 
     ```
-    $docker container run -it alpine /bin/sh
+    $ docker container run -it alpine /bin/sh
     ```
 
 You are now inside the container shell and you can try out a few commands like `ls -l`, `uname -a` and others. Exit out of the container by giving the `exit` command.
 
 
-5. Ok, now it's time to see the `docker contianer ps` or the shortcut `docker ps` command. The `docker ps` command shows you all containers that are currently running.
+5. Ok, now it's time to see the `docker container ls` or the shortcut `docker ps` command. The `docker container ls` command shows you all containers that are currently running.
 
     ```
-    $ docker container ps
+    $ docker container ls
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
     ```
 
-6. Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
+6. Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ls -a`
 
     ```
-    $ docker container ps -a
+    $ docker container ls -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
     36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
     a6a9d46d0b2f        alpine              "echo 'hello from alp"   6 minutes ago       Exited (0) 6 minutes ago                        lonely_kilby
@@ -125,12 +125,12 @@ You are now inside the container shell and you can try out a few commands like `
     / # uname -a
     Linux 97916e8cb5dc 4.4.27-moby #1 SMP Wed Oct 26 14:01:48 UTC 2016 x86_64 Linux
     ```
-    
+
     Type `exit` or `CTRL-D` to exit the interactive container. Once we exit the container the container will also exit and stop.
 
     Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands.
 
-That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker container run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker container run`.
+That concludes a whirlwind tour of the `docker container run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker container run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker container run`.
 
 
 ### <a name="Task_2"></a>Task 2: Run an interactive Ubuntu container
@@ -256,6 +256,7 @@ Background containers are how you'll run most applications. Here's a simple exam
 	mysql         1      0  0 21:00 ?        00:00:01 mysqld
 	root        207      0  0 21:39 ?        00:00:00 ps -ef
 	```
+    > **Note:** If the `ps` command is not install, you can install it with the following command: `apt update && apt install -y procps`
 
     Although MySQL is running, it is isolated within the container because no network ports have been published to the host. Network traffic cannot reach containers from the host unless ports are explicitly published.
 
@@ -273,7 +274,7 @@ Background containers are how you'll run most applications. Here's a simple exam
 
     The output above shows the MySQL version number, as well as a handy warning.
 
-5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MySQL container.  
+5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MySQL container.
 
     ```
     $ docker exec -it mydb sh
@@ -301,7 +302,7 @@ Let's clean up for the next lab.
 
 8. Stop the MySQL container
 
-    ````
+    ```
     $ docker container stop mydb
     ```
 
@@ -326,7 +327,7 @@ In the last section, you saw a lot of Docker-specific jargon which might be conf
 - *Containers* - Running instances of Docker images &mdash; containers run the actual applications. A container includes an application and all of its dependencies. It shares the kernel with other containers, and runs as an isolated process in user space on the host OS. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
-- *Docker Store* - A [registry](https://store.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
+- *Docker Hub* - A [registry](https://hub.docker.com/) of Docker images, where you can find trusted and enterprise ready containers, plugins, and Docker editions. You'll be using this later in this tutorial.
 
-## Next Steps, Docker Networking
-For the next step in the tutorial, head over to [Docker Networking](./networking-basics.md)
+## Next Steps: Webapps with Docker
+For the next step in the tutorial, head over to [Webapps with Docker](./webapps.md)

@@ -6,7 +6,7 @@ There are no specific skills needed for this tutorial beyond a basic comfort wit
 ### <a name="Task_1"></a>Task 1: Setting up your computer
 Getting all the tooling setup on your computer can be a daunting task, but getting Docker up and running on your favorite OS has become very easy.
 
-The *getting started* guide on Docker has detailed instructions for setting up Docker on [Mac](https://docs.docker.com/docker-for-mac/), [Linux](https://docs.docker.com/engine/installation/linux/) and [Windows](https://docs.docker.com/docker-for-windows/).
+The *getting started* guide on Docker has detailed instructions for setting up Docker on [Mac](https://docs.docker.com/docker-for-mac/install/), [Linux](https://docs.docker.com/engine/installation/linux/) and [Windows](https://docs.docker.com/docker-for-windows/install/).
 
 *If you're using Docker for Windows* make sure you have [shared your drive](https://docs.docker.com/docker-for-windows/#shared-drives).
 
@@ -15,8 +15,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 *All commands work in either bash or Powershell on Windows*
 
 Once you are done installing Docker, test your Docker installation by running the following:
-	
-	
+
 	$ docker container run hello-world
 	Unable to find image 'hello-world:latest' locally
 	latest: Pulling from library/hello-world
@@ -28,7 +27,6 @@ Once you are done installing Docker, test your Docker installation by running th
 	Hello from Docker.
 	This message shows that your installation appears to be working correctly.
 	...
-	
 
 ## Next Steps
 For the next step in the tutorial, head over to [1.0 Running your first container](alpine.md)

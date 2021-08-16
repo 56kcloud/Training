@@ -16,7 +16,7 @@ Great! So you have now looked at `docker container run`, played with a Docker co
 
 First, we'll use Docker to run a static website in a container. The website is based on an existing image. We'll pull a Docker image from Docker Store, run the container, and see how easy it is to set up a web server.
 
-The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Store as [`dockersamples/static-site`](https://store.docker.com/community/images/dockersamples/static-site). 
+The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Store as [`dockersamples/static-site`](https://store.docker.com/community/images/dockersamples/static-site).
 
 1. Run the image directly in one go using `docker run` as follows.
 
@@ -47,7 +47,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
     ```
 
 3. Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters, to identify the container you want to stop, and then to remove it. The example below provides the `CONTAINER ID` on our system; you should use the value that you see in your terminal.
-    
+
     ```
     $ docker container stop a7a0e504ca3e
     $ docker container rm   a7a0e504ca3e
@@ -120,16 +120,16 @@ Let's re-run the command with some new flags to publish ports and pass your name
 
 In this section, we dive into Docker images. You will build your own image, use that image to run an application locally, and finally, push the newly create images to Docker Cloud.
 
-The [Docker documentation](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/) gives a great explanation on how storage works with Docker images and containers, but here's the highlights. 
+The [Docker documentation](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/) gives a great explanation on how storage works with Docker images and containers, but here's the highlights.
 
 * Images are comprised of layers
 * These layers are added by each line in a Dockerfile
 * Images on the same host or registry will share layers if possible
 * When container is started it gets a unique writeable layer of its own to capture changes that occur while it's running
-* Layers exist on the host file system in some form (usually a directory, but not always) and are managed by a [storage driver](https://docs.docker.com/engine/userguide/storagedriver/selectadriver/) to present a logical filesystem in the running container. 
+* Layers exist on the host file system in some form (usually a directory, but not always) and are managed by a [storage driver](https://docs.docker.com/engine/userguide/storagedriver/selectadriver/) to present a logical filesystem in the running container.
 * When a container is removed the unique writeable layer (and everything in it) is removed as well
-* To persist data (and improve performance) Volumes are used. 
-* Volumes (and the directories they are built on) are not managed by the storage driver, and will live on if a container is removed.  
+* To persist data (and improve performance) Volumes are used.
+* Volumes (and the directories they are built on) are not managed by the storage driver, and will live on if a container is removed.
 
 A Docker image is built up from a series of layers. Each layer represents an instruction in the image’s Dockerfile. Each layer except the very last one is read-only. Consider the following Dockerfile:
 
@@ -140,7 +140,7 @@ A Docker image is built up from a series of layers. Each layer represents an ins
     CMD python /app/app.py
 ```
 
-This Dockerfile contains four commands, each of which creates a layer. The `FROM` statement starts out by creating a layer from the ubuntu:15.04 image. The `COPY` command adds some files from your Docker client’s current directory. The `RUN` command builds your application using the make command. Finally, the last layer specifies what command to run within the container. 
+This Dockerfile contains four commands, each of which creates a layer. The `FROM` statement starts out by creating a layer from the ubuntu:15.04 image. The `COPY` command adds some files from your Docker client’s current directory. The `RUN` command builds your application using the make command. Finally, the last layer specifies what command to run within the container.
 
 <center><img src="../images/container-layers.jpg" title="Container Layers"></center>
 
@@ -148,7 +148,7 @@ Multipe Containers can use the same Image. Each container has its own writable c
 
 <center><img src="../images/sharing-layers.jpg" title="Sharing Layers"></center>
 
-The following exercises will help to illustrate those concepts in practice. 
+The following exercises will help to illustrate those concepts in practice.
 
 Let's start by looking at layers and how files written to a container are managed by something called *copy on write*.
 
@@ -238,23 +238,23 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     Status: Downloaded newer image for mysql:latest
     ```
 
-    What do you notice about those the output from the Docker pull request for MySQL?
+    What do you notice about the output from the Docker pull request for MySQL?
 
     The first layer pulled says:
 
     `85b1f47fba49: Already exists`
 
-    Notice that the layer id (`85b1f47fba498`) is the same for the first layer of the MySQl image and the only layer in the Debian:Jessie image. And because we already had pulled that layer when we pulled the Debian image, we didn't have to pull it again. 
+    Notice that the layer id (`85b1f47fba498`) is the same for the first layer of the MySQl image and the only layer in the Debian:Jessie image. And because we already had pulled that layer when we pulled the Debian image, we didn't have to pull it again.
 
-    So, what does that tell us about the MySQL image? Since each layer is created by a line in the image's *Dockerfile*, we know that the MySQL image is based on the Debian:Jessie base image. We can confirm this by looking at the [Dockerfile on Docker Store](https://github.com/docker-library/mysql/blob/0590e4efd2b31ec794383f084d419dea9bc752c4/5.7/Dockerfile). 
+    So, what does that tell us about the MySQL image? Since each layer is created by a line in the image's *Dockerfile*, we know that the MySQL image is based on the Debian:Jessie base image. We can confirm this by looking at the [Dockerfile for the Docker Hub](https://github.com/docker-library/mysql/blob/0590e4efd2b31ec794383f084d419dea9bc752c4/5.7/Dockerfile).
 
-    The first line in the the Dockerfile is: `FROM debian:jessie` This will import that layer into the MySQL image. 
+    The first line in the the Dockerfile is: `FROM debian:jessie` This will import that layer into the MySQL image.
 
-    So layers are created by Dockerfiles and are are shared between images. When you start a container, a writeable layer is added to the base image. 
+    So layers are created by Dockerfiles and are are shared between images. When you start a container, a writeable layer is added to the base image.
 
-    Next you will create a file in our container, and see how that's represented on the host file system. 
+    Next you will create a file in our container, and see how that's represented on the host file system.
 
-3. Start a Debian container, shell into it.   
+3. Start a Debian container, shell into it.
 
     ```
     $ docker run --tty --interactive --name debian debian:stretch-slim bash
@@ -269,17 +269,17 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     bin   dev  home  lib64  mnt  proc  run   srv  test-file  usrboot  etc  lib   media  opt  root  sbin  sys  tmp        var
     ```
 
-    We can see  `test-file` exists in the root of the containers file system. 
+    We can see  `test-file` exists in the root of the containers file system.
 
-    What has happened is that when a new file was written to the disk, the Docker storage driver placed that file in it's own layer. This is called *copy on write* - as soon as a change is detected the change is copied into the writeable layer. That layers is represented by a directory on the host file system. All of this is managed by the Docker storage driver. 
+    What has happened is that when a new file was written to the disk, the Docker storage driver placed that file in it's own layer. This is called *copy on write* - as soon as a change is detected the change is copied into the writeable layer. That layers is represented by a directory on the host file system. All of this is managed by the Docker storage driver.
 
 5. Exit the container but leave it running by pressing `ctrl-p` and then `ctrl-q`
 
-<center><img src="../images/overlay_constructs.jpg" title="Overlay Constructs"></center>
+    <center><img src="../images/overlay_constructs.jpg" title="Overlay Constructs"></center>
 
-    Our Docker host utilizes OverlayFS with the [overlay2](https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#how-the-overlay2-driver-works) storage driver. 
+    Our Docker host utilizes OverlayFS with the [overlay2](https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/#how-the-overlay2-driver-works) storage driver.
 
-    OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer.  The unified view is exposed through its own directory called merged. 
+    OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer. The unified view is exposed through its own directory called merged.
 
 6. Stop the contianer
 
@@ -307,10 +307,9 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
     $ docker container attach debian
     ```
 
+    Because the container still exists, the files are still available on your file system. At this point the file we created previously still exists.
 
-    Because the container still exists, the files are still available on  your file system. At this point the file we created previously still exists.
-
-    However, if we remove the container, the directories on the host file system will be removed, and your changes will be gone
+    However, if we remove the container, the directories on the host file system will be removed, and your changes will be gone.
 
 13. Remove the container and list the directory contents
 
@@ -324,17 +323,17 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 ## Understanding Docker Volumes
 
-[Docker volumes](https://docs.docker.com/engine/admin/volumes/volumes/) are directories on the host file system that are not managed by the storage driver. Since they are not managed by the storage drive they offer a couple of important benefits. 
+[Docker volumes](https://docs.docker.com/engine/admin/volumes/volumes/) are directories on the host file system that are not managed by the storage driver. Since they are not managed by the storage drive they offer a couple of important benefits.
 
 * **Performance**: Because the storage driver has to create the logical filesystem in the container from potentially many directories on the local host, accessing data can be slow. Especially if there is a lot of write activity to that container. In fact you should try and minimize the amount of writes that happen to the container's filesystem, and instead direct those writes to a volume
 
-* **Persistence**: Volumes are not removed when the container is deleted. They exist until explicitly removed. This means data written to a volume can be reused by other containers. 
+* **Persistence**: Volumes are not removed when the container is deleted. They exist until explicitly removed. This means data written to a volume can be reused by other containers.
 
-Volumes can be anonymous or named. Anonymous volumes have no way for the to be explicitly referenced. They are almost exclusively used for performance reasons as you cannot persist data effectively with anonymous volumes. Named volumes can be explicitly referenced so they can be used to persist data and increase performance. 
+Volumes can be anonymous or named. Anonymous volumes have no way for the to be explicitly referenced. They are almost exclusively used for performance reasons as you cannot persist data effectively with anonymous volumes. Named volumes can be explicitly referenced so they can be used to persist data and increase performance.
 
-The next sections will cover both anonymous and named volumes. 
+The next sections will cover both anonymous and named volumes.
 
-> Special Note: These next sections were adapted from [Arun Gupta's](https://twitter.com/arungupta) excellent [tutorial](http://blog.arungupta.me/docker-mysql-persistence/) on persisting data with MySQL. 
+> Special Note: These next sections were adapted from [Arun Gupta's](https://twitter.com/arungupta) excellent [tutorial](http://blog.arungupta.me/docker-mysql-persistence/) on persisting data with MySQL.
 
 ### Anonymous Volumes
 
@@ -346,7 +345,7 @@ VOLUME /var/lib/mysql
 
 This line sets up an anonymous volume in order to increase database performance by avoiding sending a bunch of writes through the Docker storage driver.
 
-Note: An anonymous volume is a volume that hasn't been explicitly named. This means that it's extremely difficult to use the volume later with a new container. Named volumes solve that problem, and will be covered later in this section. 
+Note: An anonymous volume is a volume that hasn't been explicitly named. This means that it's extremely difficult to use the volume later with a new container. Named volumes solve that problem, and will be covered later in this section.
 
 
 1. Start a MySQL container
@@ -367,7 +366,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
 
     This command will return: `in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data`
 
-    As mentined anonymous volumes will not persist data between containers, they are almost always used to increase performance. 
+    As mentined anonymous volumes will not persist data between containers, they are almost always used to increase performance.
 
 3. Shell into your running MySQL container and log into MySQL
 
@@ -420,7 +419,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     1 row in set (0.00 sec)
     ```
 
-5. Exit MySQL and the MySQL container. 
+5. Exit MySQL and the MySQL container.
 
     ```
     mysql> exit
@@ -479,7 +478,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     1 row in set (0.00 sec)
     ```
 
-9. Exit MySQL and the MySQL container. 
+9. Exit MySQL and the MySQL container.
 
     ```
     mysql> exit
@@ -489,7 +488,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     exit
     ```
 
-    The table persisted across container restarts, which is to be expected. In fact, it would have done this whether or not we had actually used a volume as shown in the previous section. 
+    The table persisted across container restarts, which is to be expected. In fact, it would have done this whether or not we had actually used a volume as shown in the previous section.
 
 10. Let's look at the volume again
 
@@ -498,11 +497,11 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data
     ```
 
-    We do see the volume was not affected by the container restart either. 
+    We do see the volume was not affected by the container restart either.
 
-    Where people often get confused is in expecting that the anonymous volume can be used to persist data BETWEEN containers. 
+    Where people often get confused is in expecting that the anonymous volume can be used to persist data BETWEEN containers.
 
-    To examine that delete the old container, create a new one with the same command, and check to see if the table exists. 
+    To examine that delete the old container, create a new one with the same command, and check to see if the table exists.
 
 11. Remove the current MySQL container
 
@@ -525,7 +524,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/e0ffdc6b4e0cfc6e795b83cece06b5b807e6af1b52c9d0b787e38a48e159404a/_data
     ```
 
-    Notice this directory is different than before. 
+    Notice this directory is different than before.
 
 14. Shell back into the running container and log into MySQL
 
@@ -558,7 +557,7 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     Empty set (0.00 sec)
     ```
 
-16. Exit MySQL and the MySQL container. 
+16. Exit MySQL and the MySQL container.
 
     ```
     mysql> exit
@@ -575,15 +574,15 @@ Note: An anonymous volume is a volume that hasn't been explicitly named. This me
     mysqldb
     ```
 
-So while a volume was used to store the new table in the original container, because it wasn't a named volume the data could not be persisted between containers. 
+So while a volume was used to store the new table in the original container, because it wasn't a named volume the data could not be persisted between containers.
 
 To achieve persistence a named volume should be used.
 
 ### Named Volumes
 
-A named volume (as the name implies) is a volume that's been explicitly named and can easily be referenced. 
+A named volume (as the name implies) is a volume that's been explicitly named and can easily be referenced.
 
-A named volume can be create on the command line, in a docker-compose file, and when you start a new container. They [CANNOT be created as part of the image's dockerfile](https://github.com/moby/moby/issues/30647). 
+A named volume can be create on the command line, in a docker-compose file, and when you start a new container. They [CANNOT be created as part of the image's dockerfile](https://github.com/moby/moby/issues/30647).
 
 1. Start a MySQL container with a named volume (`dbdata`)
 
@@ -598,9 +597,9 @@ A named volume can be create on the command line, in a docker-compose file, and 
     mysql
     ```
 
-    Because the newly created volume is empty, Docker will copy over whatever existed in the container at `/var/lib/mysql` when the container starts. 
+    Because the newly created volume is empty, Docker will copy over whatever existed in the container at `/var/lib/mysql` when the container starts.
 
-    Docker volumes are primatives just like images and containers. As such, they can be listed and removed in the same way. 
+    Docker volumes are primatives just like images and containers. As such, they can be listed and removed in the same way.
 
 2. List the volumes on the Docker host
 
@@ -630,7 +629,7 @@ A named volume can be create on the command line, in a docker-compose file, and 
     ]
     ```
 
-    Any data written to `/var/lib/mysql` in the container will be rerouted to `/var/lib/docker/volumes/mydbdata/_data` instead. 
+    Any data written to `/var/lib/mysql` in the container will be rerouted to `/var/lib/docker/volumes/mydbdata/_data` instead.
 
 4. Shell into your running MySQL container and log into MySQL
 
@@ -674,7 +673,7 @@ A named volume can be create on the command line, in a docker-compose file, and 
     1 row in set (0.00 sec)
     ```
 
-6. Exit MySQL and the MySQL container. 
+6. Exit MySQL and the MySQL container.
 
     ```
     mysql> exit
@@ -690,9 +689,9 @@ A named volume can be create on the command line, in a docker-compose file, and 
     $ docker container rm --force mysqldb
     ```
 
-    Because the MySQL was writing out to a named volume, we can start a new container with the same data. 
+    Because the MySQL was writing out to a named volume, we can start a new container with the same data.
 
-    When the container starts it will not overwrite existing data in a volume. So the data created in the previous steps will be left intact and mounted into the new container. 
+    When the container starts it will not overwrite existing data in a volume. So the data created in the previous steps will be left intact and mounted into the new container.
 
 8. Start a new MySQL container
 
@@ -746,9 +745,9 @@ A named volume can be create on the command line, in a docker-compose file, and 
     1 row in set (0.00 sec)
     ```
 
-    The data will exist until the volume is explicitly deleted. 
+    The data will exist until the volume is explicitly deleted.
 
-11. Exit MySQL and the MySQL container. 
+11. Exit MySQL and the MySQL container.
 
     ```
     mysql> exit
@@ -768,7 +767,7 @@ A named volume can be create on the command line, in a docker-compose file, and 
     mydbdata
     ```
 
-    If a new container was started with the previous command, it would create a new empty volume. 
+    If a new container was started with the previous command, it would create a new empty volume.
 
 
 ## Let's Take a Break then continue to Part 2

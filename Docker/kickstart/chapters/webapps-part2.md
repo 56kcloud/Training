@@ -9,7 +9,7 @@ Now that we understand the structure of Docker images it's now time to start bui
 > * [Task 2: Modify a running website](#Task_2)
 > * [Task 3: Create your first image](#Task_3)
 
-**Prerequisite** Ensure you have a DockerID. If you don't have a DockerID you can get one for free via [Docker Cloud](https://cloud.docker.com)
+**Prerequisite** Ensure you have a DockerID. If you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com)
 
 ## <a name="Task_1"></a>Task 1: Package and run a custom app using Docker
 
@@ -50,7 +50,7 @@ Let's have a look at the  Dockerfile we'll be using, which builds a simple websi
     COPY index.html /usr/share/nginx/html
     COPY linux.png /usr/share/nginx/html
 
-    EXPOSE 80 443     
+    EXPOSE 80 443
 
     CMD ["nginx", "-g", "daemon off;"]
     ```
@@ -305,9 +305,9 @@ Bravo, we have successfully deployed 2 versions of our web app in parralel to ou
 
 ### Review
 
-What did we just accomplish? 
+What did we just accomplish?
 
-1. We created a built a Dockerfile and ran a container from this newly create image
+1. We created a Dockerfile, built a container image and ran a container from this newly create image
 2. Next, we modified the website both the version & index.html file showing real-time updates to the application
 3. Finally, we commited our new changes into a newly created image
 4. We ran version 1 and version 2 side-by-side
@@ -317,13 +317,13 @@ What did we just accomplish?
 
 Here's a quick summary of the few basic commands we used in our Dockerfile.
 
-* `FROM` starts the Dockerfile. It is a requirement that the Dockerfile must start with the `FROM` command. Images are created in layers, which means you can use another image as the base image for your own. The `FROM` command defines your base layer. As arguments, it takes the name of the image. Optionally, you can add the Docker Cloud username of the maintainer and image version, in the format `username/imagename:version`.
+* `FROM` starts the Dockerfile. It is a requirement that the Dockerfile must start with the `FROM` command. Images are created in layers, which means you can use another image as the base image for your own. The `FROM` command defines your base layer. As arguments, it takes the name of the image. Optionally, you can add the Docker Hub username of the maintainer and image version, in the format `username/imagename:version`.
 
 * `RUN` is used to build up the Image you're creating. For each `RUN` command, Docker will run the command then create a new layer of the image. This way you can roll back your image to previous states easily. The syntax for a `RUN` instruction is to place the full text of the shell command after the `RUN` (e.g., `RUN mkdir /user/local/foo`). This will automatically run in a `/bin/sh` shell. You can define a different shell like this: `RUN /bin/bash -c 'mkdir /user/local/foo'`
 
 * `COPY` copies local files into the container.
 
-* `CMD` defines the commands that will run on the Image at start-up. Unlike a `RUN`, this does not create a new layer for the Image, but simply runs the command. There can only be one `CMD` per a Dockerfile/Image. If you need to run multiple commands, the best way to do that is to have the `CMD` run a script. `CMD` requires that you tell it where to run the command, unlike `RUN`. So example `CMD` commands would be:
+* `CMD` defines the commands that will run on the Image at start-up. Unlike a `RUN`, this does not create a new layer for the Image, but simply runs the command. There can only be one `CMD` per Dockerfile/Image. If you need to run multiple commands, the best way to do that is to have the `CMD` run a script. `CMD` requires that you tell it where to run the command, unlike `RUN`. So example `CMD` commands would be:
 ```
   CMD ["python", "./app.py"]
 
@@ -331,14 +331,15 @@ Here's a quick summary of the few basic commands we used in our Dockerfile.
 ```
 
 * `EXPOSE` creates a hint for users of an image which ports provide services. It is included in the information which
- can be retrieved via `$ docker inspect <container-id>`.     
+ can be retrieved via `$ docker inspect <container-id>`.
 
->**Note:** The `EXPOSE` command does not actually make any ports accessible to the host! Instead, this requires 
-publishing ports by means of the `-p` flag when using `$ docker run`.  
+>**Note:** The `EXPOSE` command does not actually make any ports accessible to the host! Instead, this requires
+publishing ports by means of the `-p` flag when using `$ docker run`.
 
-* `PUSH` pushes your image to Docker Cloud, or alternately to a [private registry](https://docs.docker.com/registry/)
+* `PUSH` pushes your image to Docker Hub, or alternately to a [private registry](https://docs.docker.com/registry/)
 
 >**Note:** If you want to learn more about Dockerfiles, check out [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/).
+
 Great! So you have now looked at `docker run`, played with a Docker container and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; deploying web applications with Docker.
 
 

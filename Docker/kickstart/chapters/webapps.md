@@ -7,7 +7,7 @@ Great! So you have now looked at `docker container run`, played with a Docker co
 >
 > * [Task 1: Run a static website in a container](#Task_1)
 > * [Task 2: Docker Images](#Task_2)
-> * [Task 3: Create your first image](#Task_3)
+> * [Layers and Copy on Write](#layers-and-copy-on-write)
 > * [Understanding Docker Volumes](#understanding-docker-volumes)
 
 
@@ -201,8 +201,6 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 - **User images** are images created and shared by users like you. They build on base images and add additional functionality. Typically these are formatted as `user/image-name`. The `user` value in the image name is your Docker Store user or organization name.
 
-### <a name="Task_3"></a>Task 3: Create your first image
-
 
 ## Layers and Copy on Write
 
@@ -329,11 +327,11 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 * **Persistence**: Volumes are not removed when the container is deleted. They exist until explicitly removed. This means data written to a volume can be reused by other containers.
 
-Volumes can be anonymous or named. Anonymous volumes have no way for the to be explicitly referenced. They are almost exclusively used for performance reasons as you cannot persist data effectively with anonymous volumes. Named volumes can be explicitly referenced so they can be used to persist data and increase performance.
+Volumes can be anonymous or named. Anonymous volumes have no way to be explicitly referenced. They are almost exclusively used for performance reasons as you cannot persist data effectively with anonymous volumes. Named volumes can be explicitly referenced so they can be used to persist data and increase performance.
 
 The next sections will cover both anonymous and named volumes.
 
-> Special Note: These next sections were adapted from [Arun Gupta's](https://twitter.com/arungupta) excellent [tutorial](http://blog.arungupta.me/docker-mysql-persistence/) on persisting data with MySQL.
+> Special Note: These next sections were adapted from [Arun Gupta's](https://twitter.com/arungupta) excellent [tutorial](http://blog.arungupta.me/docker-mysql-persistence/)(Outdated)  on persisting data with MySQL.
 
 ### Anonymous Volumes
 
@@ -345,7 +343,7 @@ VOLUME /var/lib/mysql
 
 This line sets up an anonymous volume in order to increase database performance by avoiding sending a bunch of writes through the Docker storage driver.
 
-Note: An anonymous volume is a volume that hasn't been explicitly named. This means that it's extremely difficult to use the volume later with a new container. Named volumes solve that problem, and will be covered later in this section.
+> **Note:** An anonymous volume is a volume that hasn't been explicitly named. This means that it's extremely difficult to use the volume later with a new container. Named volumes solve that problem, and will be covered later in this section.
 
 
 1. Start a MySQL container
@@ -582,7 +580,7 @@ To achieve persistence a named volume should be used.
 
 A named volume (as the name implies) is a volume that's been explicitly named and can easily be referenced.
 
-A named volume can be create on the command line, in a docker-compose file, and when you start a new container. They [CANNOT be created as part of the image's dockerfile](https://github.com/moby/moby/issues/30647).
+A named volume can be created on the command line, in a docker-compose file, and when you start a new container. They [CANNOT be created as part of the image's dockerfile](https://github.com/moby/moby/issues/30647).
 
 1. Start a MySQL container with a named volume (`dbdata`)
 

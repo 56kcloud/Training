@@ -17,7 +17,7 @@ var app = express();
 app.engine('html', expressHandlebars());
 app.set('view engine', 'html');
 app.set('views', __dirname);
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     var message = LINES[lineIndex];
 
     lineIndex += 1;
@@ -25,9 +25,9 @@ app.get('/', function(req, res) {
         lineIndex = 0;
     }
 
-    res.render('index', {message: message});
+    res.render('index', { message: message });
 });
 
-http.Server(app).listen(PORT, function() {
+http.Server(app).listen(PORT, function () {
     console.log("HTTP server listening on port %s", PORT);
 });

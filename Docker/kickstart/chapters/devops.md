@@ -12,9 +12,9 @@ Now that we understand how to build Docker images it's now time to start autobui
 ## <a name="Task_1"></a>Task 1: Push your image to Docker Hub
 
 
-### Prepararation 
+### Prepararation
 
-1. In order to make commands more copy/paste friendly, export an environment variable containing your DockerID (if you don't have a DockerID you can get one for free via [Docker Cloud](https://cloud.docker.com))
+1. In order to make commands more copy/paste friendly, export an environment variable containing your DockerID (if you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com))
 
     ```
     $ export DOCKERID=<your docker id>
@@ -32,13 +32,13 @@ Now that we understand how to build Docker images it's now time to start autobui
 
 List the images on your Docker host. You will see that you now have two `linux_tweet_app` images - one tagged as `1.0` and the other as `2.0`.
 
-    
+
     $ docker image ls
 
     REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
     vegasbrianc/linux_tweet_app   2.0                 01612e05312b        3 minutes ago       108MB
     vegasbrianc/linux_tweet_app   1.0                 bb32b5783cd3        7 minutes ago       108MB
-    
+
 
 These images are only stored in your Docker host's local repository. We want to `push` these images to Docker Hub so we can access the images from anywhere.
 
@@ -96,7 +96,7 @@ Distribution is built into the Docker platform. You can build images locally and
 
 ### Prepare to push our newly created project to GitHub
 
-It's time to automated our build pipeline. First, we need to create a GitHub Repo. 
+It's time to automated our build pipeline. First, we need to create a GitHub Repo.
 
 1. Login to your [www.GitHub.com](https://www.github.com) account and click create new repository
 
@@ -106,7 +106,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
 <center><img src="../images/setup_repo.png" title="Create New Git Repo"></center>
 
-3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below. 
+3. From the `linux_tweet_app` directory, initialize the project, commit, and perform the initial push to GitHub. Follow the directions which GitHub provides as seen below.
 
 4. Remove the Git directory
 
@@ -142,7 +142,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 
     ```
     $ git push --set-upstream origin master
-    ```  
+    ```
 
 
 10. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) click Repositories at the top menu bar and select the `Autobuilds` Repository
@@ -156,7 +156,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 10. Select your GitHub User and the Autobuilds Repo
 <center><img src="../images/autobuilds.png" title="Configure Autobuilds"></center>
 
-11. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build. 
+11. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build.
 
 12. Click `Save & Build`
 
@@ -176,12 +176,12 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
 > Using your favorite editor (vi, emacs, etc)
 
     Edit the index.html file and edit line number 33 and change the text to "DevOps is Awesome"
-   
+
     $ vi index.html
-    
+
 
 2. Commit our new changes to our GitHub Repo
-    
+
     ```
     $ git add index.html
 
@@ -200,7 +200,7 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
 1. Open [Travis CI](https://travis-ci.org/) and in the upper click the big green button in the middle of the screen `SIGN UP`
 
-2. Once we are signed up and signed in we can then add our Repo to Travis. Upper left corner click the `+`sign to add a new Repo. 
+2. Once we are signed up and signed in we can then add our Repo to Travis. Upper left corner click the `+`sign to add a new Repo.
 
 3. Flip the toggle switch for the `autobuilds` Repo
 
@@ -223,10 +223,10 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
     script:
         - while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done
-        
+
 
 4. Add the `.travis.yml` file to our GitHub repo.
-    
+
     ```
     $ git add .travis.yml
 
@@ -247,7 +247,7 @@ This section we will enable `Travis CI`, create a test script, and enable testin
 
 <center><img src="../images/travisci-build-status.png" title="Travis CI Build Log"></center>
 
-7. Once the build status dialog box appears select `Markdown` as the format. Copy the Markdown 
+7. Once the build status dialog box appears select `Markdown` as the format. Copy the Markdown
 
 
 > Using your favorite editor (vi, emacs, etc) edit the `README.md` file and paste the Markdown to the first line of the `README.md`
@@ -257,7 +257,7 @@ This section we will enable `Travis CI`, create a test script, and enable testin
     ```
 
 8. Commit the changes to `README.md`
-    
+
     ```
     $ git add README.md
 

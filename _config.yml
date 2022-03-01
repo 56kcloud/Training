@@ -1,2 +1,5 @@
 theme: jekyll-theme-cayman
-exclude: Kubernetes/website/
+exclude: [
+  'Kubernetes/website/',
+  'istio-workshop/'
+]

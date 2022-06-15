@@ -1,6 +1,6 @@
 # Deploying an app to a Swarm
 
-This portion of the tutorial will guide you through deplyoing a Docker Swarm, the creation and customization of a voting app.
+This portion of the tutorial will guide you through deploying a Docker Swarm, the creation and customization of a voting app.
 
 > **Tasks**:
 >
@@ -49,7 +49,7 @@ This app relies on [Docker Swarm mode](https://docs.docker.com/engine/swarm/). S
    status: active
    ```
 
-   _NOTE_ For Winows users please use the `ipconfig`command to retieve your IP address
+   _NOTE_ For Windows users please use the `ipconfig`command to retrieve your IP address
 
 2. Create a Docker Swarm using the IP Address from step 1.
 
@@ -196,7 +196,7 @@ It's important that you use version 3 of compose files, as `docker stack deploy`
         condition: on-failure
 ```
 
-The `image` key there specifies which image you can use, in this case the image `dockersamples/examplevotingapp_vote:before`. If you're familiar with Compose, you may know that there's a `build` key, which builds based on a Dockerfile. However, `docker stack deploy` does not suppport `build`, so you need to use pre-built images.
+The `image` key there specifies which image you can use, in this case the image `dockersamples/examplevotingapp_vote:before`. If you're familiar with Compose, you may know that there's a `build` key, which builds based on a Dockerfile. However, `docker stack deploy` does not support `build`, so you need to use pre-built images.
 
 Much like `docker run` you will see you can define `ports` and `networks`. There's also a `depends_on` key which allows you to specify that a service is only deployed after another service, in this case `vote` only deploys after `redis`.
 

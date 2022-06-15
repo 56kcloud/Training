@@ -291,7 +291,7 @@ To save the changes you made to the `index.html` file earlier, you need to build
 
 4. Open the Tweet Web App in your Browser `http://0.0.0.0:8081` to view the old version of the website.
 
-Bravo, we have successfully deployed 2 versions of our web app in parralel to our Docker host.
+Bravo, we have successfully deployed 2 versions of our web app in parallel to our Docker host.
 
 5. Stop the running containers
 
@@ -309,7 +309,7 @@ What did we just accomplish?
 
 1. We created a Dockerfile, built a container image and ran a container from this newly create image
 2. Next, we modified the website both the version & index.html file showing real-time updates to the application
-3. Finally, we commited our new changes into a newly created image
+3. Finally, we committed our new changes into a newly created image
 4. We ran version 1 and version 2 side-by-side
 
 ### Dockerfile commands summary

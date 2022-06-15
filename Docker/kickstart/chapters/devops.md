@@ -10,7 +10,7 @@ Now that we understand how to build Docker images it's now time to start autobui
 
 ## <a name="Task_1"></a>Task 1: Push your image to Docker Hub
 
-### Prepararation
+### Preparation
 
 1. In order to make commands more copy/paste friendly, export an environment variable containing your DockerID (if you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com))
 
@@ -108,7 +108,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
    $ rm -Rf .git
    ```
 
-5. Initalize the Git directory
+5. Initialize the Git directory
 
    ```
    $ git init
@@ -149,7 +149,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 14. Select your GitHub User and the Autobuilds Repo
 <center><img src="../images/autobuilds.png" title="Configure Autobuilds"></center>
 
-15. Click the `Create` button for Autobuilding. If everything was configured correclty this should trigger an auto-build.
+15. Click the `Create` button for Autobuilding. If everything was configured correctly this should trigger an auto-build.
 
 16. Click `Save & Build`
 
@@ -165,7 +165,7 @@ Once the autobuild has complete let's have a look around.
 
 Awesome! To ensure our automated builds are really working let's commit a new version of our `linux_tweet_app` to GitHub. When we push our changes to GitHub this will trigger an automated build in Docker Hub. Great, let's give it a try.
 
-1.  in the `linux_tweep_app` directoy edit the `index.html`
+1.  in the `linux_tweet_app` directory edit the `index.html`
 
     > Using your favorite editor (vi, emacs, etc)
 
@@ -187,7 +187,7 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
 
-Now, we have an automated Build pipeline in place that is automatically being built everytime a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are commiting is doing what it is suppose to do. In this section we will setup a `Travis Continous Integration`testing to check out container.
+Now, we have an automated Build pipeline in place that is automatically being built every time a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are committing is doing what it is suppose to do. In this section we will setup a `Travis Continuous Integration`testing to check out container.
 
 This section we will enable `Travis CI`, create a test script, and enable testing on our Repo. Sounds great, let's get started.
 

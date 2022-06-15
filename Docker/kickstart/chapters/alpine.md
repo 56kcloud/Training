@@ -50,7 +50,7 @@ Now that Docker is setup, it's time to get our hands dirty. In this section, you
 What happened? Behind the scenes, a lot of stuff happened. When you call `docker container run`,
 
 1. The Docker client contacts the Docker daemon
-2. The Docker daemon checks local store if the image (alpine in this case) is available locally, and if not, dowloads it from Docker Hub. (Since we have issued `docker pull alpine` before, the download step is not necessary)
+2. The Docker daemon checks local store if the image (alpine in this case) is available locally, and if not, downloads it from Docker Hub. (Since we have issued `docker pull alpine` before, the download step is not necessary)
 3. The Docker daemon creates the container and then runs a command in that container
 4. The Docker daemon streams the output of the command to the Docker client
 
@@ -118,7 +118,7 @@ You are now inside the container shell and you can try out a few commands like `
    ```
    $ docker container run -it alpine /bin/sh
    / # ls
-   bin      dev      etc      home     lib      linuxrc  media    mnt      proc     root     run      sbin     sys      tmp      usr      var
+   bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
    / # uname -a
    Linux 97916e8cb5dc 4.4.27-moby #1 SMP Wed Oct 26 14:01:48 UTC 2016 x86_64 Linux
    ```
@@ -140,7 +140,7 @@ In the next example, we are going to run an Ubuntu Linux container.
    In this case we're giving the `docker container run` command three parameters:
 
    - `--interactive` says you want an interactive session
-   - `--tty` allocates a psuedo-tty
+   - `--tty` allocates a pseudo-tty
    - `--rm` tells Docker to go ahead and remove the container when it's done executing
 
    The first two parameters allow you to interact with the Docker container.
@@ -177,7 +177,7 @@ Interactive containers are useful when you are putting together your own image. 
 
 > **Note:** You _can_ [commit](https://docs.docker.com/engine/reference/commandline/commit/) a container to make an image from it - but you should avoid that wherever possible. It's much better to use a repeatable [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build your image. You'll see that shortly.
 
-5. To exit the shell of the Ubunutu container:
+5. To exit the shell of the Ubuntu container:
 
    ```
    $ exit
@@ -200,7 +200,8 @@ Background containers are how you'll run most applications. Here's a simple exam
    --env MYSQL_ROOT_PASSWORD=my-secret-pw \
    mysql:latest
 
-   Unable to find image 'mysql:latest' locallylatest: Pulling from library/mysql
+   Unable to find image 'mysql:latest' locally
+   latest: Pulling from library/mysql
    aa18ad1a0d33: Pull complete
    fdb8d83dece3: Pull complete
    <Snip>

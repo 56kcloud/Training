@@ -84,7 +84,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
    $ docker container run --name static-site-2 --env AUTHOR="Your Name" --detach --publish 8888:80 dockersamples/static-site
    ```
 
-   Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888` We can now view both websites running in parralel on your Docker Host.
+   Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888` We can now view both websites running in parallel on your Docker Host.
 
 <center><img src="../images/web-app.png" title="web-app"></center>
 
@@ -142,7 +142,7 @@ This Dockerfile contains four commands, each of which creates a layer. The `FROM
 
 <center><img src="../images/container-layers.jpg" title="Container Layers"></center>
 
-Multipe Containers can use the same Image. Each container has its own writable container layer, and all changes are stored in this container layer, multiple containers can share access to the same underlying image and yet have their own data state. The diagram below shows multiple containers sharing the same Ubuntu 15.04 image.
+Multiple Containers can use the same Image. Each container has its own writable container layer, and all changes are stored in this container layer, multiple containers can share access to the same underlying image and yet have their own data state. The diagram below shows multiple containers sharing the same Ubuntu 15.04 image.
 
 <center><img src="../images/sharing-layers.jpg" title="Sharing Layers"></center>
 
@@ -260,7 +260,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
    ```
    root@e09203d84deb:/# touch test-file
    root@e09203d84deb:/# ls
-   bin   dev  home  lib64  mnt  proc  run   srv  test-file  usrboot  etc  lib   media  opt  root  sbin  sys  tmp        var
+   bin  boot  dev	etc  home  lib	lib64  media  mnt  opt	proc  root  run  sbin  srv  sys  test-file  tmp  usr  var
    ```
 
    We can see `test-file` exists in the root of the containers file system.
@@ -275,7 +275,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
    OverlayFS layers two directories on a single Linux host and presents them as a single directory. These directories are called layers and the unification process is referred to as a union mount. OverlayFS refers to the lower directory as lowerdir and the upper directory a upperdir. "Upper" and "Lower" refer to when the layer was added to the image. In our example the writeable layer is the most "upper" layer. The unified view is exposed through its own directory called merged.
 
-6. Stop the contianer
+6. Stop the container
 
    ```
    $ docker container stop debian
@@ -289,7 +289,7 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
    674d7abf10c6        debian:stretch-slim "bash"              36 minutes ago      Exited (0) 2 minutes ago                       debian
    ```
 
-8. Sart the Debian container again
+8. Start the Debian container again
 
    ```
    $ docker container start debian
@@ -357,7 +357,7 @@ This line sets up an anonymous volume in order to increase database performance 
 
    This command will return: `in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data`
 
-   As mentined anonymous volumes will not persist data between containers, they are almost always used to increase performance.
+   As mentioned anonymous volumes will not persist data between containers, they are almost always used to increase performance.
 
 3. Shell into your running MySQL container and log into MySQL
 
@@ -575,7 +575,7 @@ A named volume (as the name implies) is a volume that's been explicitly named an
 
 A named volume can be created on the command line, in a docker-compose file, and when you start a new container. They [CANNOT be created as part of the image's dockerfile](https://github.com/moby/moby/issues/30647).
 
-1. Start a MySQL container with a named volume (`dbdata`)
+1. Start a MySQL container with a named volume (`mydbdata`)
 
    ```
    $ docker run --name mysqldb \
@@ -590,7 +590,7 @@ A named volume can be created on the command line, in a docker-compose file, and
 
    Because the newly created volume is empty, Docker will copy over whatever existed in the container at `/var/lib/mysql` when the container starts.
 
-   Docker volumes are primatives just like images and containers. As such, they can be listed and removed in the same way.
+   Docker volumes are primitives just like images and containers. As such, they can be listed and removed in the same way.
 
 2. List the volumes on the Docker host
 

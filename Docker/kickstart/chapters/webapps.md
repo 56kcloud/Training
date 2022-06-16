@@ -201,14 +201,15 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 
 ## Layers and Copy on Write
 
-1. Pull the Debian:Stretch image
+1. Pull the Debian:Buster image
 
    ```
-   $ docker image pull debian:stretch-slim
-   jessie: Pulling from library/debian
-   85b1f47fba49: Pull complete
-   Digest: sha256:f51cf81db2de8b5e9585300f655549812cdb27c56f8bfb992b8b706378cd517d
-   Status: Downloaded newer image for debian:jessie
+   $ docker image pull debian:buster-slim
+   buster-slim: Pulling from library/debian
+   c1ad9731b2c7: Pull complete
+   Digest: sha256:fda76aa2ef4867e583dc8a7b86bbdb51118b8794c1b98aa4aeebaca3a1ad9c0f
+   Status: Downloaded newer image for debian:buster-slim
+   docker.io/library/debian:buster-slim
    ```
 
 2. Pull a MySQL image
@@ -217,19 +218,21 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
    $ docker image pull mysql
    Using default tag: latest
    latest: Pulling from library/mysql
-   85b1f47fba49: Already exists
-   27dc53f13a11: Pull complete
-   095c8ae4182d: Pull complete
-   0972f6b9a7de: Pull complete
-   1b199048e1da: Pull complete
-   159de3cf101e: Pull complete
-   963d934c2fcd: Pull complete
-   f4b66a97a0d0: Pull complete
-   f34057997f40: Pull complete
-   ca1db9a06aa4: Pull complete
-   0f913cb2cc0c: Pull complete
-   Digest: sha256:bfb22e93ee87c6aab6c1c9a4e7cdc68e9cb9b64920f28fa289f9ffae9fe8e173
+   c1ad9731b2c7: Already exists
+   54f6eb0ee84d: Pull complete
+   cffcf8691bc5: Pull complete
+   89a783b5ac8a: Pull complete
+   6a8393c7be5f: Pull complete
+   af768d0b181e: Pull complete
+   810d6aaaf54a: Pull complete
+   2e014a8ae4c9: Pull complete
+   a821425a3341: Pull complete
+   3a10c2652132: Pull complete
+   4419638feac4: Pull complete
+   681aeed97dfe: Pull complete
+   Digest: sha256:548da4c67fd8a71908f17c308b8ddb098acf5191d3d7694e56801c6a8b2072cc
    Status: Downloaded newer image for mysql:latest
+   docker.io/library/mysql:latest
    ```
 
    What do you notice about the output from the Docker pull request for MySQL?

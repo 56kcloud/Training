@@ -222,22 +222,7 @@ $ git commit -m "Added GitHub Actions Script"
 $ git push
 ```
 
-14. Click `Configure Autobuilds`
-
-15. Select your GitHub User and the Autobuilds Repo
-<center><img src="../images/autobuilds.png" title="Configure Autobuilds"></center>
-
-16. Click the `Create` button for Autobuilding. If everything was configured correctly this should trigger an auto-build.
-
-17. Click `Save & Build`
-
-18. Navigate to the Recent Builds and click on the `Build in Master` to view the build logs
-
-Once the autobuild has complete let's have a look around.
-
-- First click the `Repo` Tab. What's populated here?
-- Next click the `Tags` Tab
-- Finally, click on the `Build Details` and click on the `Success` status. What do we see here and why?
+14. After you pushed the changes go to the _Actions_ tab in your GitHub Repository. You should see the Workflow that was just triggered.
 
 ### Test Automated Builds
 

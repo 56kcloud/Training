@@ -76,7 +76,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
    80/tcp -> 0.0.0.0:32773
    ```
 
-**If you are running [Docker for Mac](https://docs.docker.com/docker-for-mac/), [Docker for Windows](https://docs.docker.com/docker-for-windows/), or Docker on Linux, you can open `http://0.0.0.0:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.**
+   **If you are running [Docker Desktop for Mac](https://docs.docker.com/desktop/mac), [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/), or [Docker Desktop on Linux](https://docs.docker.com/desktop/linux/), you can open `http://0.0.0.0:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.**
 
 6. You can also run a second webserver at the same time, this time specifying a custom host port mapping to the container's webserver. **Be sure to change the name**
 
@@ -86,11 +86,11 @@ Let's re-run the command with some new flags to publish ports and pass your name
 
    Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888` We can now view both websites running in parallel on your Docker Host.
 
-<center><img src="../images/web-app.png" title="web-app"></center>
+   <center><img src="../images/web-app.png" title="web-app"></center>
 
-    * `--publish` will publish instruct the container to map the specified container port to the host port. `8888:80` = Host:Container Port
+   `--publish` will publish instruct the container to map the specified container port to the host port. `8888:80` = Host:Container Port
 
-    Now that you've seen how to run a webserver inside a Docker container, how do you create your own Docker image? This is the question we'll explore in the next section.
+   Now that you've seen how to run a webserver inside a Docker container, how do you create your own Docker image? This is the question we'll explore in the next section.
 
 7. Stop and remove the containers since we won't be using them anymore.
 

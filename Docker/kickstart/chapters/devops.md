@@ -18,7 +18,7 @@ Now that we understand how to build Docker images it's now time to start autobui
    $ export DOCKERID=<your docker id>
    ```
 
-   > Special Note: The Windows Command Line does not allow to export the `DOCKERID`. You can therefore either directly set the DockerID in the following commands. Or export the variable via `set DOCKERID=<your docker id>` and then replace the variable with `%DOCKERID%.
+   > Special Note: The Windows Command Line does not allow to export the `DOCKERID`. You can therefore either directly set the DockerID in the following commands. Or export the variable via `set DOCKERID=<your docker id>` and then replace the variable with `%DOCKERID%`.
 
 2. To make sure it stored correctly by echoing it back in the terminal
 

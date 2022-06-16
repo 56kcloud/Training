@@ -141,7 +141,7 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
 10. Push the changes to GitHub
 
     ```
-    $ git push --set-upstream origin master
+    $ git push --set-upstream origin main
     ```
 
 Now that we have pushed our project to GitHub, the next step is to enable [GitHub Actions](https://github.com/features/actions) to build and push the image.

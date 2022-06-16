@@ -67,7 +67,7 @@ Let's have a look at the Dockerfile we'll be using, which builds a simple websit
    $ export DOCKERID=<your docker id>
    ```
 
-   > Special Note: The Windows Command Line does not allow to export the `DOCKERID`. You can therefore either directly set the DockerID in the following commands. Or export the variable via `set DOCKERID=<your docker id>` and then replace the variable with `%DOCKERID%.
+   > Special Note: The Windows Command Line does not allow to export the `DOCKERID`. You can therefore either directly set the DockerID in the following commands. Or export the variable via `set DOCKERID=<your docker id>` and then replace the variable with `%DOCKERID%`.
 
 4. To make sure it stored correctly by echoing it back in the terminal
 

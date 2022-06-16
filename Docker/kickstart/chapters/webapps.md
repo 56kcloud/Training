@@ -84,7 +84,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
    $ docker container run --name static-site-2 --env AUTHOR="Your Name" --detach --publish 8888:80 dockersamples/static-site
    ```
 
-   Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888` We can now view both websites running in parallel on your Docker Host.
+   Open your browser to `http://0.0.0.0:32773` and open a second tab `http://0.0.0.0:8888`. We can now view both websites running in parallel on your Docker Host.
 
    <center><img src="../images/web-app.png" title="web-app"></center>
 
@@ -107,10 +107,10 @@ Let's re-run the command with some new flags to publish ports and pass your name
 
    > **Note:** `rm -f` is the not nice way of removing containers. Be warned
 
-9. Run `docker container ps` to make sure the containers are gone.
+9. Run `docker container ps -a` to make sure the containers are gone.
 
    ```
-   $ docker container ps
+   $ docker container ps -a
    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
    ```
 

@@ -18,6 +18,8 @@ Now that we understand how to build Docker images it's now time to start autobui
    $ export DOCKERID=<your docker id>
    ```
 
+   > Special Note: The Windows Command Line does not allow to export the `DOCKERID`. You can therefore either directly set the DockerID in the following commands. Or export the variable via `set DOCKERID=<your docker id>` and then replace the variable with `%DOCKERID%.
+
 2. To make sure it stored correctly by echoing it back in the terminal
 
    ```
@@ -154,9 +156,8 @@ Now that we have pushed our project to GitHub, the next step is to enable [GitHu
 
    Go to Settings -> Secrets -> Actions and add the following _Repository Secrets_:
 
-   - DOCKERHUB_USERNAME: <DOCKERID>
-   - DOCKERHUB_TOKEN: <TOKEN>
-   -
+   - DOCKERHUB_USERNAME: `Your DOCKERID`
+   - DOCKERHUB_TOKEN: The previously created `TOKEN`
 
 3. At the following content to the file `.github/workflows/build-push-and-deploy.yml`
 

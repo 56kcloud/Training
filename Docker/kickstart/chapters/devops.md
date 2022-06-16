@@ -157,9 +157,9 @@ Now that we have pushed our project to GitHub, the next step is to enable [GitHu
    Go to Settings -> Secrets -> Actions and add the following _Repository Secrets_:
 
    - DOCKERHUB_USERNAME: `Your DOCKERID`
-   - DOCKERHUB_TOKEN: The previously created `TOKEN`
+   - DOCKERHUB_TOKEN: `The previously created TOKEN`
 
-3. At the following content to the file `.github/workflows/build-push-and-deploy.yml`
+3. To add a job, you need to create the `.github/workflows/build-push-and-deploy.yml` file and add the content below to it:
 
 ```
 ---

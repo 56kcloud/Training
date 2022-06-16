@@ -352,7 +352,7 @@ This line sets up an anonymous volume in order to increase database performance 
 2. Use Docker inspect to view the details of the anonymous volume
 
    ```
-   $ docker inspect -f 'in the {{.Name}} container {{(index .Mounts 0).Destination}} is mapped to {{(index .Mounts 0).Source}}' mysqldb
+   $ docker inspect -f "in the {{.Name}} container {{(index .Mounts 0).Destination}} is mapped to {{(index .Mounts 0).Source}}" mysqldb
    ```
 
    This command will return: `in the /mysqldb container /var/lib/mysql is mapped to /var/lib/docker/volumes/cd79b3301df29d13a068d624467d6080354b81e34d794b615e6e93dd61f89628/_data`

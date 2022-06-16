@@ -114,46 +114,124 @@ It's time to automated our build pipeline. First, we need to create a GitHub Rep
    $ git init
    ```
 
-6. Add your Git Repo configuration to the local index
+6. Change the branch name to main
+
+   ```
+   $ git checkout -b main
+   ```
+
+7. Add your Git Repo configuration to the local index
 
    ```
    $ git remote add origin https://github.com/<your GitHub username>/<your github repo name>.git
    ```
 
-7. Add all files to Git index
+8. Add all files to Git index
 
    ```
    $ git add *
    ```
 
-8. Commit Linux Tweet App files to the GitHub Autobuilds Repo
+9. Commit Linux Tweet App files to the GitHub Autobuilds Repo
 
    ```
    $ git commit -m "First commit to Autobuilds"
    ```
 
-9. Push the changes to GitHub
+10. Push the changes to GitHub
 
-   ```
-   $ git push --set-upstream origin master
-   ```
+    ```
+    $ git push --set-upstream origin master
+    ```
 
-10. Now that we have pushed our project to GitHub we can now enable Autobuilds. Open [Docker Hub](www.hub.docker.com) click Repositories at the top menu bar and select the `Autobuilds` Repository
+Now that we have pushed our project to GitHub, the next step is to enable [GitHub Actions](https://github.com/features/actions) to build and push the image.
 
-11. At the top menu click `Builds`
+1. Generate a new Access Token on Docker Hub
 
-12. Connect GitHub and go back to the Repos -> Autobuilds Repo -> Builds
+   Go to the [Docker Hub Account Settings -> Security](https://hub.docker.com/settings/security)
 
-13. Click `Configure Autobuilds`
+2. Store the access token and further secrets in the GitHub Repository
 
-14. Select your GitHub User and the Autobuilds Repo
+   Go to Settings -> Secrets -> Actions and add the following _Repository Secrets_:
+
+   - DOCKERHUB_USERNAME: <DOCKERID>
+   - DOCKERHUB_TOKEN: <TOKEN>
+   -
+
+3. At the following content to the file `.github/workflows/build-push-and-deploy.yml`
+
+```
+---
+name: Build, Push and Deploy
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      # Configure Docker for Multi-Arch Images
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1.2.0
+
+      # Login to DockerHub when no pull request
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Configure the Docker Image Meta Data
+      - name: Docker Meta
+        id: docker_meta
+        uses: docker/metadata-action@v3.4.1
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,value=latest
+
+      # Build and push the image
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v2.6.1
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+```
+
+13. Commit and Push the changes to GitHub
+
+```
+$ git add .github/workflows/build-push-and-deploy.yml
+$ git commit -m "Added GitHub Actions Script"
+$ git push
+```
+
+14. Click `Configure Autobuilds`
+
+15. Select your GitHub User and the Autobuilds Repo
 <center><img src="../images/autobuilds.png" title="Configure Autobuilds"></center>
 
-15. Click the `Create` button for Autobuilding. If everything was configured correctly this should trigger an auto-build.
+16. Click the `Create` button for Autobuilding. If everything was configured correctly this should trigger an auto-build.
 
-16. Click `Save & Build`
+17. Click `Save & Build`
 
-17. Navigate to the Recent Builds and click on the `Build in Master` to view the build logs
+18. Navigate to the Recent Builds and click on the `Build in Master` to view the build logs
 
 Once the autobuild has complete let's have a look around.
 
@@ -163,7 +241,7 @@ Once the autobuild has complete let's have a look around.
 
 ### Test Automated Builds
 
-Awesome! To ensure our automated builds are really working let's commit a new version of our `linux_tweet_app` to GitHub. When we push our changes to GitHub this will trigger an automated build in Docker Hub. Great, let's give it a try.
+Awesome! To ensure our automated builds are really working let's commit a new version of our `linux_tweet_app` to GitHub. When we push our changes to GitHub this will trigger a new GitHub Action Workflow. Great, let's give it a try.
 
 1.  in the `linux_tweet_app` directory edit the `index.html`
 
@@ -183,77 +261,67 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
     $ git push
     ```
 
-3.  Head back to your [Docker Hub](www.hub.docker.com) account and click on the `Build Details` tab of your `autobuilds` repo (Keep refreshing the page). You should now see if you are quick enough that your build is queued ready to be built by Docker Hub. Next, it will run through the build and and report back the status of your new build. Click on the status of the build once it has completed building to view the logs.
+3.  Head back to your GitHub Repository and click on the `Actions` tab. You should now see a new Workflow that was just now triggered (Maybe you need to wait a couple of seconds and refresh the page). If you click on the latest Workflow, you get to the Summary page, where you can see the `build-and-push-image` job. By clicking on this you can see all the logs and also failures, if something went wrong.
 
 ## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
 
-Now, we have an automated Build pipeline in place that is automatically being built every time a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are committing is doing what it is suppose to do. In this section we will setup a `Travis Continuous Integration`testing to check out container.
+Now, we have an automated Build pipeline in place that is automatically being built every time a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are committing is doing what it is suppose to do.
 
-This section we will enable `Travis CI`, create a test script, and enable testing on our Repo. Sounds great, let's get started.
+To do this, we need to add a new job to our GitHub Actions. This will start the previously build container and tries to connect to the HTTP port.
 
-1. Open [Travis CI](https://travis-ci.org/) and in the upper click the big green button in the middle of the screen `SIGN UP`
-
-2. Once we are signed up and signed in we can then add our Repo to Travis. Upper left corner click the `+`sign to add a new Repo.
-
-3. Flip the toggle switch for the `autobuilds` Repo
-
-4. Now add the test to the Repo. This test will check that the container indeed can start and port 8080 is indeed accessible.
-   > Using your favorite editor (vi, emacs, etc) create a new file called `.travis.yml`
-
-.travis.yml should contain the following. Be sure to update your Docker ID:
-
-    sudo: required
-
-    services:
-        - docker
-
-    language: bash
-
-    before_script:
-        - "docker build -t <Your Docker ID>/autobuilds ."
-        - "docker container run --detach --publish 8080:80 <Your Docker ID>/autobuilds"
-        - docker ps
-
-    script:
-        - while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done
-
-4. Add the `.travis.yml` file to our GitHub repo.
+1. Add the following code snippet to your GitHub Actions file:
 
    ```
-   $ git add .travis.yml
+   test-container:
+      name: Test our container
+      needs: build-and-push-image
+      runs-on: ubuntu-latest
+      steps:
+         - name: Checkout
+         uses: actions/checkout@v2.3.4
 
-   $ git commit -m "added Travis CI testing to our Autobuild Repo"
+         - name: Test
+         run: |
+            docker container run --detach --publish 8080:80  ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+            docker ps
+            while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done
+   ```
+
+2. Commit and push your changes to the GitHub repo
+
+   ```
+   $ git add .github/workflows/build-push-and-deploy.yml
+
+   $ git commit -m "added testing job to our Autobuild Repo"
 
    $ git push
    ```
 
-5. Head back to [Travis CI](https://travis-ci.org/) and click on the `autobuilds` Repo in the left pane. Click the running job and we should now see the build log.
+3. Head back to the GitHub Actions tab in your GitHub Repository. Select the latest workflow. There you should now see two jobs. After a successful build, you should see the following:
 
-<center><img src="../images/travisci-build-log.png" title="Travis CI Build Log"></center>
+   <center><img src="../images/github-actions-build-push-and-test.png" title="GitHub Actions Workflow Summary"></center>
 
 ### OPTIONAL ADD BUILD STATUS TO PROJECT\*\*
 
-6. Update the build status in our `README.md`. At the top of the `TravisCI` page click on the build status icon.
+<center><img src="../images/github-actions-build-status.png" title="GitHub Actions Build Status"></center>
 
-<center><img src="../images/travisci-build-status.png" title="Travis CI Build Log"></center>
+To add the build status to your project, you need to add the following line to your `README.md` file in your repositories root folder.
 
-7. Once the build status dialog box appears select `Markdown` as the format. Copy the Markdown
+You can use your favorite editor (vi, emacs, VSCode, etc) edit the `README.md` file and paste the following snippet to the first line of the `README.md`
 
-> Using your favorite editor (vi, emacs, etc) edit the `README.md` file and paste the Markdown to the first line of the `README.md`
+```
+![Build-Push-And-Test Workflow](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/build-push-and-deploy.yml/badge.svg)
+```
 
-    ```
-    [![Build Status](https://travis-ci.org/vegasbrianc/autobuilds.svg?branch=dev)](https://travis-ci.org/vegasbrianc/autobuilds)
-    ```
+6. Commit the changes to `README.md`
 
-8. Commit the changes to `README.md`
+```
+$ git add README.md
 
-   ```
-   $ git add README.md
+$ git commit -m "Added GitHub Actions build status to our Repo"
 
-   $ git commit -m "added Travis CI build status to our Repo"
-
-   $ git push
-   ```
+$ git push
+```
 
 ## Next Steps
 

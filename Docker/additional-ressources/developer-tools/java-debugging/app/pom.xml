@@ -11,7 +11,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>3.2.4.RELEASE</version>
+      <version>5.2.21.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

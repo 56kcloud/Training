@@ -278,10 +278,10 @@ To do this, we need to add a new job to our GitHub Actions. This will start the 
       runs-on: ubuntu-latest
       steps:
          - name: Checkout
-         uses: actions/checkout@v2.3.4
+           uses: actions/checkout@v2.3.4
 
          - name: Test
-         run: |
+           run: |
             docker container run --detach --publish 8080:80  ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
             docker ps
             while ! curl --retry 10 --retry-delay 5 -v http://0.0.0.0:8080 >/dev/null; do sleep 1; done

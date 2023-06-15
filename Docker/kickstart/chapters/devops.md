@@ -311,4 +311,4 @@ $ git push
 
 ## Next Steps
 
-For the next step in the tutorial head over to [Deploying an app to Docker Swarm](./votingapp.md)
+For the next step in the tutorial head over to [Deploying an app with Docker Compose](./votingapp-compose.md)

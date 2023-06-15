@@ -6,7 +6,7 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 >
 > - [Task 1: Run our First Container](#Task_1)
 > - [Task 2: Run an Interactive Container](#Task_2)
-> - [Task 3: Run a background MySQL container](#Task_3)
+> - [Task 3: Run a background MariaDB container](#Task_3)
 > - [Terminology Covered in this section](#Terminology)
 
 ## <a name="Task_1"></a>Task 1: Running your first container
@@ -185,11 +185,11 @@ Interactive containers are useful when you are putting together your own image. 
 
 We can exit the TTY of the container with by typing `exit` or `CTRL-D`
 
-### <a name="Task_3"></a>Task 3: Run a background MySQL container
+### <a name="Task_3"></a>Task 3: Run a background MariaDB container
 
-Background containers are how you'll run most applications. Here's a simple example using MySQL.
+Background containers are how you'll run most applications. Here's a simple example using MariaDB.
 
-1. Let's run MySQL in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
+1. Let's run MariaDB in the background container using the `--detach` flag. We'll also use the `--name` flag to name the running container `mydb`.
 
    We'll also use an environment variable (`--env`) to set the root password (NOTE: This should never be done in production):
 
@@ -197,30 +197,30 @@ Background containers are how you'll run most applications. Here's a simple exam
    $ docker container run \
    --detach \
    --name mydb \
-   --env MYSQL_ROOT_PASSWORD=my-secret-pw \
-   mysql:latest
+   --env MARIADB_ROOT_PASSWORD=my-secret-pw \
+   mariadb:latest
 
-   Unable to find image 'mysql:latest' locally
-   latest: Pulling from library/mysql
-   aa18ad1a0d33: Pull complete
-   fdb8d83dece3: Pull complete
+   Unable to find image 'mariadb:latest' locally
+   latest: Pulling from library/mariadb
+   6c7698a779f6: Pull complete
+   c3beef926275: Pull complete
    <Snip>
-    315e21657aa4: Pull complete
-   Digest: sha256:0dc3dacb751ef46a6647234abdec2d47400f0dfbe77ab490b02bffdae57846ed
-   Status: Downloaded newer image for mysql:latest
-   41d6157c9f7d1529a6c922acb8167ca66f167119df0fe3d86964db6c0d7ba4e0
+   fbc99aa6f426: Pull complete
+   Digest: sha256:dd51b32c5c5c6ed56019bb92f48b4f749287208b1b903ac61ef1efa6c2ae2410
+   Status: Downloaded newer image for mariadb:latest
+   762950d93224b25b465167a5b9862cd208d5d4577715aa4dc05b36f898a8b9b0
    ```
 
    Once again, the image we requested was not available locally, so Docker pulled it from Docker Hub.
 
-   As long as the MySQL process is running, Docker will keep the container running in the background.
+   As long as the MariaDB process is running, Docker will keep the container running in the background.
 
 2. List running containers
 
    ```
    $ docker container ls
    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS            NAMES
-   3f4e8da0caf7        mysql:latest        "docker-entrypoint..."   52 seconds ago      Up 51 seconds       3306/tcp         mydb
+   3f4e8da0caf7        mariadb:latest      "docker-entrypoint..."   52 seconds ago      Up 51 seconds       3306/tcp         mydb
    ```
 
    Notice your container is running
@@ -230,9 +230,10 @@ Background containers are how you'll run most applications. Here's a simple exam
    ```
    $ docker container logs mydb
    <output truncated>
-   2017-09-29T16:02:58.605004Z 0 [Note] Executing 'SELECT * FROM INFORMATION_SCHEMA.TABLES;' to get a list of tables using the deprecated partition engine. You may use the startup option '--disable-partition-engine-check' to skip this check.
-   2017-09-29T16:02:58.605026Z 0 [Note] Beginning of list of non-natively partitioned tables
-   2017-09-29T16:02:58.616575Z 0 [Note] End of list of non-natively partitioned tables
+   2023-06-15  8:29:26 0 [Note] Server socket created on IP: '0.0.0.0'.
+   2023-06-15  8:29:26 0 [Note] Server socket created on IP: '::'.
+   2023-06-15  8:29:26 0 [Note] mariadbd: ready for connections.
+   Version: '11.0.2-MariaDB-1:11.0.2+maria~ubu2204'  socket: '/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
    ```
 
    This shows the logs from your Docker container.
@@ -241,38 +242,37 @@ Background containers are how you'll run most applications. Here's a simple exam
 
    ```
    $ docker container top mydb
-   PID                 USER                TIME                COMMAND
-   6930                999                 0:00                mysqld
+   UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+   999                 23256               23229               0                   08:29               ?                   00:00:00            mariadbd
    ```
 
-   You should see the MySQL demon (`mysqld`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `mysqld` process running as the main process of the container (PID 1) try:
+   You should see the MariaDB demon (`mariadbd`) is running. Note that the PID shown here is the PID for this process on your docker host. To see the same `mariadbd` process running as the main process of the container (PID 1) try:
 
    ```
    $ docker container exec mydb ps -ef
-   UID         PID   PPID  C STIME TTY          TIME CMD
-   mysql         1      0  0 21:00 ?        00:00:01 mysqld
-   root        207      0  0 21:39 ?        00:00:00 ps -ef
+   UID        PID  PPID  C STIME TTY          TIME CMD
+   mysql        1     0  0 08:29 ?        00:00:00 mariadbd
+   root       139     0  0 08:30 ?        00:00:00 ps -ef
    ```
 
    > **Note:** If the `ps` command is not install, you can install it with the following command: `apt update && apt install -y procps`
 
-   Although MySQL is running, it is isolated within the container because no network ports have been published to the host. Network traffic cannot reach containers from the host unless ports are explicitly published.
+   Although MariaDB is running, it is isolated within the container because no network ports have been published to the host. Network traffic cannot reach containers from the host unless ports are explicitly published.
 
-4. List the MySQL version using `docker container exec`.
+4. List the MariaDB version using `docker container exec`.
 
-   `docker container exec` allows you to run a command inside a container. In this example, we'll use `docker container exec` to run the command-line equivalent of `mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version` inside our MySQL container.
+   `docker container exec` allows you to run a command inside a container. In this example, we'll use `docker container exec` to run the command-line equivalent of `mariadb --user=root --password=$MARIADB_ROOT_PASSWORD --version` inside our MariaDB container.
 
    ```
    $ docker container exec -it mydb \
-   mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+   mariadb --user=root --password=$MARIADB_ROOT_PASSWORD --version
 
-   mysql: [Warning] Using a password on the command line interface can be insecure.
-   mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
+   mariadb from 11.0.2-MariaDB, client 15.2 for debian-linux-gnu (aarch64) using  EditLine wrapper
    ```
 
-   The output above shows the MySQL version number, as well as a handy warning.
+   The output above shows the MariaDB version number, as well as a handy warning.
 
-5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MySQL container.
+5. You can also use `docker container exec` to connect to a new shell process inside an already-running container. Executing the command below will give you an interactive shell (`sh`) in your MariaDB container.
 
    ```
    $ docker exec -it mydb sh
@@ -284,36 +284,35 @@ Background containers are how you'll run most applications. Here's a simple exam
 6. Let's check the version number by running the same command we passed to the container in the previous step.
 
    ```
-   # mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version
+   # mariadb --user=root --password=$MARIADB_ROOT_PASSWORD --version
 
-   mysql: [Warning] Using a password on the command line interface can be insecure.
-   mysql  Ver 14.14 Distrib 5.7.19, for Linux (x86_64) using  EditLine wrapper
+   mariadb from 11.0.2-MariaDB, client 15.2 for debian-linux-gnu (aarch64) using  EditLine wrapper
    ```
 
    Notice the output is the same as before.
 
 7. Type `exit` to leave the interactive shell session.
 
-   Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mysqld` process still running.
+   Your container will still be running. This is because the `docker container exec` command started a new `sh` process. When you typed `exit`, you exited the `sh` process and left the `mariadbd` process still running.
 
 Let's clean up for the next lab.
 
-8. Stop the MySQL container
+8. Stop the MariaDB container
 
    ```
    $ docker container stop mydb
    ```
 
-9. Remove the MySQL container
+9. Remove the MariaDB container
 
    ```
    $ docker container rm mydb
    ```
 
-10. Delete the MySQL image
+10. Delete the MariaDB image
 
     ```
-    $ docker image rm mysql
+    $ docker image rm mariadb
     ```
 
 ### Terminology

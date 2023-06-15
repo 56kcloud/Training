@@ -33,7 +33,7 @@ For this application we will use the [Docker Example Voting App](https://github.
 
 ### <a name="Task_2"></a>Task 2: Understand the Compose File
 
-Locate the [Docker Compose](https://docs.docker.com/compose) file. The file you need is in Docker Example Voting App at the root level. It's called `docker-compose.yml`.
+Locate the [Docker Compose](https://docs.docker.com/compose) file. The file we are looking for is in the Docker Example Voting App repo at the root level. It's called `docker-compose.yml`.
 
 Let's review what is inside the file:
 
@@ -138,11 +138,12 @@ networks:
 
 If you take a look at `docker-compose.yml`, you will see that the file defines
 
-- vote container based on a Python image
-- result container based on a Node.js image
+- vote container based on the vote folder
+- result container based on the result folder
 - redis container based on a redis image, to temporarily store the data.
-- .NET based worker app based on a .NET image
+- .NET based worker app based on the worker folder
 - Postgres container based on a postgres image
+- optional seed container, to populate the DB with votes
 
 The Compose file also defines two networks, front-tier and back-tier. Each container is placed on one or two networks. Once on those networks, they can access other services on that network in code just by using the name of the service. Services can be on any number of networks. Services are isolated on their network. Services are only able to discover each other by name if they are on the same network. To learn more about networking check out the [Networking Lab](https://github.com/docker/labs/tree/master/networking).
 
@@ -154,7 +155,7 @@ Take a look at the file again, it start's with the following comment:
 # docker-compose v1.27+ required
 ```
 
-You will find many `docker-compose.yml` files that start with either `version: "2"` and `version: "3"`. These were the two major versions of the [compose specification](https://docs.docker.com/compose/compose-file/). v2 was used for `docker compose` and v3 brought all the features needed for `docker swarm`. However, over time the features where merged into one specification.
+You will find many `docker-compose.yml` files that start with either `version: "2"` or `version: "3"`. These were the two major versions of the [compose specification](https://docs.docker.com/compose/compose-file/). v2 was used for `docker compose` and v3 brought all the features needed for `docker swarm`. However, over time the features where merged into one specification.
 
 You will see there's also a `services` key, under which there is a separate key for each of the services. Such as:
 
@@ -183,7 +184,7 @@ You will see there's also a `services` key, under which there is a separate key 
 
 The `build` key specifies, were compose can find the `Dockerfile` to build the image to use. You can also use the `image` tag, as you can see in the `redis` or `db` service. This will then pull and start a container based on an existing image.
 
-The `command` key, allows you to specify the command that is executed inside the container. This will overwrite the `CMD` tag in the `Dockerfile`.
+The `command` key, allows you to specify the command that is executed inside the container. This will overwrite the `CMD` tag from the `Dockerfile`.
 
 Much like with `docker run` you can define `volumes`, `ports` and `networks`. There's also a `depends_on` key which allows you to specify that a service is only deployed after another service, in this case `vote` only deploys after `redis`.
 
@@ -228,29 +229,21 @@ The next step is to test whether you can access the app with your browser.
 
 3. View the results: [http://localhost:5001](http://localhost:5001)
 
+   You should see the result of the previous vote
+
 ### <a name="Task_5"></a>Task 4: Customize the Voting App
 
 In this step, you will customize the app and learn how you can use Docker Compose in your development process.
 
-1. Change the type of your vote
+1. Change the topics you want to vote between
 
-   The vote side of the app is located in the `vote` folder inside the repository. Search for the `app.py` script and replace _Cats_ and _Dogs_ with your choice of vote.
-
-   Reload the vote page in your browser.
-
-   You will now see that you changed the type of vote.
+   The vote side of the app is located in the `vote` folder inside the repository. Search for the `app.py` script and replace _Cats_ and _Dogs_ with your choice of vote. After you saved the change, reload the vote page in your browser.
 
 1. Change the result side
 
-   As we are having a micro-services architecture, you also need to change the result page to update displayed information.
+   As we are having a micro-services architecture, you also need to change the result page to update the displayed information.
 
-   You can find this information in the `result` folder. Inside this folder, you need to go to the file `views/index.html` and adjust the votes accordingly.
-
-   Reload the result page in the browser. You will now see that your results reflect the changes you just made.
-
-#### Change the result page
-
-Now place another vote `http://localhost:5000` and view the results `http://localhost:5001`
+   You can find this information in the `result` folder. Inside this folder, you need to go to the file `views/index.html` and adjust the votes accordingly. Reload the result page in the browser. You should now see that your results reflect the changes you just made.
 
 ### <a name="Task_5"></a>Task 5: Remove the containers
 
@@ -258,6 +251,15 @@ To remove the container you can run the following command:
 
 ```
 $ docker compose down
+[+] Running 7/7
+ ✔ Container example-voting-app-result-1  Removed     0.4s
+ ✔ Container example-voting-app-worker-1  Removed     0.2s
+ ✔ Container example-voting-app-vote-1    Removed     0.3s
+ ✔ Container example-voting-app-redis-1   Removed     0.1s
+ ✔ Container example-voting-app-db-1      Removed     0.1s
+ ✔ Network example-voting-app_back-tier   Removed     0.1s
+ ✔ Network example-voting-app_front-tier  Removed     0.1s
+
 ```
 
 This will stop the containers and remove them afterwards.

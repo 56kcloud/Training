@@ -204,50 +204,45 @@ Another key concept is the idea of _official images_ and _user images_. (Both of
 1. Pull the Debian:Buster image
 
    ```
-   $ docker image pull debian:buster-slim
-   buster-slim: Pulling from library/debian
-   c1ad9731b2c7: Pull complete
-   Digest: sha256:fda76aa2ef4867e583dc8a7b86bbdb51118b8794c1b98aa4aeebaca3a1ad9c0f
-   Status: Downloaded newer image for debian:buster-slim
-   docker.io/library/debian:buster-slim
+   $ docker image pull ubuntu:jammy
+   jammy: Pulling from library/ubuntu
+   952b15bbc7fb: Pull complete
+   Digest: sha256:ac58ff7fe25edc58bdf0067ca99df00014dbd032e2246d30a722fa348fd799a5
+   Status: Downloaded newer image for ubuntu:jammy
+   docker.io/library/ubuntu:jammy
    ```
 
-2. Pull a MySQL image
+2. Pull a MariaDB image
 
    ```
-   $ docker image pull mysql
-   Using default tag: latest
-   latest: Pulling from library/mysql
-   c1ad9731b2c7: Already exists
-   54f6eb0ee84d: Pull complete
-   cffcf8691bc5: Pull complete
-   89a783b5ac8a: Pull complete
-   6a8393c7be5f: Pull complete
-   af768d0b181e: Pull complete
-   810d6aaaf54a: Pull complete
-   2e014a8ae4c9: Pull complete
-   a821425a3341: Pull complete
-   3a10c2652132: Pull complete
-   4419638feac4: Pull complete
-   681aeed97dfe: Pull complete
-   Digest: sha256:548da4c67fd8a71908f17c308b8ddb098acf5191d3d7694e56801c6a8b2072cc
-   Status: Downloaded newer image for mysql:latest
-   docker.io/library/mysql:latest
+   $ docker image pull mariadb:11
+   11: Pulling from library/mariadb
+   6c7698a779f6: Already exists
+   c3beef926275: Pull complete
+   dd40ffbb6cb3: Pull complete
+   31691bc52e3b: Pull complete
+   0b4de91620aa: Pull complete
+   1ecbfd4a00bd: Pull complete
+   91656c5c74a8: Pull complete
+   fbc99aa6f426: Pull complete
+   Digest: sha256:b85481f8f2a65c10dec198e562a751676e926da83018e5590d00be86e5c9f635
+   Status: Downloaded newer image for mariadb:11
+   docker.io/library/mariadb:11
    ```
 
    What do you notice about the output from the Docker pull request for MySQL?
 
    The first layer pulled says:
 
-   `85b1f47fba49: Already exists`
+   `6c7698a779f6: Already exists`
 
-   Notice that the layer id (`85b1f47fba498`) is the same for the first layer of the MySQl image and the only layer in the Debian:Jessie image. And because we already had pulled that layer when we pulled the Debian image, we didn't have to pull it again.
+   Notice that the layer id (`6c7698a779f6`) is the same for the first layer of the MySQl image and the only layer in the Debian:Jessie image. And because we already had pulled that layer when we pulled the Debian image, we didn't have to pull it again.
 
-   So, what does that tell us about the MySQL image? Since each layer is created by a line in the image's _Dockerfile_, we know that the MySQL image is based on the Debian:Jessie base image. We can confirm this by looking at the [Dockerfile for the Docker Hub](https://github.com/docker-library/mysql/blob/0590e4efd2b31ec794383f084d419dea9bc752c4/5.7/Dockerfile).
+   So, what does that tell us about the MySQL image? Since each layer is created by a line in the image's _Dockerfile_, we know that the MySQL image is based on the Debian:Jessie base image. We can confirm this by looking at the [Dockerfile for the Docker Hub](https://github.com/MariaDB/mariadb-docker/blob/e56b3a008e9c47c7199d28db6d77d2cfecde526d/11.0/Dockerfile).
 
-   The first line in the the Dockerfile is: `FROM debian:jessie` This will import that layer into the MySQL image.
+   The first line in the the Dockerfile is: `FROM ubuntu:jammy` This will import that layer into the MySQL image.
 
-   So layers are created by Dockerfiles and are are shared between images. When you start a container, a writeable layer is added to the base image.
+   So layers are created by the Dockerfile and are shared between images. When you start a container, a writeable layer is added to the base image.
 
    Next you will create a file in our container, and see how that's represented on the host file system.
 

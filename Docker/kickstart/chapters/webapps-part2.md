@@ -6,7 +6,7 @@ Now that we understand the structure of Docker images it's now time to start bui
 >
 > - [Task 1: Package and run a custom app using Docker](#task-1-package-and-run-a-custom-app-using-docker)
 > - [Task 2: Modify a running website](#task-2-modify-a-running-website)
-> - [Task 3: Create your first image](#task-3-reate-your-first-image)
+> - [Task 3: Create your first image](#task-3-create-your-first-image)
 
 **Prerequisite** Ensure you have a DockerID. If you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com)
 

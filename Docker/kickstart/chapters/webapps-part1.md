@@ -2,7 +2,7 @@
 
 Great! So you have now looked at `docker container run`, played with a Docker container, and also got the hang of some terminology. Armed with all this knowledge, you are now ready to get to the real stuff &#8212; create Docker Images, and deploy these images as web applications with Docker.
 
-### <a name="Task_1"></a>Task 1: Run a static website in a container
+# Task 1: Run a static website in a container
 
 > **Note:** Code for this section is in this repo in the [static-site directory](https://github.com/docker/labs/tree/master/beginner/static-site).
 

@@ -4,16 +4,16 @@ This portion of the tutorial will guide you through using [Docker Compose](https
 
 > **Tasks**:
 >
-> - [Task 1: Clone Voting App Repo](#Task_1)
-> - [Task 2: Understand the Compose File](#Task_2)
-> - [Task 3: Run the Vote App with Docker Compose](#Task_3)
-> - [Task 4: Customize the Voting App](#Task_4)
-> - [Task 5: Remove the containers](#Task_5)
+> - [Task 1: Clone Voting App Repo](#task-1-clone-voting-app-repo)
+> - [Task 2: Understand the Compose File](#task-2-understand-the-compose-file)
+> - [Task 3: Run the Vote App with Docker Compose](#task-3-run-the-vote-app-with-docker-compose)
+> - [Task 4: Customize the Voting App](#task-4-customize-the-voting-app)
+> - [Task 5: Remove the containers](#task-5-remove-the-containers)
 
 **Important.**
 To complete this section, you will need to have Docker installed on your machine as mentioned in the [Setup](./setup.md) section. You'll also need to have git installed. There are many options for installing it. For instance, you can get it from [GitHub](https://help.github.com/articles/set-up-git/).
 
-### <a name="Task_1"></a>Task 1: Clone Voting App Repo
+## Task 1: Clone Voting App Repo
 
 For this application we will use the [Docker Example Voting App](https://github.com/docker/example-voting-app). This app consists of five components:
 
@@ -31,7 +31,7 @@ For this application we will use the [Docker Example Voting App](https://github.
    $ cd example-voting-app
    ```
 
-### <a name="Task_2"></a>Task 2: Understand the Compose File
+## Task 2: Understand the Compose File
 
 Locate the [Docker Compose](https://docs.docker.com/compose) file. The file we are looking for is in the Docker Example Voting App repo at the root level. It's called `docker-compose.yml`.
 
@@ -190,7 +190,7 @@ Much like with `docker run` you can define `volumes`, `ports` and `networks`. Th
 
 With the `healthcheck` key, you can define a check to figure out if the container is healthy or not. This allows the orchestrator to decide when traffic can be routed to it. Or a new container is needed as the current one is not running properly. You can find more details [here](https://docs.docker.com/compose/compose-file/05-services/#healthcheck).
 
-### <a name="Task_3"></a>Task 3: Run the Vote App with Docker Compose
+## Task 3: Run the Vote App with Docker Compose
 
 To start the app in the background you can run the following command:
 
@@ -231,7 +231,7 @@ The next step is to test whether you can access the app with your browser.
 
    You should see the result of the previous vote
 
-### <a name="Task_5"></a>Task 4: Customize the Voting App
+## Task 4: Customize the Voting App
 
 In this step, you will customize the app and learn how you can use Docker Compose in your development process.
 
@@ -245,7 +245,7 @@ In this step, you will customize the app and learn how you can use Docker Compos
 
    You can find this information in the `result` folder. Inside this folder, you need to go to the file `views/index.html` and adjust the votes accordingly. Reload the result page in the browser. You should now see that your results reflect the changes you just made.
 
-### <a name="Task_5"></a>Task 5: Remove the containers
+## Task 5: Remove the containers
 
 To remove the container you can run the following command:
 

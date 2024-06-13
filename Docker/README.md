@@ -22,4 +22,4 @@ Be sure to check out the additional Docker resources section aimed at Developers
 
 We want to see this repo grow, so if you have a tutorial to submit or contributions to existing tutorials, please see this guide:
 
-[Guide to submitting your tutorial](contribute.md)
+[Guide to submitting your tutorial](./../contribute.md)

@@ -4,13 +4,13 @@ Now that we understand the structure of Docker images it's now time to start bui
 
 > **Tasks**:
 >
-> - [Task 1: Package and run a custom app using Docker](#Task_1)
-> - [Task 2: Modify a running website](#Task_2)
-> - [Task 3: Create your first image](#Task_3)
+> - [Task 1: Package and run a custom app using Docker](#task-1-package-and-run-a-custom-app-using-docker)
+> - [Task 2: Modify a running website](#task-2-modify-a-running-website)
+> - [Task 3: Create your first image](#task-3-reate-your-first-image)
 
 **Prerequisite** Ensure you have a DockerID. If you don't have a DockerID you can get one for free via [Docker Hub](https://hub.docker.com)
 
-## <a name="Task_1"></a>Task 1: Package and run a custom app using Docker
+## Task 1: Package and run a custom app using Docker
 
 In this step you'll learn how to package your own apps as Docker images using a [Dockerfile](https://docs.docker.com/engine/reference/builder/).
 
@@ -143,7 +143,7 @@ Let's have a look at the Dockerfile we'll be using, which builds a simple websit
    >
    > In a production environment you may want to use `docker container stop` to gracefully stop the container and leave it on the host. You can then use `docker container rm` to permanently remove it.
 
-## <a name="Task_2"></a>Task 2: Modify a running website
+## Task 2: Modify a running website
 
 When you're actively working on an application it is inconvenient to have to stop the container, rebuild the image, and run a new version every time you make a change to your source code.
 
@@ -228,7 +228,7 @@ Because we did a bind mount, any changes made to the local filesystem are immedi
    linux_tweet app
    ```
 
-### Update the image
+## Task 3: Create your first image
 
 To save the changes you made to the `index.html` file earlier, you need to build a new version of the image.
 
@@ -305,7 +305,7 @@ Bravo, we have successfully deployed 2 versions of our web app in parallel to ou
    $ docker container stop linux_tweet_app
    ```
 
-### Review
+## Review
 
 What did we just accomplish?
 

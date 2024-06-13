@@ -69,7 +69,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
    80/tcp -> 0.0.0.0:32773
    ```
 
-   **If you are running [Docker Desktop for Mac](https://docs.docker.com/desktop/mac), [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/), or [Docker Desktop on Linux](https://docs.docker.com/desktop/linux/), you can open `http://0.0.0.0:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.**
+   > **Note:** If you are running [Docker Desktop for Mac](https://docs.docker.com/desktop/mac), [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/), or [Docker Desktop on Linux](https://docs.docker.com/desktop/linux/), you can open `http://0.0.0.0:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.
 
 6. You can also run a second webserver at the same time, this time specifying a custom host port mapping to the container's webserver. **Be sure to change the name**
 

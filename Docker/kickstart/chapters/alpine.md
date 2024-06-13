@@ -4,12 +4,12 @@ The wait is finally over. It's time to roll up our sleeves and start our first c
 
 > **Tasks**:
 >
-> - [Task 1: Run our First Container](#Task_1)
-> - [Task 2: Run an Interactive Container](#Task_2)
-> - [Task 3: Run a background MariaDB container](#Task_3)
-> - [Terminology Covered in this section](#Terminology)
+> - [Task 1: Run our First Container](#task-1-running-your-first-container)
+> - [Task 2: Run an Interactive Container](#task-2-run-an-interactive-ubuntu-container)
+> - [Task 3: Run a background MariaDB container](#task-3-run-a-background-mariadb-container)
+> - [Terminology Covered in this section](#terminology)
 
-## <a name="Task_1"></a>Task 1: Running your first container
+## Task 1: Running your first container
 
 Now that Docker is setup, it's time to get our hands dirty. In this section, you are going to run an [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on your system and get hands-on with the `docker container run` command.
 
@@ -129,7 +129,7 @@ You are now inside the container shell and you can try out a few commands like `
 
 That concludes a whirlwind tour of the `docker container run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker container run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker container run`.
 
-### <a name="Task_2"></a>Task 2: Run an interactive Ubuntu container
+## Task 2: Run an interactive Ubuntu container
 
 You can run a container based on a different version of Linux than what is running on your Docker host.
 
@@ -185,7 +185,7 @@ Interactive containers are useful when you are putting together your own image. 
 
 We can exit the TTY of the container with by typing `exit` or `CTRL-D`
 
-### <a name="Task_3"></a>Task 3: Run a background MariaDB container
+## Task 3: Run a background MariaDB container
 
 Background containers are how you'll run most applications. Here's a simple example using MariaDB.
 
@@ -315,7 +315,7 @@ Let's clean up for the next lab.
     $ docker image rm mariadb
     ```
 
-### Terminology
+## Terminology
 
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 

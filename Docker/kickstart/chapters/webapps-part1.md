@@ -61,7 +61,7 @@ Let's re-run the command with some new flags to publish ports and pass your name
    e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
    ```
 
-5. Now you can see the ports by running the `docker port` command with the name of the newly create container `static-site`.
+5. Now you can see the ports by running the `docker port` command with the name of the newly created container `static-site`.
 
    ```
    $ docker port static-site

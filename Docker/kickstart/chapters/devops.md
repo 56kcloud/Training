@@ -4,11 +4,11 @@ Now that we understand how to build Docker images it's now time to start autobui
 
 > **Tasks**:
 >
-> - [Task 1: Push your image to Docker Hub](#Task_1)
-> - [Task 2: Setup a Automated Build](#Task_2)
-> - [Task 3: Unit Test our Automated Builds](#Task_3)
+> - [Task 1: Push your image to Docker Hub](#task-1-push-your-image-to-docker-hub)
+> - [Task 2: Setup a Automated Build](#task-2-setup-an-automated-build)
+> - [Task 3: Unit Test our Automated Builds](#task-3-unit-test-our-automated-builds)
 
-## <a name="Task_1"></a>Task 1: Push your image to Docker Hub
+## Task 1: Push your image to Docker Hub
 
 ### Preparation
 
@@ -88,11 +88,11 @@ Distribution is built into the Docker platform. You can build images locally and
 
    You can browse to `https://hub.docker.com/r/<your docker id>/` and see your newly-pushed Docker images. These are public repositories, so anyone can pull the images - you don't even need a Docker ID to pull public images.
 
-## <a name="Task_2"></a>Task 2: Setup an Automated Build
+## Task 2: Setup an Automated Build
 
 ### Prepare to push our newly created project to GitHub
 
-It's time to automated our build pipeline. First, we need to create a GitHub Repo.
+It's time to automate our build pipeline. First, we need to create a GitHub Repo.
 
 1. Login to your [www.GitHub.com](https://www.github.com) account and click create new repository
 
@@ -249,7 +249,7 @@ Awesome! To ensure our automated builds are really working let's commit a new ve
 
 3.  Head back to your GitHub Repository and click on the `Actions` tab. You should now see a new Workflow that was just now triggered (Maybe you need to wait a couple of seconds and refresh the page). If you click on the latest Workflow, you get to the Summary page, where you can see the `build-and-push-image` job. By clicking on this you can see all the logs and also failures, if something went wrong.
 
-## <a name="Task_3"></a>Task 3: Unit Test our Automated Builds
+## Task 3: Unit Test our Automated Builds
 
 Now, we have an automated Build pipeline in place that is automatically being built every time a new commit is made to GitHub. The next logical step is to add some testing to our project to ensure what we are committing is doing what it is suppose to do.
 
@@ -287,13 +287,13 @@ To do this, we need to add a new job to our GitHub Actions. This will start the 
 
    <center><img src="../images/github-actions-build-push-and-test.png" title="GitHub Actions Workflow Summary"></center>
 
-### OPTIONAL ADD BUILD STATUS TO PROJECT\*\*
+### OPTIONAL: Add Build Status to Project
 
 <center><img src="../images/github-actions-build-status.png" title="GitHub Actions Build Status"></center>
 
-To add the build status to your project, you need to add the following line to your `README.md` file in your repositories root folder.
+To add the build status to your project, add the following line to your `README.md` file in your repository root folder.
 
-You can use your favorite editor (vi, emacs, VSCode, etc) edit the `README.md` file and paste the following snippet to the first line of the `README.md`
+You can use your favorite editor (vi, emacs, VSCode, etc) to edit the `README.md` file and paste the following snippet to the first line of the `README.md`
 
 ```
 ![Build-Push-And-Test Workflow](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/build-push-and-deploy.yml/badge.svg)
@@ -311,4 +311,4 @@ $ git push
 
 ## Next Steps
 
-For the next step in the tutorial head over to [Deploying an app with Docker Compose](./votingapp-compose.md)
+For the next step in the tutorial, head over to [Deploying an app with Docker Compose](./votingapp-compose.md)
